@@ -1,17 +1,17 @@
 {
-  "publicPath": "/_nuxt/",
+  "publicPath": "/overflect/_nuxt/",
   "all": [
     "../server/index.spa.html",
     "45e6ae3f312e76310206.js",
-    "91d5f558a938bfcfdd84.js",
-    "9bceb0d4f28b672569eb.js",
+    "8ad4ac4461b24bd54c8e.js",
     "LICENSES",
+    "b4aa58a08a4a7d2914ec.js",
     "bd49d1acfb5e6a140e02.js"
   ],
   "initial": [
-    "9bceb0d4f28b672569eb.js",
+    "b4aa58a08a4a7d2914ec.js",
     "bd49d1acfb5e6a140e02.js",
-    "91d5f558a938bfcfdd84.js"
+    "8ad4ac4461b24bd54c8e.js"
   ],
   "async": [
     "45e6ae3f312e76310206.js"
@@ -452,8 +452,8 @@
   },
   "assetsMapping": {
     "45e6ae3f312e76310206.js": "2a130dde",
-    "91d5f558a938bfcfdd84.js": "1a3ae26b",
-    "9bceb0d4f28b672569eb.js": "6fca0322",
+    "8ad4ac4461b24bd54c8e.js": "1a3ae26b",
+    "b4aa58a08a4a7d2914ec.js": "6fca0322",
     "bd49d1acfb5e6a140e02.js": "0859c165"
   }
 }

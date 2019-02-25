@@ -28,6 +28,10 @@ module.exports = {
         }, ],
     },
 
+    router: {
+        base: '/overflect/',
+    },
+
     /*
      ** Customize the progress-bar color
      */
