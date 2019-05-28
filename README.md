@@ -27,6 +27,8 @@ npm run lint
 ### Push to `gh-pages`
 [Platform Guides - GitHub Pages](https://cli.vuejs.org/guide/deployment.html#github-pages)
 ```
+npm run build
+
 git add dist
 git commit -m "Push to gh-pages"
 git subtree push --prefix dist origin gh-pages
