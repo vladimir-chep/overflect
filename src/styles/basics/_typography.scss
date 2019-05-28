@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Comfortaa';
+    font-weight: 400;
+    src: local('Comfortaa'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    src: local('Comfortaa Bold'), local('Comfortaa-Bold'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
+}
+
+body {
+    font-family: 'Comfortaa', cursive;
+}
