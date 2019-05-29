@@ -3,11 +3,13 @@
         <div v-if="showAddResult">
             <add-result/>
         </div>
-      <router-link to="/">Profile</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/progress">Progress</router-link> |
-      <router-link to="/chart">Chart</router-link> |
-      <router-link to="/settings">Settings</router-link>
+        <router-link to="/">Profile</router-link> |
+        <router-link to="/about">About</router-link> |
+        <router-link to="/progress">Progress</router-link> |
+        <router-link to="/chart">Chart</router-link> |
+        <router-link to="/settings">Settings</router-link> |
+        <router-link to="/signup">SignUp</router-link> |
+        <router-link to="/signin">SignIn</router-link>
     </nav>
 </template>
 

@@ -6,39 +6,58 @@ import Progress from './views/Progress.vue';
 import Chart from './views/Chart.vue';
 import Settings from './views/Settings.vue';
 
-Vue.use(Router)
+import SignUp from './components/Signup.vue';
+import SignIn from './components/Signin.vue';
+
+Vue.use(Router);
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/profile',
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
+  },
+  {
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+  },
+  {
+    path: '/progress',
+    name: 'progress',
+    component: Progress
+  },
+  {
+    path: '/chart',
+    name: 'chart',
+    component: Chart
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: Settings
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUp
+  },
+  {
+    path: '/signin',
+    name: 'signin',
+    component: SignIn
+  },
+];
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'profile',
-      component: Profile
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/progress',
-      name: 'progress',
-      component: Progress
-    },
-    {
-      path: '/chart',
-      name: 'chart',
-      component: Chart
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings
-    }
-  ]
+  routes,
 })
