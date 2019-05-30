@@ -31,14 +31,14 @@ export default new Vuex.Store({
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
                 .then(firebaseUser => {
                     commit('setUser', {
-                        email: firebaseUser.user.email
+                        email: firebaseUser.user.email,
                     })
-                    commit('setLoading', false)
-                    router.push('/profile')
+                    commit('setLoading', false);
+                    router.push('/profile');
                 })
                 .catch(error => {
-                    commit('setError', error.message)
-                    commit('setLoading', false)
+                    commit('setError', error.message);
+                    commit('setLoading', false);
                 })
         },
         userSignIn ({
@@ -48,16 +48,35 @@ export default new Vuex.Store({
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 .then(firebaseUser => {
                     commit('setUser', {
-                        email: firebaseUser.user.email
+                        email: firebaseUser.user.email,
                     })
-                    commit('setLoading', false)
-                    commit('setError', null)
-                    router.push('/profile')
+                    commit('setLoading', false);
+                    commit('setError', null);
+                    router.push('/profile');
                 })
                 .catch(error => {
-                    commit('setError', error.message)
-                    commit('setLoading', false)
+                    commit('setError', error.message);
+                    commit('setLoading', false);
                 });
         },
+        autoSignIn ({
+            commit
+        }, payload) {
+            commit('setUser', {
+                email: payload.email,
+            })
+        },
+        userSignOut ({
+            commit
+        }) {
+            firebase.auth().signOut();
+            commit('setUser', null);
+            router.push('/');
+        }
+    },
+    getters: {
+        isAuthenticated (state) {
+            return state.user !== null && state.user !== undefined;
+        }
     },
 });
