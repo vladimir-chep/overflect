@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app" class="app">
     <router-view/>
     <navigation/>
   </div>
@@ -20,5 +20,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.app{
+  position: relative;
+  width: 756px;
+  max-width: 100%;
+  margin: auto;
+}
+h1{
+  text-align: center;
+}
 </style>
