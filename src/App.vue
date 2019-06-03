@@ -24,6 +24,7 @@ export default {
 .app{
   position: relative;
   width: 756px;
+  max-width: 100%;
   margin: auto;
 }
 h1{

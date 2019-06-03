@@ -39,3 +39,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Memo
 [Deploy vue-cli 3 project to github pages](https://medium.com/@Roli_Dori/deploy-vue-cli-3-project-to-github-pages-ebeda0705fbd)
 [Firebase Auth SetUp](https://medium.com/@oleg.agapov/basic-single-page-application-using-vue-js-and-firebase-part-2-143a3084266f)
+[Vue.js + FirebaseでTodoアプリを作る](https://qiita.com/magaya0403/items/e292cd250184ea3fe7b0)
+[Building a Real-World Web App With Vue.js and Firebase](https://savvyapps.com/blog/definitive-guide-building-web-app-vuejs-firebase)

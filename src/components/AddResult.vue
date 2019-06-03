@@ -2,20 +2,58 @@
 <div class="addResult">
     <div class="button" :class="{'is-on':show}" @click="show = !show">+</div>
     <div class="block" :class="{'is-on':show}">
-        <p>Add Result</p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio tenetur blanditiis alias quibusdam qui ducimus libero doloribus laudantium, excepturi rerum fugit nihil sit ipsum iure facere praesentium ullam ut fugiat?
-        </p>
+        <p>Add result</p>
+        <div>
+            <input type="radio" id="win" value="win" v-model="winStatus">
+            <label for="win">Win</label>
+            <input type="radio" id="draw" value="draw" v-model="winStatus">
+            <label for="draw">Draw</label>
+            <input type="radio" id="lose" value="lose" v-model="winStatus">
+            <label for="lose">Lose</label>
+            <br>
+            <span>Selected: {{ winStatus }}</span>
+        </div>
+        <br>
+        <div>
+            <input type="number" placeholder="Insert score" v-model="newScore">
+            <button type="submit" @click="addResult()">Add</button>
+        </div>
     </div>
 </div>
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
     data() {
         return {
-            show: false,
+            show: true,
+
+            resultRef: null,
+            newTodoName: '',
+
+            newScore: '',
+            winStatus: '',
         }
+    },
+    created() {
+        this.database = firebase.database();
+        this.resultsRef = firebase.database().ref('results');
+        this.resultsRef.on('value', snapshot => this.resultList = snapshot.val());
+    },
+    methods: {
+        addResult() {
+            if (this.newScore == "" && this.winStatus === '') return;
+
+            const newData = {
+                score: this.newScore,
+                winStatus: this.winStatus,
+            };
+            this.resultsRef.push(newData);
+            this.newScore = "";
+            this.winStatus = null;
+        },
     },
 }
 </script>
@@ -51,7 +89,7 @@ export default {
     width: 100%;
     padding: 15px;
     padding-bottom: 100px;
-    border: 1px solid;
+    border: 4px solid #7b4bff;
     border-radius: 8px;
     background: #fff;
     transform: translateY(100%);

@@ -7,20 +7,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        appTitle: 'My Awesome App',
         user: null,
         error: null,
         loading: false,
     },
     mutations: {
         setUser (state, payload) {
-            state.user = payload
+            state.user = payload;
         },
         setError (state, payload) {
-            state.error = payload
+            state.error = payload;
         },
         setLoading (state, payload) {
-            state.loading = payload
+            state.loading = payload;
         }
     },
     actions: {

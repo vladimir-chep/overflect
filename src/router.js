@@ -14,9 +14,6 @@ import NotFound from './components/NotFound.vue';
 const routes = [{
         path: '/',
         redirect: '/profile',
-        meta: {
-            requiresAuth: true
-        },
     },
     {
         path: '/profile',

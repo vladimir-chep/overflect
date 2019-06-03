@@ -1,13 +1,13 @@
 <template>
     <nav id="nav">
         <add-result v-if="showAddResult"/>
-        <router-link to="/">Profile</router-link>
+        <router-link to="/profile">Profile</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <router-link to="/progress">Progress</router-link>
         <router-link to="/chart">Chart</router-link>
         <router-link to="/settings">Settings</router-link>
         <!-- <router-link to="/signup">SignUp</router-link> | -->
-        <router-link to="/signin">{{ isAuthenticated ? 'Sign Out' : 'Sign In' }}</router-link>
+        <!-- <router-link to="/signin">{{ isAuthenticated ? 'Sign Out' : 'Sign In' }}</router-link> -->
     </nav>
 </template>
 
