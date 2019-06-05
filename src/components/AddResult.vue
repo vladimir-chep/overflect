@@ -4,18 +4,24 @@
     <div class="block" :class="{'is-on':show}">
         <p>Add result</p>
         <div>
-            <input type="radio" id="win" value="win" v-model="winStatus">
+            <input type="radio" id="win" value="1" v-model="winStatus">
             <label for="win">Win</label>
-            <input type="radio" id="draw" value="draw" v-model="winStatus">
+            <input type="radio" id="draw" value="2" v-model="winStatus">
             <label for="draw">Draw</label>
-            <input type="radio" id="lose" value="lose" v-model="winStatus">
+            <input type="radio" id="lose" value="0" v-model="winStatus">
             <label for="lose">Lose</label>
+            <input type="radio" id="dummy" value="dummy" v-model="winStatus">
+            <label for="dummy">Dummy</label>
             <br>
             <span>Selected: {{ winStatus }}</span>
         </div>
         <br>
         <div>
-            <input type="number" placeholder="Insert score" v-model="newScore">
+            <input
+                type="number"
+                placeholder="Insert score"
+                v-model.number="newRank"
+                >
             <button type="submit" @click="addResult()">Add</button>
         </div>
     </div>
@@ -30,30 +36,79 @@ export default {
         return {
             show: true,
 
-            resultRef: null,
-            newTodoName: '',
+            errors: {
+                rank: false,
+                winStatus: false,
+            },
 
-            newScore: '',
-            winStatus: '',
+            resultRef: null,
+
+            newRank: null,
+            winStatus: null,
         }
     },
     created() {
         this.database = firebase.database();
         this.resultsRef = firebase.database().ref('results');
-        this.resultsRef.on('value', snapshot => this.resultList = snapshot.val());
+        this.resultsRef.on('value', snapshot => {
+            // console.log(snapshot.val());
+            this.resultList = snapshot.val();
+        });
     },
     methods: {
         addResult() {
-            if (this.newScore == "" && this.winStatus === '') return;
+            // e.preventDefault();
+            // if (this.newScore == '' || this.winStatus === '') return;
+            if (!checkWinStatus(this.winStatus)) return;
+            if (!checkNewRank(this.newRank)) return;
 
             const newData = {
-                score: this.newScore,
-                winStatus: this.winStatus,
+                rank: this.newRank,
+                winStatus: converWinStatus(this.winStatus),
+                date: getCurrentData(),
             };
             this.resultsRef.push(newData);
-            this.newScore = "";
+            this.newRank = null;
             this.winStatus = null;
+
+            function getCurrentData() {
+                let d = new Date();
+                return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} - ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+            }
+
+            function checkNewRank(value) {
+                if (isNaN(value)) {
+                    console.log('Rank: Not a number!');
+                    return false;
+                }
+                if (value <= 0 || value > 5000) {
+                    console.log('Rank: Weird value!');
+                    return false;
+                }
+                return true;
+            }
+
+            function checkWinStatus(value) {
+                if (isNaN(value)) {
+                    console.log('Win status: Not a number!');
+                    return false;
+                }
+                if (value === null) {
+                    console.log('Win status: Empty!');
+                    return false;
+                }
+                return true;
+            }
+
+            function converWinStatus(value){
+                let result;
+                if (value == 0) result = false;
+                if (value == 1) result = true;
+                if (value == 2) result = 'draw';
+                return result;
+            }
         },
+
     },
 }
 </script>

@@ -1,30 +1,32 @@
 <template>
 <div class="progress">
     <h1>This is a progress page</h1>
-    <h2>TODOS</h2>
-    <div>
-        <input type="text" v-model="newTodoName">
-        <button type="submit" @click="createTodo()">Create</button>
-    </div>
-    <br>
-    <div>
-      <button type="submit" @click="showTodoType = 'all'">Show All</button>
-      <button type="submit" @click="showTodoType = 'active'">Show non completed</button>
-      <button type="submit" @click="showTodoType = 'complete'">Show Completed</button>
-    </div>
-    <ul v-for="(todo, key) in filteredTodos" :key="key">
-        <li><input class="toggle" type="checkbox" v-model="todo.isComplete" @click="updateIsCompleteTodo(todo, key)">{{ todo.name }}</li>
-        <button type="submit" @click="deleteTodo(key)">Delete</button>
-    </ul>
-    <hr>
     <h2>Progress</h2>
-    <ul v-for="(item, key) in filteredResults" :key="key">
-        <li>
-          <span style="margin-right:10px">Score: {{ item.score }}</span>
-          <span style="margin-right:10px">Result: {{ item.winStatus }}</span>
-          <button type="submit" @click="deleteTodo(key)">Delete</button>
-        </li>
-    </ul>
+    <div class="contaider-full">
+        <table class="progressTable">
+            <thead>
+                <tr>
+                    <th scope="col">Plays({{ numOfPlays }})</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Tier</th>
+                    <th scope="col">Diff</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, key) in resultList" :key="key">
+                    <!-- {{ item.winStatus }} -->
+                    <th :class="addResultClass(item.winStatus)" scope="row">{{ key+1 }}</th>
+                    <td>{{ item.rank }}</td>
+                    <td>{{ item.tier.name }}</td>
+                    <td>{{ item.diff }}</td>
+                    <td class="dev-todo">
+                        <button @click="remove(item.key)">X</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 </template>
@@ -37,79 +39,177 @@ export default {
     data() {
         return {
             database: null,
-            todosRef: null,
-            newTodoName: '',
-            showTodoType: 'all',
-            todos: [],
-
-
             resultsRef: null,
+
             resultList: [],
+
+            numOfPlays: 0,
         }
     },
     created() {
         this.database = firebase.database();
-        this.todosRef = this.database.ref('todos');
         this.resultsRef = this.database.ref('results');
+        this.resultsRef.on('value', snapshot => {
+            const resultList = [];
+            let order = 0;
 
-        this.todosRef.on('value', snapshot => this.todos = snapshot.val());
-        this.resultsRef.on('value', snapshot => this.resultList = snapshot.val());
-    },
-    computed: {
-        filteredTodos: function () {
-            let result;
-            if (this.showTodoType == 'all') {
-                result = this.todos;
-            } else {
-                let showIsComplete = (this.showTodoType == 'complete') ? true : false;
+            snapshot.forEach(child => {
+                let val = child.exportVal();
+                let obj = {
+                    order: order,
+                    key: child.key,
+                    rank: val.rank,
+                    winStatus: val.winStatus,
+                    date: val.date,
+                };
+                resultList.push(obj);
+                order++;
+            });
 
-                let filterTodos = {};
-                for (let key in this.todos) {
-                    let todo = this.todos[key];
-                    if (todo.isComplete == showIsComplete) {
-                        filterTodos[key] = todo;
+            resultList.forEach((val, index, arr) => {
+                val.diff = calcDiff();
+                val.tier = calcTier();
+                // calcTier();
+
+                function calcDiff() {
+                    let result = '-';
+                    if (index !== 0) {
+                        let cur = val.rank;
+                        let prev = arr[index - 1].rank;
+
+                        result = cur - prev;
                     }
-                    result = filterTodos;
+                    return result;
                 }
-            }
-            return result;
-        },
-        filteredResults: function(){
-          let result;
-          // let filterResults = {};
-          result = this.resultList;
 
-          return result;
-        },
+                function calcTier() {
+                    const tierScheme = [{
+                            name: 'Bronze',
+                            image: '',
+                            min: 0,
+                            max: 1499,
+                        },
+                        {
+                            name: 'Silver',
+                            image: '',
+                            min: 1500,
+                            max: 1999,
+                        },
+                        {
+                            name: 'Gold',
+                            image: '',
+                            min: 2000,
+                            max: 2499,
+                        },
+                        {
+                            name: 'Platinum',
+                            image: '',
+                            min: 2500,
+                            max: 2999,
+                        },
+                        {
+                            name: 'Diamond',
+                            image: '',
+                            min: 3000,
+                            max: 3499,
+                        },
+                        {
+                            name: 'Master',
+                            image: '',
+                            min: 3500,
+                            max: 3999,
+                        },
+                        {
+                            name: 'Grandmaster',
+                            image: '',
+                            min: 4000,
+                            max: 4499,
+                        },
+                        {
+                            name: 'Top500',
+                            image: '',
+                            min: 4500,
+                            max: 5000,
+                        },
+                    ];
+                    let foundOne = tierScheme.find(e => {
+                        if (val.rank >= e.min && val.rank <= e.max) return e;
+                    });
+                    return {
+                        name: foundOne.name,
+                        url: foundOne.url || 'none',
+                    };
+                }
+            });
+
+            this.numOfPlays = snapshot.numChildren();
+            this.resultList = resultList;
+        });
     },
+    computed: {},
     methods: {
-        createTodo() {
-            if (this.newTodoName == "") return;
-            const thisRef = this.todosRef.push();
-            const newData = {
-                name: this.newTodoName,
-                isComplete: false,
-            };
-            thisRef.push(newData);
-
-            this.newTodoName = "";
+        addResultClass(value) {
+            let baseClass = 'winStatus';
+            if (value === 'draw') return `${baseClass} isDraw`;
+            if (value) return `${baseClass} isWin`;
+            if (!value) return `${baseClass} isLose`;
         },
-        updateIsCompleteTodo(todo, key) {
-            todo.isComplete = !todo.isComplete
-            var updates = {};
-            updates['/todos/' + key] = todo;
-            this.database.ref().update(updates);
-        },
-        // deleteTodo(key) {
-        //     this.database.ref('todos').child(key).remove();
-        // },
-        deleteTodo(key) {
-            this.database.ref('results').child(key).remove();
+        remove(key) {
+            this.resultsRef.child(key).remove();
         },
     },
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
+.contaider-full {
+    padding: 16px;
+    background: #fff;
+}
 
+.progressTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: .75rem;
+        border-top: 1px solid #F0F0F2;
+        text-align: center;
+    }
+
+    thead {
+        th {
+            color: #AFB2BC;
+            vertical-align: bottom;
+            border-bottom: 2px solid #F0F0F2;
+        }
+    }
+
+    .dev-todo {
+        color: #c7c5c5;
+    }
+}
+
+.winStatus {
+    &:before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        background: #AFB2BC;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    &.isWin:before {
+        background: #19CF36;
+    }
+
+    &.isLose:before {
+        background: #E51B1B;
+    }
+
+    &.isDraw:before {}
+}
 </style>
