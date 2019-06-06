@@ -1,115 +1,294 @@
 <template>
-<div class="progress">
-    <h1>This is a progress page</h1>
-    <h2>TODOS</h2>
-    <div>
-        <input type="text" v-model="newTodoName">
-        <button type="submit" @click="createTodo()">Create</button>
+    <div class="progress">
+        <h1>This is a progress page</h1>
+        <div class="contaider-full"
+             v-if="resultList.length">
+            <div v-if="editMode"
+                 class="">
+                <h4>Edit Item</h4>
+                <div>
+                    <input type="radio"
+                           id="win"
+                           :value="1"
+                           v-model="editStatus">
+                    <label for="win">Win</label>
+                    <input type="radio"
+                           id="draw"
+                           :value="2"
+                           v-model="editStatus">
+                    <label for="draw">Draw</label>
+                    <input type="radio"
+                           id="lose"
+                           :value="0"
+                           v-model="editStatus">
+                    <label for="lose">Lose</label>
+                    <br>
+                </div>
+                <input type="number"
+                       placeholder="Insert new score"
+                       v-model.number="editRank">
+                <button type="submit"
+                        @click="submitEdit">Submit</button>
+                <button type="submit"
+                        @click="resetEdit">Cancel</button>
+                <br>
+                <br>
+            </div>
+            <table class="progressTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Plays ({{ numOfPlays }})</th>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Tier</th>
+                        <th scope="col">Diff</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, key) in filteredList"
+                        :key="key">
+                        <th :class="addResultClass(item.winStatus)"
+                            scope="row">{{ item.order+1 }}</th>
+                        <td>{{ item.rank }}</td>
+                        <td>{{ item.tier.name }}</td>
+                        <td>{{ item.diff }}</td>
+                        <td class="dev-todo">
+                            <button @click="remove(item.key)"
+                                    :disabled="editMode">X</button>
+                            <button @click="startEdit(item.key)"
+                                    :disabled="editMode">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-else>
+            <h2 style="text-align:center">Nothing to display</h2>
+        </div>
     </div>
-    <br>
-    <div>
-      <button type="submit" @click="showTodoType = 'all'">Show All</button>
-      <button type="submit" @click="showTodoType = 'active'">Show non completed</button>
-      <button type="submit" @click="showTodoType = 'complete'">Show Completed</button>
-    </div>
-    <ul v-for="(todo, key) in filteredTodos" :key="key">
-        <li><input class="toggle" type="checkbox" v-model="todo.isComplete" @click="updateIsCompleteTodo(todo, key)">{{ todo.name }}</li>
-        <button type="submit" @click="deleteTodo(key)">Delete</button>
-    </ul>
-    <hr>
-    <h2>Progress</h2>
-    <ul v-for="(item, key) in filteredResults" :key="key">
-        <li>
-          <span style="margin-right:10px">Score: {{ item.score }}</span>
-          <span style="margin-right:10px">Result: {{ item.winStatus }}</span>
-          <button type="submit" @click="deleteTodo(key)">Delete</button>
-        </li>
-    </ul>
-
-</div>
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-    name: 'progressList',
+    name: "progressList",
     data() {
         return {
             database: null,
-            todosRef: null,
-            newTodoName: '',
-            showTodoType: 'all',
-            todos: [],
-
-
             resultsRef: null,
+
             resultList: [],
-        }
+
+            numOfPlays: 0,
+
+            // Edit mode
+            editMode: false,
+            editKey: null,
+            editStatus: null,
+            editRank: null
+        };
     },
     created() {
         this.database = firebase.database();
-        this.todosRef = this.database.ref('todos');
-        this.resultsRef = this.database.ref('results');
+        this.resultsRef = this.database.ref("results");
+        this.resultsRef.on("value", snapshot => {
+            const resultList = [];
+            let order = 0;
 
-        this.todosRef.on('value', snapshot => this.todos = snapshot.val());
-        this.resultsRef.on('value', snapshot => this.resultList = snapshot.val());
+            snapshot.forEach(child => {
+                let val = child.exportVal();
+                let obj = {
+                    order: order,
+                    key: child.key,
+                    rank: val.rank,
+                    winStatus: val.winStatus,
+                    date: val.date
+                };
+                resultList.push(obj);
+                order++;
+            });
+
+            resultList.forEach((val, index, arr) => {
+                val.diff = calcDiff();
+                val.tier = calcTier();
+
+                function calcDiff() {
+                    let result = "-";
+                    if (index !== 0) {
+                        let cur = val.rank;
+                        let prev = arr[index - 1].rank;
+
+                        result = cur - prev;
+                    }
+                    return result;
+                }
+
+                function calcTier() {
+                    const tierScheme = [
+                        {
+                            name: "Bronze",
+                            image: "",
+                            min: 0,
+                            max: 1499
+                        },
+                        {
+                            name: "Silver",
+                            image: "",
+                            min: 1500,
+                            max: 1999
+                        },
+                        {
+                            name: "Gold",
+                            image: "",
+                            min: 2000,
+                            max: 2499
+                        },
+                        {
+                            name: "Platinum",
+                            image: "",
+                            min: 2500,
+                            max: 2999
+                        },
+                        {
+                            name: "Diamond",
+                            image: "",
+                            min: 3000,
+                            max: 3499
+                        },
+                        {
+                            name: "Master",
+                            image: "",
+                            min: 3500,
+                            max: 3999
+                        },
+                        {
+                            name: "Grandmaster",
+                            image: "",
+                            min: 4000,
+                            max: 4499
+                        },
+                        {
+                            name: "Top500",
+                            image: "",
+                            min: 4500,
+                            max: 5000
+                        }
+                    ];
+                    let foundOne = tierScheme.find(e => {
+                        if (val.rank >= e.min && val.rank <= e.max) return e;
+                    });
+                    return {
+                        name: foundOne.name,
+                        url: foundOne.url || "none"
+                    };
+                }
+            });
+
+            this.numOfPlays = snapshot.numChildren();
+            this.resultList = resultList;
+        });
     },
     computed: {
-        filteredTodos: function () {
-            let result;
-            if (this.showTodoType == 'all') {
-                result = this.todos;
-            } else {
-                let showIsComplete = (this.showTodoType == 'complete') ? true : false;
-
-                let filterTodos = {};
-                for (let key in this.todos) {
-                    let todo = this.todos[key];
-                    if (todo.isComplete == showIsComplete) {
-                        filterTodos[key] = todo;
-                    }
-                    result = filterTodos;
-                }
-            }
-            return result;
-        },
-        filteredResults: function(){
-          let result;
-          // let filterResults = {};
-          result = this.resultList;
-
-          return result;
-        },
+        filteredList() {
+            let filteredList = this.resultList;
+            if (!this.sortToNew) filteredList.reverse();
+            // if (this.listLimit) {
+            //     filteredList.slice(0, this.listLimit);
+            // }
+            return filteredList;
+        }
     },
+    watch: {},
     methods: {
-        createTodo() {
-            if (this.newTodoName == "") return;
-            const thisRef = this.todosRef.push();
-            const newData = {
-                name: this.newTodoName,
-                isComplete: false,
-            };
-            thisRef.push(newData);
+        addResultClass(value) {
+            let baseClass = "winStatus";
+            if (value === 0) return `${baseClass} isLose`;
+            if (value === 1) return `${baseClass} isWin`;
+            if (value === 2) return `${baseClass} isDraw`;
+        },
+        startEdit(key) {
+            this.editMode = true;
+            this.editKey = key;
+            this.resultsRef.once("value", snapshot => {
+                const thisItem = snapshot.child(key).val();
 
-            this.newTodoName = "";
+                this.editStatus = thisItem.winStatus;
+                this.editRank = thisItem.rank;
+            });
         },
-        updateIsCompleteTodo(todo, key) {
-            todo.isComplete = !todo.isComplete
-            var updates = {};
-            updates['/todos/' + key] = todo;
-            this.database.ref().update(updates);
+        submitEdit() {
+            let newData = {
+                rank: this.editRank,
+                winStatus: this.editStatus
+            };
+            this.resultsRef.child(this.editKey).set(newData);
+
+            resetEdit();
         },
-        // deleteTodo(key) {
-        //     this.database.ref('todos').child(key).remove();
-        // },
-        deleteTodo(key) {
-            this.database.ref('results').child(key).remove();
+        resetEdit() {
+            this.editRank = null;
+            this.editStatus = null;
+            this.editMode = false;
         },
-    },
-}
+        remove(key) {
+            this.resultsRef.child(key).remove();
+        }
+    }
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
+.contaider-full {
+    padding: 16px;
+    background: #fff;
+}
 
+.progressTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 0.75rem;
+        border-top: 1px solid #f0f0f2;
+        text-align: center;
+    }
+
+    thead {
+        th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #f0f0f2;
+            color: #afb2bc;
+        }
+    }
+
+    .dev-todo {
+        color: #c7c5c5;
+    }
+}
+
+.winStatus {
+    &:before {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-right: 10px;
+        border-radius: 50%;
+        background: transparent;
+        content: "";
+    }
+
+    &.isWin:before {
+        background: #19cf36;
+    }
+
+    &.isLose:before {
+        background: #e51b1b;
+    }
+
+    &.isDraw:before {
+        background: #afb2bc;
+    }
+}
 </style>

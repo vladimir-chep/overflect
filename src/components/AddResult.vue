@@ -1,61 +1,123 @@
 <template>
-<div class="addResult">
-    <div class="button" :class="{'is-on':show}" @click="show = !show">+</div>
-    <div class="block" :class="{'is-on':show}">
-        <p>Add result</p>
-        <div>
-            <input type="radio" id="win" value="win" v-model="winStatus">
-            <label for="win">Win</label>
-            <input type="radio" id="draw" value="draw" v-model="winStatus">
-            <label for="draw">Draw</label>
-            <input type="radio" id="lose" value="lose" v-model="winStatus">
-            <label for="lose">Lose</label>
+    <div class="addResult">
+        <div class="button"
+             :class="{'is-on':show}"
+             @click="show = !show">+</div>
+        <div class="block"
+             :class="{'is-on':show}">
+            <p>Add result</p>
+            <div>
+                <input type="radio"
+                       id="win"
+                       :value="1"
+                       v-model="winStatus">
+                <label for="win">Win</label>
+                <input type="radio"
+                       id="draw"
+                       :value="2"
+                       v-model="winStatus">
+                <label for="draw">Draw</label>
+                <input type="radio"
+                       id="lose"
+                       :value="0"
+                       v-model="winStatus">
+                <label for="lose">Lose</label>
+                <input type="radio"
+                       id="dummy"
+                       :value="3"
+                       v-model="winStatus">
+                <label for="dummy">Calibration</label>
+                <br>
+                <span>Selected: {{ winStatus }}</span>
+            </div>
             <br>
-            <span>Selected: {{ winStatus }}</span>
-        </div>
-        <br>
-        <div>
-            <input type="number" placeholder="Insert score" v-model="newScore">
-            <button type="submit" @click="addResult()">Add</button>
+            <div>
+                <input type="number"
+                       placeholder="Insert score"
+                       v-model.number="newRank">
+                <button type="submit"
+                        @click="addResult()">Add</button>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
     data() {
         return {
-            show: true,
+            show: false,
+
+            errors: {
+                rank: false,
+                winStatus: false
+            },
 
             resultRef: null,
-            newTodoName: '',
 
-            newScore: '',
-            winStatus: '',
-        }
+            newRank: null,
+            winStatus: null
+        };
     },
     created() {
         this.database = firebase.database();
-        this.resultsRef = firebase.database().ref('results');
-        this.resultsRef.on('value', snapshot => this.resultList = snapshot.val());
+        this.resultsRef = firebase.database().ref("results");
+        this.resultsRef.on("value", snapshot => {
+            // console.log(snapshot.val());
+            this.resultList = snapshot.val();
+        });
     },
     methods: {
         addResult() {
-            if (this.newScore == "" && this.winStatus === '') return;
+            // e.preventDefault();
+            // if (this.newScore == '' || this.winStatus === '') return;
+            if (!checkWinStatus(this.winStatus)) return;
+            if (!checkNewRank(this.newRank)) return;
 
             const newData = {
-                score: this.newScore,
+                rank: this.newRank,
+                // winStatus: converWinStatus(this.winStatus),
                 winStatus: this.winStatus,
+                date: getCurrentData()
             };
             this.resultsRef.push(newData);
-            this.newScore = "";
+            this.newRank = null;
             this.winStatus = null;
-        },
-    },
-}
+
+            function getCurrentData() {
+                let d = new Date();
+                return `${d.getFullYear()}/${d.getMonth() +
+                    1}/${d.getDate()} - ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+            }
+
+            function checkNewRank(value) {
+                if (isNaN(value)) {
+                    console.log("Rank: Not a number!");
+                    return false;
+                }
+                if (value <= 0 || value > 5000) {
+                    console.log("Rank: Weird value!");
+                    return false;
+                }
+                return true;
+            }
+
+            function checkWinStatus(value) {
+                if (isNaN(value)) {
+                    console.log("Win status: Not a number!");
+                    return false;
+                }
+                if (value === null) {
+                    console.log("Win status: Empty!");
+                    return false;
+                }
+                return true;
+            }
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -70,7 +132,7 @@ export default {
     color: #fff;
     background: #7b4bff;
     font-size: 40px;
-    transition: .25s all ease-in-out;
+    transition: 0.25s all ease-in-out;
     cursor: pointer;
 
     &.is-on {
@@ -93,7 +155,7 @@ export default {
     border-radius: 8px;
     background: #fff;
     transform: translateY(100%);
-    transition: .25s all ease-in-out;
+    transition: 0.25s all ease-in-out;
 
     &.is-on {
         transform: translateY(0%);
