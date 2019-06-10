@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         userSignUp() {
-            this.$store.dispatch('userSignUp', {
+            this.$store.dispatch('auth/userSignUp', {
                 email: this.email,
                 password: this.password
             })

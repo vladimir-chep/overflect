@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -50,15 +51,8 @@ export default {
             return this.$store.state.loading;
         },
         isAuthenticated() {
-            return this.$store.getters.isAuthenticated;
+            return this.$store.getters['auth/isAuthenticated'];
         },
-        // menuItems() {
-        //     if (this.isAuthenticated) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // }
     },
     watch: {
         error(value) {
@@ -70,13 +64,13 @@ export default {
     },
     methods: {
         userSignIn() {
-            this.$store.dispatch('userSignIn', {
+            this.$store.dispatch('auth/userSignIn', {
                 email: this.email,
                 password: this.password,
             })
         },
         userSignOut() {
-            this.$store.dispatch('userSignOut');
+            this.$store.dispatch('auth/userSignOut');
         }
     },
 }

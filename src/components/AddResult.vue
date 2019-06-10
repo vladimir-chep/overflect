@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+// import firebase from "firebase";
 
 export default {
     data() {
@@ -62,12 +62,12 @@ export default {
         };
     },
     created() {
-        this.database = firebase.database();
-        this.resultsRef = firebase.database().ref("results");
-        this.resultsRef.on("value", snapshot => {
-            // console.log(snapshot.val());
-            this.resultList = snapshot.val();
-        });
+        // this.database = firebase.database();
+        // this.resultsRef = firebase.database().ref("results");
+        // this.resultsRef.on("value", snapshot => {
+        //     // console.log(snapshot.val());
+        //     this.resultList = snapshot.val();
+        // });
     },
     methods: {
         addResult() {
@@ -82,7 +82,9 @@ export default {
                 winStatus: this.winStatus,
                 date: getCurrentData()
             };
-            this.resultsRef.push(newData);
+
+            // this.resultsRef.push(newData);
+            this.$store.dispatch('progress/add', newData);
             this.newRank = null;
             this.winStatus = null;
 
