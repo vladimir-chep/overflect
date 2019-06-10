@@ -1,28 +1,26 @@
 <template>
-    <div class="progress">
-        <h1>This is a progress page</h1>
-        <div class="contaider-full"
-             v-if="resultList.length">
-            <div v-if="editMode"
-                 class="">
-                <h4>Edit Item</h4>
-                <div>
-                    <input type="radio"
+<div class="progress">
+    <h1>This is a progress page</h1>
+    <div class="contaider-full" v-if="filteredList.length">
+        <div v-if="editMode" class="">
+            <h4>Edit Item</h4>
+            <div>
+                <input type="radio"
                            id="win"
                            :value="1"
                            v-model="editStatus">
-                    <label for="win">Win</label>
-                    <input type="radio"
+                <label for="win">Win</label>
+                <input type="radio"
                            id="draw"
                            :value="2"
                            v-model="editStatus">
-                    <label for="draw">Draw</label>
-                    <input type="radio"
+                <label for="draw">Draw</label>
+                <input type="radio"
                            id="lose"
                            :value="0"
                            v-model="editStatus">
-                    <label for="lose">Lose</label>
-                    <br>
+                <label for="lose">Lose</label>
+                <br>
                 </div>
                 <input type="number"
                        placeholder="Insert new score"
@@ -34,53 +32,45 @@
                 <br>
                 <br>
             </div>
-            <table class="progressTable">
-                <thead>
-                    <tr>
-                        <th scope="col">Plays ({{ numOfPlays }})</th>
-                        <th scope="col">Rank</th>
-                        <th scope="col">Tier</th>
-                        <th scope="col">Diff</th>
-                        <th scope="col">Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, key) in filteredList"
-                        :key="key">
-                        <th :class="addResultClass(item.winStatus)"
-                            scope="row">{{ item.order+1 }}</th>
-                        <td>{{ item.rank }}</td>
-                        <td>{{ item.tier.name }}</td>
-                        <td>{{ item.diff }}</td>
-                        <td class="dev-todo">
-                            <button @click="remove(item.key)"
+                <table class="progressTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Plays ({{ numOfPlays }})</th>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Tier</th>
+                            <th scope="col">Diff</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, key) in sorted(filteredList)" :key="key">
+                            <th :class="addResultClass(item.winStatus)" scope="row">{{ item.order+1 }}</th>
+                            <td>{{ item.rank }}</td>
+                            <td>{{ item.tier.name }}</td>
+                            <td>{{ item.diff }}</td>
+                            <td class="dev-todo">
+                                <button @click="remove(item.key)"
                                     :disabled="editMode">X</button>
-                            <button @click="startEdit(item.key)"
+                                <button @click="startEdit(item.key)"
                                     :disabled="editMode">Edit</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-else>
+                <h2 style="text-align:center">Nothing to display</h2>
+            </div>
         </div>
-        <div v-else>
-            <h2 style="text-align:center">Nothing to display</h2>
-        </div>
-    </div>
 </template>
 
 <script>
-import firebase from "firebase";
-
+const fb = require('../firebaseConfig.js');
 export default {
     name: "progressList",
     data() {
         return {
-            database: null,
-            resultsRef: null,
-
-            resultList: [],
-
-            numOfPlays: 0,
+            sortByNewest: true,
 
             // Edit mode
             editMode: false,
@@ -90,113 +80,16 @@ export default {
         };
     },
     created() {
-        this.database = firebase.database();
-        this.resultsRef = this.database.ref("results");
-        this.resultsRef.on("value", snapshot => {
-            const resultList = [];
-            let order = 0;
-
-            snapshot.forEach(child => {
-                let val = child.exportVal();
-                let obj = {
-                    order: order,
-                    key: child.key,
-                    rank: val.rank,
-                    winStatus: val.winStatus,
-                    date: val.date
-                };
-                resultList.push(obj);
-                order++;
-            });
-
-            resultList.forEach((val, index, arr) => {
-                val.diff = calcDiff();
-                val.tier = calcTier();
-
-                function calcDiff() {
-                    let result = "-";
-                    if (index !== 0) {
-                        let cur = val.rank;
-                        let prev = arr[index - 1].rank;
-
-                        result = cur - prev;
-                    }
-                    return result;
-                }
-
-                function calcTier() {
-                    const tierScheme = [
-                        {
-                            name: "Bronze",
-                            image: "",
-                            min: 0,
-                            max: 1499
-                        },
-                        {
-                            name: "Silver",
-                            image: "",
-                            min: 1500,
-                            max: 1999
-                        },
-                        {
-                            name: "Gold",
-                            image: "",
-                            min: 2000,
-                            max: 2499
-                        },
-                        {
-                            name: "Platinum",
-                            image: "",
-                            min: 2500,
-                            max: 2999
-                        },
-                        {
-                            name: "Diamond",
-                            image: "",
-                            min: 3000,
-                            max: 3499
-                        },
-                        {
-                            name: "Master",
-                            image: "",
-                            min: 3500,
-                            max: 3999
-                        },
-                        {
-                            name: "Grandmaster",
-                            image: "",
-                            min: 4000,
-                            max: 4499
-                        },
-                        {
-                            name: "Top500",
-                            image: "",
-                            min: 4500,
-                            max: 5000
-                        }
-                    ];
-                    let foundOne = tierScheme.find(e => {
-                        if (val.rank >= e.min && val.rank <= e.max) return e;
-                    });
-                    return {
-                        name: foundOne.name,
-                        url: foundOne.url || "none"
-                    };
-                }
-            });
-
-            this.numOfPlays = snapshot.numChildren();
-            this.resultList = resultList;
-        });
+        this.$store.dispatch('progress/fetchResults');
     },
     computed: {
         filteredList() {
-            let filteredList = this.resultList;
-            if (!this.sortToNew) filteredList.reverse();
-            return filteredList;
-        }
+            return this.$store.getters['progress/getResults'];
+        },
+        numOfPlays() {
+            return this.$store.getters['progress/getNum'];
+        },
     },
-    watch: {},
     methods: {
         addResultClass(value) {
             let baseClass = "winStatus";
@@ -207,7 +100,8 @@ export default {
         startEdit(key) {
             this.editMode = true;
             this.editKey = key;
-            this.resultsRef.once("value", snapshot => {
+
+            fb.resultsRef.once("value", snapshot => {
                 const thisItem = snapshot.child(key).val();
 
                 this.editStatus = thisItem.winStatus;
@@ -219,8 +113,7 @@ export default {
                 rank: this.editRank,
                 winStatus: this.editStatus
             };
-            this.resultsRef.child(this.editKey).set(newData);
-
+            fb.resultsRef.child(this.editKey).set(newData);
             this.resetEdit();
         },
         resetEdit() {
@@ -229,9 +122,15 @@ export default {
             this.editMode = false;
         },
         remove(key) {
-            this.resultsRef.child(key).remove();
+            this.$store.dispatch('progress/remove', key);
+        },
+        sorted(arr) {
+            if (this.sortByNewest) {
+                return arr.map(e => e).reverse();
+            }
+            return arr;
         }
-    }
+    },
 };
 </script>
 

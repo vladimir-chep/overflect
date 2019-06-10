@@ -22,12 +22,12 @@ export default {
     },
     computed: {
         isAuthenticated() {
-            return this.$store.getters.isAuthenticated;
+            return this.$store.getters['auth/isAuthenticated'];
         },
     },
     methods: {
         userSignOut() {
-            this.$store.dispatch('userSignOut');
+            this.$store.dispatch('auth/userSignOut');
         }
     },
 }
