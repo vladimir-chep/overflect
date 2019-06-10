@@ -1,7 +1,7 @@
 <template>
     <nav id="nav">
-        <add-result v-if="showAddResult"/>
-        <!-- <router-link to="/profile">Profile</router-link> -->
+        <add-result v-if="showAddResult" />
+        <router-link to="/profile">Profile</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <router-link to="/progress">Progress</router-link>
         <router-link to="/firebase">Firebase</router-link>
@@ -13,23 +13,23 @@
 </template>
 
 <script>
-import AddResult from '@/components/AddResult.vue';
+import AddResult from "@/components/AddResult.vue";
 
 export default {
     data() {
         return {
-            showAddResult: true,
-        }
+            showAddResult: true
+        };
     },
     computed: {
         isAuthenticated() {
             return this.$store.getters.isAuthenticated;
-        },
+        }
     },
-    components:{
+    components: {
         AddResult
     }
-}
+};
 </script>
 
 <style lang="scss">
@@ -48,7 +48,7 @@ export default {
         color: #7b4bff;
         margin: auto 16px;
         display: inline-block;
-        &.router-link-exact-active{
+        &.router-link-exact-active {
             font-weight: bold;
             text-decoration: underline;
         }

@@ -193,9 +193,6 @@ export default {
         filteredList() {
             let filteredList = this.resultList;
             if (!this.sortToNew) filteredList.reverse();
-            // if (this.listLimit) {
-            //     filteredList.slice(0, this.listLimit);
-            // }
             return filteredList;
         }
     },
@@ -224,7 +221,7 @@ export default {
             };
             this.resultsRef.child(this.editKey).set(newData);
 
-            resetEdit();
+            this.resetEdit();
         },
         resetEdit() {
             this.editRank = null;
