@@ -29,7 +29,7 @@ export default {
     methods: {
         renderLineChart: function () {
             this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450);
-            this.gradient.addColorStop(0, 'rgba(123, 75, 255, 0.5)')
+            this.gradient.addColorStop(0, 'rgba(123, 75, 255, 0.5)');
             this.gradient.addColorStop(0.5, 'rgba(123, 75, 255, 0.25)');
             this.gradient.addColorStop(1, 'rgba(123, 75, 255, 0)');
             this.renderChart({
@@ -48,7 +48,6 @@ export default {
     },
     watch: {
         data() {
-            // this._chart.destroy();
             if (this.$data._chart) {
                 this.$data._chart.destroy();
             }
