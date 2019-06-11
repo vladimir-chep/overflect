@@ -65,7 +65,8 @@
 </template>
 
 <script>
-const fb = require('../firebaseConfig.js');
+const fb = require('@/firebaseConfig.js');
+
 export default {
     name: "progressList",
     data() {
@@ -78,9 +79,6 @@ export default {
             editStatus: null,
             editRank: null
         };
-    },
-    created() {
-        this.$store.dispatch('progress/fetchResults');
     },
     computed: {
         filteredList() {

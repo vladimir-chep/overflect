@@ -5,7 +5,7 @@
         <!-- <router-link to="/about">About</router-link> -->
         <router-link to="/progress">Progress</router-link>
         <router-link to="/firebase">Firebase</router-link>
-        <!-- <router-link to="/chart">Chart</router-link> -->
+        <router-link to="/chart">Chart</router-link>
         <router-link to="/settings">Settings</router-link>
         <!-- <router-link to="/signup">SignUp</router-link> | -->
         <!-- <router-link to="/signin">{{ isAuthenticated ? 'Sign Out' : 'Sign In' }}</router-link> -->
