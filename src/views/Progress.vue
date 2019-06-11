@@ -37,7 +37,7 @@
                         <tr>
                             <th scope="col">Plays ({{ numOfPlays }})</th>
                             <th scope="col">Rank</th>
-                            <th scope="col">Tier</th>
+                            <!-- <th scope="col">Tier</th> -->
                             <th scope="col">Diff</th>
                             <th scope="col">Details</th>
                         </tr>
@@ -46,7 +46,7 @@
                         <tr v-for="(item, key) in sorted(filteredList)" :key="key">
                             <th :class="addResultClass(item.winStatus)" scope="row">{{ item.order+1 }}</th>
                             <td>{{ item.rank }}</td>
-                            <td>{{ item.tier.name }}</td>
+                            <!-- <td>{{ item.tier.name }}</td> -->
                             <td>{{ item.diff }}</td>
                             <td class="dev-todo">
                                 <button @click="remove(item.key)"
@@ -65,7 +65,8 @@
 </template>
 
 <script>
-const fb = require('../firebaseConfig.js');
+const fb = require('@/firebaseConfig.js');
+
 export default {
     name: "progressList",
     data() {
@@ -78,9 +79,6 @@ export default {
             editStatus: null,
             editRank: null
         };
-    },
-    created() {
-        this.$store.dispatch('progress/fetchResults');
     },
     computed: {
         filteredList() {

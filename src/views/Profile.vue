@@ -2,8 +2,8 @@
 <div class="profile">
     <h1>This is a profile page</h1>
     <div class="header">
-        <img :src="data.icon" alt="Icon">
-        <p>{{ data.name }}</p>
+        <!-- <img :src="data.icon" alt="Icon"> -->
+        <!-- <p>{{ data.name }}</p> -->
         <ul class="">
             <li>{{ data.level }}</li>
             <li>{{ data.prestige }}</li>
@@ -16,7 +16,7 @@
             <li>Level: {{ data.level }}</li>
             <li>Rating: {{ data.rating }}</li>
             <li>Prestige: {{ data.prestige }}</li>
-            <li>Tier: <img class="ratingClass" :src="data.ratingIcon" alt=""></li>
+            <!-- <li>Tier: <img class="ratingClass" :src="data.ratingIcon" alt=""></li> -->
             <li>Winrate: ...</li>
             <li>Number of plays: ...</li>
             <li>Higheast raiting of season: ...</li>

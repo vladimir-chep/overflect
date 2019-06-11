@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-const fb = require('./firebaseConfig');
-import './styles/main.scss';
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
+const fb = require('@/firebaseConfig');
+import '@/styles/main.scss';
 
 Vue.config.productionTip = false;
 
@@ -19,6 +19,7 @@ fb.auth.onAuthStateChanged(firebaseUser => {
                 if (firebaseUser) {
                     store.dispatch('auth/autoSignIn', firebaseUser);
                 }
+                this.$store.dispatch('progress/fetchResults');
             },
         });
     }
