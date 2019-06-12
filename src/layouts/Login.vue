@@ -1,5 +1,5 @@
 <template>
-<div class="">
+<div class="container">
     <router-view />
 </div>
 </template>
@@ -13,5 +13,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import "../styles/setup/_variables";
+body{
+    background: $main;
+    color: #fff;
+}
 </style>

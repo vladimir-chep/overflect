@@ -1,3 +1,27 @@
-body{
-    background: #f1f1f1;
-}
+// $grid-breakpoints: (
+    //   xs: 0,
+    //   sm: 576px,
+    //   md: 768px,
+    //   lg: 992px,
+    //   xl: 1200px
+    // ) !default;
+
+// Colors
+
+$main: #7B4BFF;
+$dark: #242D44;
+$gray: #AFB2BC;
+$light: #F3F6FF;
+$green: #19CF36;
+$danger: #E51B1B;
+
+
+// Theme
+$theme: $main;
+$text-color: $dark;
+$bg-color: $light;
+
+
+// $font-size-base: 1rem !default;
+// $font-size-lg: $font-size-base * 1.25 !default;
+// $font-size-sm: $font-size-base * .875 !default;
