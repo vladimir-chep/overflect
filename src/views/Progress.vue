@@ -39,7 +39,7 @@
                             <th scope="col">Rank</th>
                             <th scope="col">Tier</th>
                             <th scope="col">Diff</th>
-                            <th scope="col">Details</th>
+                            <th scope="col" v-if="!isSkipped">Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +48,7 @@
                             <td>{{ item.rank }}</td>
                             <td>{{ item.tier.name }}</td>
                             <td>{{ item.diff }}</td>
-                            <td class="dev-todo">
+                            <td class="dev-todo" v-if="!isSkipped">
                                 <button @click="remove(item.key)"
                                     :disabled="editMode">X</button>
                                 <button @click="startEdit(item.key)"
@@ -89,6 +89,9 @@ export default {
         numOfPlays() {
             return this.$store.getters['progress/getNum'];
         },
+        isSkipped() {
+            return this.$store.getters['auth/isSkipped'];
+        },
     },
     methods: {
         addResultClass(value) {
@@ -125,7 +128,8 @@ export default {
             this.editMode = false;
         },
         remove(key) {
-            this.$store.dispatch('progress/remove', key);
+            // this.$store.dispatch('progress/remove', key);
+            fb.resultsRef.child(key).remove();
         },
         sorted(arr) {
             if (this.sortByNewest) {

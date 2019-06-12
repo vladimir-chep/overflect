@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import firebase from 'firebase';
+import store from '@/store';
+const fb = require('@/firebaseConfig');
 
 import Profile from '@/views/Profile.vue';
 import Progress from '@/views/Progress.vue';
@@ -20,42 +21,34 @@ const routes = [{
     {
         path: '/profile',
         name: 'profile',
-        component: Profile,
         meta: {
             requiresAuth: true
         },
-    },
-    {
-        path: '/about',
-        name: 'about',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import( /* webpackChunkName: "about" */ '@/views/About.vue')
+        component: Profile,
     },
     {
         path: '/progress',
         name: 'progress',
-        component: Progress,
         meta: {
             requiresAuth: true
         },
+        component: Progress,
     },
     {
         path: '/chart',
         name: 'chart',
-        component: Chart,
         meta: {
             requiresAuth: true
         },
+        component: Chart,
     },
     {
         path: '/settings',
         name: 'settings',
-        component: Settings,
         meta: {
             requiresAuth: true
         },
+        component: Settings,
     },
     {
         path: '/signup',
@@ -65,6 +58,9 @@ const routes = [{
     {
         path: '/signin',
         name: 'signin',
+        meta: {
+            layout: 'login',
+        },
         component: SignIn
     },
     {
@@ -88,8 +84,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    const isAuthenticated = firebase.auth().currentUser;
-    if (requiresAuth && !isAuthenticated) {
+    const isAuthenticated = fb.auth.currentUser;
+    const skipStatus = store.getters['auth/isSkipped'];
+    console.log(`skipStatus: ${skipStatus}`);
+
+    if (requiresAuth && !isAuthenticated && !skipStatus) {
         next('/signin');
     } else {
         next();

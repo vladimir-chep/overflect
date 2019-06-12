@@ -1,11 +1,8 @@
-const fb = require('../../firebaseConfig');
+const fb = require('@/firebaseConfig');
 
 const state = {
-    // database: firebase.database(),
-    ref: null,
-
-    list: [],
     numOfPlays: 0,
+    list: [],
     tierScheme: [
         {
             name: "Bronze",
@@ -61,7 +58,6 @@ const state = {
 const getters = {
     getResults: state => state.list,
     getNum: state => state.numOfPlays,
-    // getStatusValue: () => 0,
 };
 
 const actions = {
@@ -79,7 +75,7 @@ const actions = {
                     key: child.key,
                     rank: val.rank,
                     winStatus: val.winStatus,
-                    date: val.date
+                    created: val.created
                 };
                 resultList.push(obj);
                 order++;
@@ -112,12 +108,12 @@ const actions = {
             commit('updateResults', resultList);
         });
     },
-    add({commit}, payload){
-        fb.resultsRef.push(payload);
-    },
-    remove({commit}, payload){
-        fb.resultsRef.child(payload).remove();
-    },
+    // add({commit}, payload){
+    //     fb.resultsRef.push(payload);
+    // },
+    // remove({commit}, payload){
+    //     fb.resultsRef.child(payload).remove();
+    // },
 };
 
 const mutations = {

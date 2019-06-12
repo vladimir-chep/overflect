@@ -3,7 +3,14 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 const fb = require('@/firebaseConfig');
+
+import Default from './layouts/Default.vue';
+import Login from './layouts/Login.vue';
+
 import '@/styles/main.scss';
+
+Vue.component('default-layout', Default);
+Vue.component('login-layout', Login);
 
 Vue.config.productionTip = false;
 
