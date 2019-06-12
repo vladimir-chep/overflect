@@ -65,10 +65,12 @@
 </template>
 
 <script>
+import mixin from '@/mixins';
 const fb = require('@/firebaseConfig.js');
 
 export default {
     name: "progressList",
+    mixins:[mixin],
     data() {
         return {
             sortByNewest: true,
@@ -111,7 +113,10 @@ export default {
                 rank: this.editRank,
                 winStatus: this.editStatus
             };
-            fb.resultsRef.child(this.editKey).set(newData);
+
+            fb.resultsRef.child(this.editKey).child('rank').set(newData.rank);
+            fb.resultsRef.child(this.editKey).child('winStatus').set(newData.winStatus);
+            fb.resultsRef.child(this.editKey).child('edited').set(this.getCurrentData());
             this.resetEdit();
         },
         resetEdit() {

@@ -28,11 +28,11 @@ export default {
                 order: [],
                 ranks: [],
             };
+
             this.$store.getters['progress/getResults'].forEach((el, index) => {
                 result.order.push(index);
                 result.ranks.push(el.rank);
             });
-            console.log(result);
             return result;
         }
     },

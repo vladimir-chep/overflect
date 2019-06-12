@@ -43,9 +43,10 @@
 </template>
 
 <script>
-// import firebase from "firebase";
+import mixin from '@/mixins';
 
 export default {
+    mixins:[mixin],
     data() {
         return {
             show: false,
@@ -61,38 +62,20 @@ export default {
             winStatus: null
         };
     },
-    created() {
-        // this.database = firebase.database();
-        // this.resultsRef = firebase.database().ref("results");
-        // this.resultsRef.on("value", snapshot => {
-        //     // console.log(snapshot.val());
-        //     this.resultList = snapshot.val();
-        // });
-    },
     methods: {
         addResult() {
-            // e.preventDefault();
-            // if (this.newScore == '' || this.winStatus === '') return;
             if (!checkWinStatus(this.winStatus)) return;
             if (!checkNewRank(this.newRank)) return;
 
             const newData = {
                 rank: this.newRank,
-                // winStatus: converWinStatus(this.winStatus),
                 winStatus: this.winStatus,
-                date: getCurrentData()
+                created: this.getCurrentData()
             };
 
-            // this.resultsRef.push(newData);
             this.$store.dispatch('progress/add', newData);
             this.newRank = null;
             this.winStatus = null;
-
-            function getCurrentData() {
-                let d = new Date();
-                return `${d.getFullYear()}/${d.getMonth() +
-                    1}/${d.getDate()} - ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-            }
 
             function checkNewRank(value) {
                 if (isNaN(value)) {
