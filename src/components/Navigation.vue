@@ -43,7 +43,7 @@ export default {
     background: #fff;
     text-align: center;
 
-    a {
+    >a {
         text-decoration: none;
         color: #7b4bff;
         margin: auto 16px;

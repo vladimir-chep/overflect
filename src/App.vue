@@ -22,5 +22,14 @@ export default {
 </script>
 
 <style lang="scss">
+.app {
+    position: relative;
+    width: 756px;
+    max-width: 100%;
+    margin: auto;
+}
 
+h1 {
+    text-align: center;
+}
 </style>

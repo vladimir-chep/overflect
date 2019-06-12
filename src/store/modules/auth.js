@@ -21,36 +21,37 @@ const actions = {
     userSignUp ({
         commit
     }, payload) {
-        commit('setLoading', true);
+        // commit('setLoading', true);
         fb.auth.createUserWithEmailAndPassword(payload.email, payload.password)
             .then(firebaseUser => {
                 commit('setUser', {
                     email: firebaseUser.user.email,
                 })
-                commit('setLoading', false);
+                // commit('setLoading', false);
                 router.push('/profile');
             })
             .catch(error => {
                 commit('setError', error.message);
-                commit('setLoading', false);
+                // commit('setLoading', false);
             })
     },
     userSignIn ({
         commit
     }, payload) {
-        commit('setLoading', true);
+        // commit('setLoading', true);
+        commit('setWithout', false);
         fb.auth.signInWithEmailAndPassword(payload.email, payload.password)
             .then(firebaseUser => {
                 commit('setUser', {
                     email: firebaseUser.user.email,
                 })
-                commit('setLoading', false);
+                // commit('setLoading', false);
                 commit('setError', null);
                 router.push('/profile');
             })
             .catch(error => {
                 commit('setError', error.message);
-                commit('setLoading', false);
+                // commit('setLoading', false);
             });
     },
     autoSignIn ({
@@ -86,8 +87,6 @@ const mutations = {
         state.loading = payload;
     },
     setWithout (state, payload) {
-        console.log(state);
-        console.log(payload);
         state.without = payload;
     }
 };
