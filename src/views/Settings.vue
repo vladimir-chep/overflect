@@ -8,6 +8,9 @@
         <li v-if="isAuthenticated">
             <button class="" @click.prevent="userSignOut">Sign Out</button>
         </li>
+        <li v-else>
+            <router-link to="/signin">Sign In</router-link>
+        </li>
     </ul>
 
 </div>

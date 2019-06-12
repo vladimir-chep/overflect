@@ -2,39 +2,32 @@
 <div>
     <div class="layout">
         <div>
-            <h1>{{ isAuthenticated ? 'Sign Out' : 'Sign In' }}</h1>
+            <h1>Sign In</h1>
         </div>
-        <div v-if="!isAuthenticated">
-            <form @submit.prevent="userSignIn">
-                <div>
-                    <div class="error" v-if="alert">{{ error }}</div>
+        <form @submit.prevent="userSignIn">
+            <div class="error" v-if="alert">{{ error }}</div>
+            <div>
+                <label for="email">Your Email Address</label>
+                <input
+                    type="text"
+                    id="email"
+                    v-model="email">
                 </div>
                 <div>
-                    <label for="email">Your Email Address</label>
-                    <input
-                        type="text"
-                        id="email"
-                        v-model="email">
-                </div>
-                    <div>
-                        <label for="password">Enter Password</label>
-                        <input
-                        type="password"
-                        id="password"
-                        v-model="password">
-                </div>
-                        <button class="">Sign In</button>
-            </form>
-        </div>
-        <div v-else>
-            <button class="" @click.prevent="userSignOut">Sign Out</button>
-        </div>
+                <label for="password">Enter Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    v-model="password">
+            </div>
+                <button>Connect</button>
+        </form>
+        <button @click="continueWithout">Watch without login</button>
     </div>
 </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -71,6 +64,9 @@ export default {
         },
         userSignOut() {
             this.$store.dispatch('auth/userSignOut');
+        },
+        continueWithout(){
+            this.$store.dispatch('auth/continueWithout');
         }
     },
 }

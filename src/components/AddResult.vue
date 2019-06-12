@@ -44,6 +44,7 @@
 
 <script>
 import mixin from '@/mixins';
+const fb = require('@/firebaseConfig.js');
 
 export default {
     mixins:[mixin],
@@ -73,7 +74,8 @@ export default {
                 created: this.getCurrentData()
             };
 
-            this.$store.dispatch('progress/add', newData);
+            // this.$store.dispatch('progress/add', newData);
+            fb.resultsRef.push(newData);
             this.newRank = null;
             this.winStatus = null;
 

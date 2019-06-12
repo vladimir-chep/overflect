@@ -125,7 +125,8 @@ export default {
             this.editMode = false;
         },
         remove(key) {
-            this.$store.dispatch('progress/remove', key);
+            // this.$store.dispatch('progress/remove', key);
+            fb.resultsRef.child(key).remove();
         },
         sorted(arr) {
             if (this.sortByNewest) {

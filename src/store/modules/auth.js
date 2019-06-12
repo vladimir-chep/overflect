@@ -1,15 +1,19 @@
-import firebase from 'firebase';
 import router from '@/router';
+const fb = require('@/firebaseConfig');
 
 const state = {
     user: null,
     error: null,
     loading: false,
+    without: false,
 };
 
 const getters = {
     isAuthenticated (state) {
         return state.user !== null && state.user !== undefined;
+    },
+    isSkipped (state) {
+        return state.without;
     }
 };
 
@@ -18,7 +22,7 @@ const actions = {
         commit
     }, payload) {
         commit('setLoading', true);
-        firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        fb.auth.createUserWithEmailAndPassword(payload.email, payload.password)
             .then(firebaseUser => {
                 commit('setUser', {
                     email: firebaseUser.user.email,
@@ -35,7 +39,7 @@ const actions = {
         commit
     }, payload) {
         commit('setLoading', true);
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        fb.auth.signInWithEmailAndPassword(payload.email, payload.password)
             .then(firebaseUser => {
                 commit('setUser', {
                     email: firebaseUser.user.email,
@@ -59,9 +63,15 @@ const actions = {
     userSignOut ({
         commit
     }) {
-        firebase.auth().signOut();
+        fb.auth.signOut();
         commit('setUser', null);
-        router.push('/');
+        router.push('/signin');
+    },
+    continueWithout ({
+        commit
+    }){
+        commit('setWithout', true);
+        router.push('/profile');
     }
 };
 
@@ -74,6 +84,11 @@ const mutations = {
     },
     setLoading (state, payload) {
         state.loading = payload;
+    },
+    setWithout (state, payload) {
+        console.log(state);
+        console.log(payload);
+        state.without = payload;
     }
 };
 

@@ -21,6 +21,7 @@ const auth = firebase.auth();
 const resultsRef = db.ref('results');
 
 export {
+    firebase,
     db,
     auth,
     resultsRef,
