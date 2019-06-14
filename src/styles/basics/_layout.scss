@@ -1,6 +1,78 @@
-.container{
-    position: relative;
-    width: 756px;
-    max-width: 100%;
-    margin: auto;
+* {
+    margin: 0;
+    padding: 0;
 }
+
+html,
+body,
+.appContainer {
+    height: 100%;
+    overflow: auto;
+}
+
+body {
+    font-variant-numeric: proportional-nums;
+    -webkit-font-feature-settings: 'pnum';
+            font-feature-settings: 'pnum';
+
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.appContainer {
+    overflow: hidden;
+    &.layout-default {
+        color: $text-color;
+        background: $bg-color;
+    }
+    .wrapper {
+        position: relative;
+        width: $wrap-width;
+        max-width: 100%;
+        margin: auto;
+    }
+}
+
+// display
+.d-block{
+    display: block;
+}
+.d-inline{
+    display: inline;
+}
+.d-inline-block{
+    display: inline-block;
+}
+.d-flex{
+    display: flex;
+}
+.d-none{
+    display: none;
+}
+
+// aligns
+.u-tac {
+    text-align: center;
+}
+
+.u-tal {
+    text-align: left;
+}
+
+.u-tar {
+    text-align: right;
+}
+// margins
+@include spacing('m', 'margin', 'auto');
+@include spacing('mt', 'margin-top', 5);
+@include spacing('mb', 'margin-bottom', 5);
+@include spacing('ml', 'margin-left', 5);
+@include spacing('mr', 'margin-right', 5);
+
+// paddings
+@include spacing('pt', 'padding-top', 5);
+@include spacing('pb', 'padding-bottom', 5);
+@include spacing('pl', 'padding-left', 5);
+@include spacing('pr', 'padding-right', 5);

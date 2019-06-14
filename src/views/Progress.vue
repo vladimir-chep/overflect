@@ -84,7 +84,7 @@ export default {
     },
     computed: {
         filteredList() {
-            return this.$store.getters['progress/getResults'];
+            return this.$store.state['progress'].list;
         },
         numOfPlays() {
             return this.$store.getters['progress/getNum'];

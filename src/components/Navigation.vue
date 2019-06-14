@@ -4,7 +4,7 @@
         <router-link to="/profile">Profile</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <router-link to="/progress">Progress</router-link>
-        <router-link to="/firebase">Firebase</router-link>
+        <!-- <router-link to="/firebase">Firebase</router-link> -->
         <router-link to="/chart">Chart</router-link>
         <router-link to="/settings">Settings</router-link>
         <!-- <router-link to="/signup">SignUp</router-link> | -->

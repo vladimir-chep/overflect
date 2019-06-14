@@ -1,6 +1,6 @@
 <template>
-<div id="app">
-    <component :is="layout"></component>
+<div id="app" class="appContainer" :class="layout">
+    <component :is="layout" class="wrapper"></component>
 </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     },
     computed: {
         layout() {
-            return `${this.$route.meta.layout || defaultLayout}-layout`;
+            return `layout-${this.$route.meta.layout || defaultLayout}`;
         }
     },
 }

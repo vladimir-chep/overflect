@@ -64,10 +64,10 @@ const routes = [{
         component: SignIn
     },
     {
-      path: '/firebase',
-      name: 'firebase',
-      component: Firebase
-  },
+        path: '/firebase',
+        name: 'firebase',
+        component: Firebase
+    },
     {
         path: '*',
         component: NotFound
@@ -86,7 +86,6 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const isAuthenticated = fb.auth.currentUser;
     const skipStatus = store.getters['auth/isSkipped'];
-    console.log(`skipStatus: ${skipStatus}`);
 
     if (requiresAuth && !isAuthenticated && !skipStatus) {
         next('/signin');
