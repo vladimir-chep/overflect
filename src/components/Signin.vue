@@ -64,7 +64,8 @@
 export default {
     data() {
         return {
-            password: '',
+            // password: '',
+            password: '321506',
             alert: false,
             slided: false,
         }
@@ -212,7 +213,7 @@ export default {
         margin: auto;
         padding: $padding-card;
         border-radius: $radius;
-        box-shadow: $card-shadow;
+        box-shadow: $shadow-card;
         background: #fff;
 
         &__error {

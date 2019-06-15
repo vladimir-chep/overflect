@@ -1,12 +1,12 @@
 <template>
-<div class="">
-    <router-view />
+<div class="outherWrap">
+    <router-view/>
     <navigation />
 </div>
 </template>
 
 <script>
-import Navigation from '@/components/Navigation.vue';
+import Navigation from '@/components/layout/Navigation.vue';
 
 export default {
     components: {

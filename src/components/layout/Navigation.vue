@@ -34,9 +34,10 @@ export default {
 
 <style lang="scss">
 #nav {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: relative;
+    // position: fixed;
+    // left: 0;
+    // bottom: 0;
     width: 100%;
     padding: 20px;
     border-top: 3px solid #7b4bff;

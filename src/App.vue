@@ -1,6 +1,6 @@
 <template>
 <div id="app" class="appContainer" :class="layout">
-    <component :is="layout" class="wrapper"></component>
+    <component :is="layout"></component>
 </div>
 </template>
 

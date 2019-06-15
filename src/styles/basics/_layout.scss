@@ -13,8 +13,7 @@ body,
 body {
     font-variant-numeric: proportional-nums;
     -webkit-font-feature-settings: 'pnum';
-            font-feature-settings: 'pnum';
-
+    font-feature-settings: 'pnum';
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -33,22 +32,60 @@ body {
         max-width: 100%;
         margin: auto;
     }
+    .outherWrap {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+.innerWrapper {
+    @include wrapper;
+}
+
+// Header
+.pageHeader {
+    box-shadow: $shadow-pageHeader;
+    background: #fff;
+    margin-bottom: 20px;
+    &__wrapper {
+        @include wrapper;
+        display: flex;
+        height: 59px;
+        justify-content: space-between;
+        align-items: center;
+        &__ttl {
+            margin: 0;
+            padding: $l-py 0;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+        &__aside {
+            width: 100%;
+            max-width: calc(100% / 12 * 2);
+        }
+    }
 }
 
 // display
-.d-block{
+.d-block {
     display: block;
 }
-.d-inline{
+
+.d-inline {
     display: inline;
 }
-.d-inline-block{
+
+.d-inline-block {
     display: inline-block;
 }
-.d-flex{
+
+.d-flex {
     display: flex;
 }
-.d-none{
+
+.d-none {
     display: none;
 }
 
@@ -64,13 +101,13 @@ body {
 .u-tar {
     text-align: right;
 }
+
 // margins
 @include spacing('m', 'margin', 'auto');
 @include spacing('mt', 'margin-top', 5);
 @include spacing('mb', 'margin-bottom', 5);
 @include spacing('ml', 'margin-left', 5);
 @include spacing('mr', 'margin-right', 5);
-
 // paddings
 @include spacing('pt', 'padding-top', 5);
 @include spacing('pb', 'padding-bottom', 5);

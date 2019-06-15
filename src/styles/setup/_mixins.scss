@@ -1,5 +1,5 @@
 @mixin spacing($className, $prop, $val: 5) {
-    @if type-of($val) == string {
+    @if type-of($val)==string {
         .#{$className}-#{$val} {
             #{$prop}: #{$val};
         }
@@ -11,4 +11,11 @@
             }
         }
     }
+}
+
+@mixin wrapper {
+    position: relative;
+    width: $wrap-width;
+    max-width: 100%;
+    margin: auto;
 }

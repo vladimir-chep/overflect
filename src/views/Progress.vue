@@ -1,76 +1,83 @@
 <template>
 <div class="progress">
-    <h1>This is a progress page</h1>
-    <div class="contaider-full" v-if="filteredList.length">
-        <div v-if="editMode" class="">
-            <h4>Edit Item</h4>
-            <div>
-                <input type="radio"
+    <Header>Progress</Header>
+    <div class="innerWrapper">
+        <h1>This is a progress page</h1>
+        <div class="contaider-full" v-if="filteredList.length">
+            <div v-if="editMode" class="">
+                <h4>Edit Item</h4>
+                <div>
+                    <input type="radio"
                            id="win"
                            :value="1"
                            v-model="editStatus">
-                <label for="win">Win</label>
-                <input type="radio"
+                    <label for="win">Win</label>
+                    <input type="radio"
                            id="draw"
                            :value="2"
                            v-model="editStatus">
-                <label for="draw">Draw</label>
-                <input type="radio"
+                    <label for="draw">Draw</label>
+                    <input type="radio"
                            id="lose"
                            :value="0"
                            v-model="editStatus">
-                <label for="lose">Lose</label>
-                <br>
+                    <label for="lose">Lose</label>
+                    <br>
                 </div>
-                <input type="number"
+                    <input type="number"
                        placeholder="Insert new score"
                        v-model.number="editRank">
-                <button type="submit"
+                    <button type="submit"
                         @click="submitEdit">Submit</button>
-                <button type="submit"
+                    <button type="submit"
                         @click="resetEdit">Cancel</button>
-                <br>
-                <br>
+                    <br>
+                    <br>
             </div>
-                <table class="progressTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">Plays ({{ numOfPlays }})</th>
-                            <th scope="col">Rank</th>
-                            <th scope="col">Tier</th>
-                            <th scope="col">Diff</th>
-                            <th scope="col" v-if="!isSkipped">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, key) in sorted(filteredList)" :key="key">
-                            <th :class="addResultClass(item.winStatus)" scope="row">{{ item.order+1 }}</th>
-                            <td>{{ item.rank }}</td>
-                            <td>{{ item.tier.name }}</td>
-                            <td>{{ item.diff }}</td>
-                            <td class="dev-todo" v-if="!isSkipped">
-                                <button @click="remove(item.key)"
-                                    :disabled="editMode">X</button>
-                                <button @click="startEdit(item.key)"
-                                    :disabled="editMode">Edit</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div v-else>
-                <h2 style="text-align:center">Nothing to display</h2>
-            </div>
+            <table class="progressTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Plays ({{ numOfPlays }})</th>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Tier</th>
+                        <th scope="col">Diff</th>
+                        <th scope="col" v-if="!isSkipped">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, key) in sorted(filteredList)" :key="key">
+                        <th :class="addResultClass(item.winStatus)" scope="row">{{ item.order+1 }}</th>
+                        <td>{{ item.rank }}</td>
+                        <td>{{ item.tier.name }}</td>
+                        <td>{{ item.diff }}</td>
+                        <td class="dev-todo" v-if="!isSkipped">
+                            <button @click="remove(item.key)"
+                            :disabled="editMode">X</button>
+                            <button @click="startEdit(item.key)"
+                            :disabled="editMode">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <div v-else>
+            <h2 style="text-align:center">Nothing to display</h2>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 import mixin from '@/mixins';
 const fb = require('@/firebaseConfig.js');
+import Header from '@/components/layout/Header.vue';
 
 export default {
-    name: "progressList",
-    mixins:[mixin],
+    name: "ProgressList",
+    mixins: [mixin],
+    components: {
+        Header,
+    },
     data() {
         return {
             sortByNewest: true,

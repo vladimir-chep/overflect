@@ -1,23 +1,30 @@
 <template>
 <div class="settings">
-    <h1>This is a settings page</h1>
-    <ul>
-        <li>
-            <p>Dummy</p>
-        </li>
-        <li v-if="isAuthenticated">
-            <button class="" @click.prevent="userSignOut">Sign Out</button>
-        </li>
-        <li v-else>
-            <router-link to="/signin">Sign In</router-link>
-        </li>
-    </ul>
-
+    <Header>Settings</Header>
+    <div class="innerWrapper">
+        <ul>
+            <li>
+                <p>Dummy</p>
+            </li>
+            <li v-if="isAuthenticated">
+                <button class="" @click.prevent="userSignOut">Sign Out</button>
+            </li>
+            <li v-else>
+                <router-link to="/signin">Sign In</router-link>
+            </li>
+        </ul>
+    </div>
 </div>
 </template>
 
 <script>
+import Header from '@/components/layout/Header.vue';
+
 export default {
+    name: 'Settings',
+    components: {
+        Header,
+    },
     data() {
         return {
 
