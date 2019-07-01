@@ -1,18 +1,30 @@
 <template>
-<div class="settings">
+<div class="pageContent">
     <Header>Settings</Header>
-    <div class="innerWrapper">
-        <ul>
-            <li>
-                <p>Dummy</p>
-            </li>
-            <li v-if="isAuthenticated">
-                <button class="" @click.prevent="userSignOut">Sign Out</button>
-            </li>
-            <li v-else>
-                <router-link to="/signin">Sign In</router-link>
-            </li>
-        </ul>
+    <div class="pageCore">
+        <div class="pageCore__wrap">
+            <ul class="settingsMenu">
+                <li class="settingsMenu__item">
+                    <div class="settingsMenu__item__ttl">Status</div>
+                    <div class="settingsMenu__item__content">
+                        <span v-if="isAuthenticated">
+                            Logged (<a href="#" @click.prevent="userSignOut">Sign Out</a>)
+                        </span>
+                        <span v-else>
+                            Not logged (<router-link to="/signin">Sign In</router-link>)
+                        </span>
+                    </div>
+                </li>
+                <li class="settingsMenu__item">
+                    <div class="settingsMenu__item__ttl">Version</div>
+                    <div class="settingsMenu__item__content">0.1</div>
+                </li>
+                <li class="settingsMenu__item">
+                    <div class="settingsMenu__item__ttl">Author</div>
+                    <div class="settingsMenu__item__content"><a href="https://github.com/vladimir-chep" target="_blank">vladimir-chep</a></div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </template>
@@ -44,5 +56,5 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import '../styles/pages/settings.scss';
 </style>

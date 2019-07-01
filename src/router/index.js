@@ -12,8 +12,6 @@ import SignUp from '@/components/Signup.vue';
 import SignIn from '@/components/Signin.vue';
 import NotFound from '@/components/NotFound.vue';
 
-import Firebase from '@/views/Firebase.vue';
-
 const routes = [{
         path: '/',
         redirect: '/profile',
@@ -62,11 +60,6 @@ const routes = [{
             layout: 'login',
         },
         component: SignIn
-    },
-    {
-        path: '/firebase',
-        name: 'firebase',
-        component: Firebase
     },
     {
         path: '*',

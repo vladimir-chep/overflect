@@ -32,7 +32,10 @@
                     <transition name="error" mode="out-in">
                         <p class="mainContent__card__error" v-if="alert">{{ error }}</p>
                     </transition>
-                    <button type="submit" class="mainContent__card__btn" @click.prevent="userSignIn" :disabled="loading">{{loading ? '・・・' : 'Check it'}}</button>
+                    <button type="submit" class="mainContent__card__btn" @click.prevent="userSignIn" :disabled="loading">
+                        <Loading v-if="loading"/>
+                        <span v-if="!loading">Check it</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -42,9 +45,13 @@
                 <div class="mainContent__visual">
 
                 </div>
-                <div class="mainContent__msg">
+                <!-- <div class="mainContent__msg">
                     <p class="mainContent__msg__head">OverFlect</p>
                     <p class="mainContent__msg__txt">OverFlect is a tool for monitoring your individual performance in <a href="https://playoverwatch.com/" target="_blank" rel="noopener nofollow">Overwatch</a>’s competetive mode</p>
+                </div> -->
+                <div class="mainContent__msg">
+                    <p class="mainContent__msg__head">My Vue App</p>
+                    <p class="mainContent__msg__txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cupiditate modi quam corrupti, et sapiente fuga. Distinctio, assumenda voluptatum doloribus soluta eligendi aliquid debitis aliquam quo, deserunt ut aperiam nihil.</p>
                 </div>
                 <div class="mb-5">
                     <div class="u-tac mb-1">
@@ -61,7 +68,12 @@
 </template>
 
 <script>
+import Loading from '@/components/ui/Spinner-loading.vue';
+
 export default {
+    components: {
+        Loading,
+    },
     data() {
         return {
             // password: '',
@@ -270,6 +282,10 @@ export default {
             background: $theme;
             font-weight: bold;
             font-size: 1.8rem;
+            &:disabled{
+                background: lighten($theme, 30%);
+                border-color: transparent;
+            }
         }
     }
 }

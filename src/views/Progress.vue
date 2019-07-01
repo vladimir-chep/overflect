@@ -1,7 +1,7 @@
 <template>
-<div class="progress">
+<div class="progress pageWrapper">
     <Header>Progress</Header>
-    <div class="innerWrapper">
+    <div class="pageContent">
         <h1>This is a progress page</h1>
         <div class="contaider-full" v-if="filteredList.length">
             <div v-if="editMode" class="">

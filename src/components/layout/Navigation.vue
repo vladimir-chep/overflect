@@ -2,13 +2,9 @@
     <nav id="nav">
         <add-result v-if="showAddResult" />
         <router-link to="/profile">Profile</router-link>
-        <!-- <router-link to="/about">About</router-link> -->
         <router-link to="/progress">Progress</router-link>
-        <!-- <router-link to="/firebase">Firebase</router-link> -->
         <router-link to="/chart">Chart</router-link>
         <router-link to="/settings">Settings</router-link>
-        <!-- <router-link to="/signup">SignUp</router-link> | -->
-        <!-- <router-link to="/signin">{{ isAuthenticated ? 'Sign Out' : 'Sign In' }}</router-link> -->
     </nav>
 </template>
 
@@ -35,9 +31,6 @@ export default {
 <style lang="scss">
 #nav {
     position: relative;
-    // position: fixed;
-    // left: 0;
-    // bottom: 0;
     width: 100%;
     padding: 20px;
     border-top: 3px solid #7b4bff;

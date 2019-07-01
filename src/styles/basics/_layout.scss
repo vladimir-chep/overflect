@@ -37,11 +37,21 @@ body {
         height: 100%;
         flex-direction: column;
         justify-content: space-between;
+        .pageContent{
+            height: 100%;
+        }
     }
 }
 
-.innerWrapper {
-    @include wrapper;
+.pageCore {
+    padding-top: $l-py;
+    padding-bottom: $l-py;
+    background: #fff;
+    box-shadow: $shadow1;
+    &__wrap{
+        @include wrapper;
+
+    }
 }
 
 // Header

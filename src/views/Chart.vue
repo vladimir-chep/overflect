@@ -1,7 +1,7 @@
 <template>
-<div class="chartPage">
+<div class="chartPage pageWrapper">
     <Header>Chart</Header>
-    <div class="innerWrapper">
+    <div class="pageContent">
         <div class="Chart__list">
             <div class="Chart">
                 <h1>This is a chart page</h1>
