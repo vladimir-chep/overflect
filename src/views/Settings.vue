@@ -16,12 +16,12 @@
                     </div>
                 </li>
                 <li class="settingsMenu__item">
-                    <div class="settingsMenu__item__ttl">Version</div>
-                    <div class="settingsMenu__item__content">0.1</div>
-                </li>
-                <li class="settingsMenu__item">
                     <div class="settingsMenu__item__ttl">Author</div>
                     <div class="settingsMenu__item__content"><a href="https://github.com/vladimir-chep" target="_blank">vladimir-chep</a></div>
+                </li>
+                <li class="settingsMenu__item">
+                    <div class="settingsMenu__item__ttl">Version</div>
+                    <div class="settingsMenu__item__content">0.1</div>
                 </li>
             </ul>
         </div>

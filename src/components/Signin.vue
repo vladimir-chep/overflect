@@ -1,6 +1,33 @@
 <template>
 <div class="">
     <transition-group :name="slide" mode="out-in">
+        <div v-if="!slided" class="signin" :key="0">
+            <div class="topNav"></div>
+            <div class="mainContent">
+                <div class="mainContent__visual">
+
+                </div>
+                <!--
+                <div class="mainContent__msg">
+                    <p class="mainContent__msg__head">OverFlect</p>
+                    <p class="mainContent__msg__txt">OverFlect is a tool for monitoring your individual performance in <a href="https://playoverwatch.com/" target="_blank" rel="noopener nofollow">Overwatch</a>’s competetive mode</p>
+                </div>
+                -->
+                <div class="mainContent__msg">
+                    <p class="mainContent__msg__head">My Vue App</p>
+                    <p class="mainContent__msg__txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cupiditate modi quam corrupti, et sapiente fuga. Distinctio, assumenda voluptatum doloribus soluta eligendi aliquid debitis aliquam quo, deserunt ut aperiam nihil.</p>
+                </div>
+                <div class="mb-3">
+                    <div class="u-tac mb-1">
+                        <button type="button" class="btn btn-connect" @click.prevent="nextSlide">
+                            Connect</button>
+                    </div>
+                    <div class="u-tac">
+                        <a @click="skip" class="link link-continue">Watch without login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div v-if="slided" class="signin" :key="1">
             <div class="topNav">
                 <div class="topNav__cell topNav__cell--aside">
@@ -37,30 +64,6 @@
                         <span v-if="!loading">Check it</span>
                     </button>
                 </form>
-            </div>
-        </div>
-        <div v-if="!slided" class="signin" :key="0">
-            <div class="topNav"></div>
-            <div class="mainContent">
-                <div class="mainContent__visual">
-
-                </div>
-                <!-- <div class="mainContent__msg">
-                    <p class="mainContent__msg__head">OverFlect</p>
-                    <p class="mainContent__msg__txt">OverFlect is a tool for monitoring your individual performance in <a href="https://playoverwatch.com/" target="_blank" rel="noopener nofollow">Overwatch</a>’s competetive mode</p>
-                </div> -->
-                <div class="mainContent__msg">
-                    <p class="mainContent__msg__head">My Vue App</p>
-                    <p class="mainContent__msg__txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cupiditate modi quam corrupti, et sapiente fuga. Distinctio, assumenda voluptatum doloribus soluta eligendi aliquid debitis aliquam quo, deserunt ut aperiam nihil.</p>
-                </div>
-                <div class="mb-5">
-                    <div class="u-tac mb-1">
-                        <button type="button" class="btn btn-connect" @click.prevent="nextSlide" >Connect</button>
-                    </div>
-                    <div class="u-tac">
-                        <a @click="skip" class="link link-continue">Watch without login</a>
-                    </div>
-                </div>
             </div>
         </div>
     </transition-group>
@@ -187,13 +190,14 @@ export default {
 
 .mainContent {
     display: flex;
+    justify-content: space-between;
+    flex: 1 1 auto;
     width: 100%;
     max-width: $wrap-width - ($l-px * 2);
     flex-direction: column;
 
     &__visual {
-        margin: auto;
-        margin-bottom: 3rem;
+        margin: 0 auto 3rem;
     }
 
     &__msg {
@@ -222,7 +226,8 @@ export default {
     &__card {
         width: 100%;
         max-width: 476px;
-        margin: auto;
+        /* margin: auto; */
+        margin-bottom: auto;
         padding: $padding-card;
         border-radius: $radius;
         box-shadow: $shadow-card;
@@ -288,6 +293,11 @@ export default {
             }
         }
     }
+}
+.link-continue{
+    color: #fff;
+    padding: 1rem;
+    display: inline-block;
 }
 
 .slide-right-enter-active,

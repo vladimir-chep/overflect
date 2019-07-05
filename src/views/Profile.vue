@@ -1,7 +1,7 @@
 <template>
 <div class="profile">
     <div class="header">
-        <img :src="data.icon" alt="Icon">
+        <!-- <img :src="data.icon" alt="Icon"> -->
         <p>{{ data.name }}</p>
         <ul class="">
             <li>{{ data.level }}</li>

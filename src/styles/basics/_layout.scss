@@ -13,7 +13,8 @@ body,
 body {
     font-variant-numeric: proportional-nums;
     -webkit-font-feature-settings: 'pnum';
-    font-feature-settings: 'pnum';
+            font-feature-settings: 'pnum';
+
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -22,22 +23,26 @@ body {
 
 .appContainer {
     overflow: hidden;
+
     &.layout-default {
         color: $text-color;
         background: $bg-color;
     }
+
     .wrapper {
         position: relative;
         width: $wrap-width;
         max-width: 100%;
         margin: auto;
     }
+
     .outherWrap {
         display: flex;
         height: 100%;
         flex-direction: column;
         justify-content: space-between;
-        .pageContent{
+
+        .pageContent {
             height: 100%;
         }
     }
@@ -46,31 +51,35 @@ body {
 .pageCore {
     padding-top: $l-py;
     padding-bottom: $l-py;
+    box-shadow: $shadow3;
     background: #fff;
-    box-shadow: $shadow1;
-    &__wrap{
-        @include wrapper;
 
+    &__wrap {
+        @include wrapper;
     }
 }
 
 // Header
 .pageHeader {
+    position: relative;
+    margin-bottom: 20px;
     box-shadow: $shadow-pageHeader;
     background: #fff;
-    margin-bottom: 20px;
+
     &__wrapper {
         @include wrapper;
         display: flex;
         height: 59px;
         justify-content: space-between;
         align-items: center;
+
         &__ttl {
             margin: 0;
             padding: $l-py 0;
             font-weight: bold;
             font-size: 1.6rem;
         }
+
         &__aside {
             width: 100%;
             max-width: calc(100% / 12 * 2);
