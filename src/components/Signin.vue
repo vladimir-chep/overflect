@@ -79,8 +79,8 @@ export default {
     },
     data() {
         return {
-            // password: '',
-            password: '321506',
+            password: '',
+            // password: '321506',
             alert: false,
             slided: false,
         }
@@ -101,17 +101,23 @@ export default {
     },
     watch: {
         error(value) {
+            console.log(value);
             if (value) this.alert = true;
         },
         alert(value) {
+            console.log(value);
             if (!value) this.$store.commit('auth/setError', null);
         }
     },
     methods: {
         userSignIn() {
-            this.$store.dispatch('auth/userSignIn', {
-                password: this.password
-            })
+            if(this.password === '') {
+                this.$store.commit('auth/setError', 'Insert password plz');
+            } else {
+                this.$store.dispatch('auth/userSignIn', {
+                    password: this.password
+                })
+            }
         },
         userSignOut() {
             this.$store.dispatch('auth/userSignOut');
@@ -226,8 +232,7 @@ export default {
     &__card {
         width: 100%;
         max-width: 476px;
-        /* margin: auto; */
-        margin-bottom: auto;
+        margin: 0 auto auto;
         padding: $padding-card;
         border-radius: $radius;
         box-shadow: $shadow-card;
