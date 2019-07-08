@@ -44,6 +44,7 @@ body {
 
         .pageContent {
             height: 100%;
+            overflow-y: auto;
         }
     }
 }
@@ -53,6 +54,7 @@ body {
     padding-bottom: $l-py;
     box-shadow: $shadow3;
     background: #fff;
+    margin: 20px auto;
 
     &__wrap {
         @include wrapper;
