@@ -1,7 +1,7 @@
 <template>
 <div class="pageContent">
     <Header>Settings</Header>
-    <div class="pageCore">
+    <div class="pageCore pageCore--hasBG">
         <div class="pageCore__wrap">
             <ul class="settingsMenu">
                 <li class="settingsMenu__item">

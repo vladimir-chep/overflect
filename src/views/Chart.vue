@@ -1,12 +1,9 @@
 <template>
-<div class="chartPage pageWrapper">
+<div class="pageContent">
     <Header>Chart</Header>
-    <div class="pageContent">
-        <div class="Chart__list">
-            <div class="Chart">
-                <h1>This is a chart page</h1>
-                <line-chart :data="dataChart" />
-            </div>
+    <div class="pageCore">
+        <div class="pageCore__wrap">
+            <line-chart :data="dataChart" />
         </div>
     </div>
 </div>

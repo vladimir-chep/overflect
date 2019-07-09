@@ -7,21 +7,24 @@
                        id="win"
                        :value="1"
                        v-model="winStatus">
-                <label for="win">Win</label>
+                <label class="resultInput-win"
+                       for="win">Win</label>
             </div>
             <div class="addPanel__resultInput__item">
                 <input type="radio"
                        id="draw"
                        :value="2"
                        v-model="winStatus">
-                <label for="draw">Draw</label>
+                <label class="resultInput-draw"
+                       for="draw">Draw</label>
             </div>
             <div class="addPanel__resultInput__item">
                 <input type="radio"
                        id="lose"
                        :value="0"
                        v-model="winStatus">
-                <label for="lose">Lose</label>
+                <label class="resultInput-lose"
+                       for="lose">Lose</label>
             </div>
         </div>
         <input type="number"
@@ -53,7 +56,7 @@ export default {
 
             resultRef: null,
 
-            newRank: '',
+            newRank: "",
             winStatus: 1
         };
     },
@@ -68,13 +71,13 @@ export default {
         isSkipped() {
             return this.$store.getters["auth/isSkipped"];
         },
-        notActive(){
-            return this.newRank !== '' ? false : true;
+        notActive() {
+            return this.newRank !== "" ? false : true;
         }
     },
     methods: {
         reset() {
-            this.newRank = '';
+            this.newRank = "";
             this.winStatus = 1;
         },
         addResult() {
@@ -144,25 +147,45 @@ export default {
         margin-bottom: 20px;
         display: flex;
         align-content: center;
+        margin: 0 -10px 10px;
         &__item {
             flex: 1 1 0;
+            margin: 10px;
             input {
                 position: absolute;
                 opacity: 0;
                 pointer-events: none;
                 + label {
-                    background: gray;
                 }
             }
             input:checked {
                 + label {
-                    background: red;
+                    &.resultInput {
+                        &-win {
+                            background-color: $success-color;
+                        }
+                        &-draw {
+                            background-color: $neutral-color;
+                        }
+                        &-lose {
+                            background-color: $error-color;
+                        }
+                    }
                 }
             }
             label {
+                background-color: $unactive-color;
                 display: block;
-                padding: 10px;
-                background: red;
+                width: 100%;
+                padding: 14px;
+                border-radius: 8px;
+                color: #fff;
+                font-weight: bold;
+                font-size: 1.8rem;
+                outline-style: none;
+                appearance: none;
+                text-transform: uppercase;
+                border-width: 0;
             }
         }
     }
@@ -176,9 +199,9 @@ export default {
         border-width: 0;
         border-radius: 8px;
         box-shadow: inset 0 0 0 1px #f1f1f1;
-        color: #c4c4c4;
+        /* color: #c4c4c4; */
         background-color: #f1f1f1;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         text-align: center;
         transition-property: all;
         transition-duration: 80ms;
@@ -191,7 +214,7 @@ export default {
         background: $success-color;
         display: block;
         width: 100%;
-        padding: 14px;
+        padding: 15px;
         border-radius: 8px;
         color: #fff;
         font-weight: bold;
@@ -201,8 +224,11 @@ export default {
         text-transform: uppercase;
         border-width: 0;
         margin-bottom: 20px;
-        &:disabled{
-            background: $gray;
+        &:disabled {
+            /* background: $light2; */
+            background-color: $unactive-color;
+
+            /* filter: grayscale(1); */
         }
     }
 }

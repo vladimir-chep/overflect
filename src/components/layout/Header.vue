@@ -3,9 +3,11 @@
         <div class="pageHeader__wrapper">
             <div class="pageHeader__wrapper__aside"></div>
             <h1 class="pageHeader__wrapper__ttl">
-                <slot>Header</slot>
+                <slot name="default">Header</slot>
             </h1>
-            <div class="pageHeader__wrapper__aside"></div>
+            <div class="pageHeader__wrapper__aside">
+                <slot name="details"></slot>
+            </div>
         </div>
     </header>
 </template>

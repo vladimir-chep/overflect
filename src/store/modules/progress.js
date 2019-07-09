@@ -85,12 +85,14 @@ const actions = {
                 val.diff = calcDiff();
                 val.tier = calcTier();
                 function calcDiff() {
-                    let result = "-";
+                    let result = 0;
                     if (index !== 0) {
                         let cur = val.rank;
                         let prev = arr[index - 1].rank;
                         result = cur - prev;
                     }
+                    console.log(result);
+
                     return result;
                 }
                 function calcTier() {
