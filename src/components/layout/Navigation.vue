@@ -145,7 +145,7 @@ import AddResult from "@/components/AddResult.vue";
 export default {
     data() {
         return {
-            isShowed: false
+            isShowed: false,
         };
     },
     computed: {
@@ -162,9 +162,10 @@ export default {
     methods: {
         show() {
             if (this.isSkipped) return;
+            this.$store.dispatch("common/switchPageScroll");
             this.isShowed = !this.isShowed;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -256,13 +257,13 @@ export default {
     height: 56px;
     box-shadow: $shadow1;
     z-index: 3;
-    transition: background-color .15s ease-in;
+    transition: background-color 0.15s ease-in;
     &__button {
         width: 100%;
         height: 100%;
         position: relative;
         display: block;
-        transition: transform .15s ease-in;
+        transition: transform 0.15s ease-in;
         svg {
             width: 24px;
             height: 24px;

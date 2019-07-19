@@ -101,11 +101,9 @@ export default {
     },
     watch: {
         error(value) {
-            console.log(value);
             if (value) this.alert = true;
         },
         alert(value) {
-            console.log(value);
             if (!value) this.$store.commit('auth/setError', null);
         }
     },

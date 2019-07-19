@@ -19,3 +19,7 @@
     max-width: 100%;
     margin: auto;
 }
+@mixin height-overflow{
+    height: 100%;
+    overflow: auto;
+}
