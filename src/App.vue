@@ -1,5 +1,5 @@
 <template>
-<div id="app" class="app">
+<div id="app" class="appContainer" :class="layout">
     <component :is="layout"></component>
 </div>
 </template>
@@ -15,21 +15,11 @@ export default {
     },
     computed: {
         layout() {
-            return `${this.$route.meta.layout || defaultLayout}-layout`;
+            return `layout-${this.$route.meta.layout || defaultLayout}`;
         }
     },
 }
 </script>
 
 <style lang="scss">
-.app {
-    position: relative;
-    width: 756px;
-    max-width: 100%;
-    margin: auto;
-}
-
-h1 {
-    text-align: center;
-}
 </style>

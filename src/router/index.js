@@ -12,8 +12,6 @@ import SignUp from '@/components/Signup.vue';
 import SignIn from '@/components/Signin.vue';
 import NotFound from '@/components/NotFound.vue';
 
-import Firebase from '@/views/Firebase.vue';
-
 const routes = [{
         path: '/',
         redirect: '/profile',
@@ -64,11 +62,6 @@ const routes = [{
         component: SignIn
     },
     {
-      path: '/firebase',
-      name: 'firebase',
-      component: Firebase
-  },
-    {
         path: '*',
         component: NotFound
     },
@@ -86,7 +79,6 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const isAuthenticated = fb.auth.currentUser;
     const skipStatus = store.getters['auth/isSkipped'];
-    console.log(`skipStatus: ${skipStatus}`);
 
     if (requiresAuth && !isAuthenticated && !skipStatus) {
         next('/signin');

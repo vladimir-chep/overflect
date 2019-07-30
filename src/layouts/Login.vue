@@ -1,7 +1,5 @@
 <template>
-<div class="">
-    <router-view />
-</div>
+    <router-view class="wrapper"/>
 </template>
 
 <script>
@@ -11,7 +9,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss">
-
-</style>

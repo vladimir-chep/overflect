@@ -6,49 +6,49 @@ const state = {
     tierScheme: [
         {
             name: "Bronze",
-            image: "",
+            image: require('@/assets/images/ranks/Bronze.png'),
             min: 0,
             max: 1499
         },
         {
             name: "Silver",
-            image: "",
+            image: require('@/assets/images/ranks/Silver.png'),
             min: 1500,
             max: 1999
         },
         {
             name: "Gold",
-            image: "",
+            image: require('@/assets/images/ranks/Gold.png'),
             min: 2000,
             max: 2499
         },
         {
             name: "Platinum",
-            image: "",
+            image: require('@/assets/images/ranks/Platinum.png'),
             min: 2500,
             max: 2999
         },
         {
             name: "Diamond",
-            image: "",
+            image: require('@/assets/images/ranks/Diamond.png'),
             min: 3000,
             max: 3499
         },
         {
             name: "Master",
-            image: "",
+            image: require('@/assets/images/ranks/Master.png'),
             min: 3500,
             max: 3999
         },
         {
             name: "Grandmaster",
-            image: "",
+            image: require('@/assets/images/ranks/Grandmaster.png'),
             min: 4000,
             max: 4499
         },
         {
             name: "Top500",
-            image: "",
+            image: require('@/assets/images/ranks/Top500.png'),
             min: 4500,
             max: 5000
         }
@@ -85,12 +85,14 @@ const actions = {
                 val.diff = calcDiff();
                 val.tier = calcTier();
                 function calcDiff() {
-                    let result = "-";
+                    let result = 0;
                     if (index !== 0) {
                         let cur = val.rank;
                         let prev = arr[index - 1].rank;
                         result = cur - prev;
                     }
+                    // console.log(result);
+
                     return result;
                 }
                 function calcTier() {
@@ -99,7 +101,7 @@ const actions = {
                     });
                     return {
                         name: foundOne.name,
-                        url: foundOne.url || "none"
+                        url: foundOne.image || "none"
                     };
                 }
             });

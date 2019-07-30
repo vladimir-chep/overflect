@@ -1,11 +1,9 @@
 <template>
-<div class="chartPage">
-    <div class="container">
-        <div class="Chart__list">
-            <div class="Chart">
-                <h1>This is a chart page</h1>
-                <line-chart :data="dataChart" />
-            </div>
+<div class="pageContent">
+    <Header>Chart</Header>
+    <div class="pageCore">
+        <div class="pageCore__wrap">
+            <line-chart :data="dataChart" />
         </div>
     </div>
 </div>
@@ -13,10 +11,12 @@
 
 <script>
 import LineChart from '@/components/LineChart.vue';
+import Header from '@/components/layout/Header.vue';
 
 export default {
     name: 'Chart',
     components: {
+        Header,
         LineChart,
     },
     data() {

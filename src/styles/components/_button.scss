@@ -1,0 +1,22 @@
+.btn {
+    cursor: pointer;
+
+    &-connect {
+        padding: $sps;
+        width: 100%;
+        border: none;
+        border-radius: $radius;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $theme;
+        font-size: 1.8rem;
+        margin: auto;
+        background-color: #fff;
+        max-width: 60%;
+        display: block;
+        transition: .25s background-color ease-in-out;
+        &:hover {
+            background-color: #eee7ff;
+        }
+    }
+}

@@ -4,13 +4,13 @@ import router from '@/router';
 import store from '@/store';
 const fb = require('@/firebaseConfig');
 
-import Default from './layouts/Default.vue';
-import Login from './layouts/Login.vue';
+import Default from '@/layouts/Default.vue';
+import Login from '@/layouts/Login.vue';
 
 import '@/styles/main.scss';
 
-Vue.component('default-layout', Default);
-Vue.component('login-layout', Login);
+Vue.component('layout-default', Default);
+Vue.component('layout-login', Login);
 
 Vue.config.productionTip = false;
 
@@ -26,7 +26,7 @@ fb.auth.onAuthStateChanged(firebaseUser => {
                 if (firebaseUser) {
                     store.dispatch('auth/autoSignIn', firebaseUser);
                 }
-                this.$store.dispatch('progress/fetchResults');
+                store.dispatch('progress/fetchResults');
             },
         });
     }
