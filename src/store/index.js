@@ -5,6 +5,7 @@ import common from './modules/common';
 import auth from './modules/auth';
 import profile from './modules/profile';
 import progress from './modules/progress';
+import editModule from './modules/editModule';
 
 Vue.use(Vuex);
 
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
         common,
         auth,
         profile,
-        progress
+        progress,
+        editModule
     },
     strict: debug,
 });

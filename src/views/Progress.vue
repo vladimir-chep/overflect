@@ -14,7 +14,7 @@
             </div>
         </Header>
         <div v-if="filteredList.length"
-             class="pageCore pageCore--hasBG">
+             class="pageCore">
             <div class="pageCore__wrap">
                 <div v-if="editMode">
                     <h4>Edit Item</h4>
@@ -44,6 +44,20 @@
                     <button type="submit"
                             @click="resetEdit">Cancel</button>
                 </div>
+                <div class="viewSettings">
+                    <div class="viewSettings__item">
+                        Season:
+                        <select name="" id="">
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button @click="switchList('tank')">Tank</button>|
+                <button @click="switchList('damage')">Damage</button>|
+                <button @click="switchList('support')">Support</button>
+                <br>
                 <div class="progressTable">
                     <div class="progressTable__header">
                         <p class="progressTable__header__item cell cell--plays">Plays ({{ numOfPlays }})</p>
@@ -57,7 +71,7 @@
                         <li class="progressTable__list__item"
                             v-for="(item, key) in sorted(filteredList)"
                             :key="key">
-                            <div :class="['cell', 'cell--plays', addResultClass(item.winStatus)]">{{ item.order+1 }}</div>
+                            <div :class="['cell', 'cell--plays', addResultClass(item.winStatus)]">{{ item.id }}</div>
                             <div class="cell cell--rank">{{ item.rank }}</div>
                             <div class="cell cell--tier">
                                 <img class="rankImg"
@@ -136,6 +150,7 @@ export default {
     },
     data() {
         return {
+            selectedRole: 'tank',
             sortByNewest: true,
 
             // Edit mode
@@ -146,11 +161,12 @@ export default {
         };
     },
     computed: {
+        // store.dispatch('progress/fetchResults', fb.resultsRef);
         pagePaused() {
-            return this.$store.state["common"].pagePaused;
+            return this.$store.state["editModule"].visible;
         },
         filteredList() {
-            return this.$store.state["progress"].list;
+            return this.$store.state["progress"].activeList;
         },
         numOfPlays() {
             return this.$store.getters["progress/getNum"];
@@ -160,6 +176,22 @@ export default {
         }
     },
     methods: {
+        switchList(value){
+            switch (value) {
+                case 'tank':
+                    this.$store.dispatch('progress/fetchResults', fb.tankRef);
+                    break;
+                case 'damage':
+                    this.$store.dispatch('progress/fetchResults', fb.damageRef);
+                    break;
+                case 'support':
+                    this.$store.dispatch('progress/fetchResults', fb.supportRef);
+                    break;
+                default:
+                    console.warn('Ref doesnt found');
+                    break;
+            }
+        },
         addResultClass(value) {
             if (value === 0) return "isLose";
             if (value === 1) return "isWin";

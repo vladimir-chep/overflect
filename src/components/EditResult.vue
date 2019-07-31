@@ -1,7 +1,7 @@
 <template>
     <div>
         <p class="ttl">
-            Add result
+            Edit result
         </p>
         <InfoSection
             v-model="info"
@@ -17,9 +17,9 @@
             v-model="newRank"
             />
         <SubmitButton
-            text="Add"
+            text="Submit changes"
             :unactive="notActive"
-            @action="addResult"
+            @action="edit"
             />
     </div>
 </template>
@@ -37,11 +37,13 @@ const fb = require("@/firebaseConfig.js");
 
 export default {
     mixins: [mixin],
+    // props: ['showed'],
     data() {
         return {
             info: {
-                season: 17,
+                season: 17
             },
+            // seasonNo: 17,
             role: 'tank',
             winStatus: 1,
             newRank: '',
@@ -63,7 +65,7 @@ export default {
         }
     },
     methods: {
-        addResult() {
+        edit() {
             if (!checkWinStatus(this.winStatus)) return;
             if (!checkNewRank(this.newRank)) return;
 
@@ -85,10 +87,7 @@ export default {
                 newData.id = value;
                 targetRef.push(newData);
             });
-
-            this.role = 'tank';
-            this.winStatus = 1;
-            this.newRank = '';
+            this.reset();
 
             function checkNewRank(value) {
                 if (isNaN(value)) {

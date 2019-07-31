@@ -19,10 +19,16 @@ const auth = firebase.auth();
 
 // firebase collections
 const resultsRef = db.ref('results');
+const tankRef = db.ref('tankComp');
+const damageRef = db.ref('damageComp');
+const supportRef = db.ref('supportComp');
 
 export {
     firebase,
     db,
     auth,
     resultsRef,
+    tankRef,
+    damageRef,
+    supportRef,
 }

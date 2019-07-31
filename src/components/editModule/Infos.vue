@@ -1,0 +1,60 @@
+<template>
+    <div class="info">
+        <div class="info__item">
+            <p class="info__item__label">Season:</p>
+            <input
+                class="info__item__input info__item__input--season"
+                type="number"
+                v-model.number="value.season"
+                >
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        value: {
+            type: Object,
+            required: true,
+        },
+    },
+    // model: {
+    //     event: `modified`,
+    // },
+    watch: {
+        value() {
+            this.$emit('input', this.value);
+        }
+    },
+    methods: {
+    },
+}
+</script>
+
+<style lang="scss">
+.info {
+    padding: 26px 0;
+    &__item{
+        text-align: left;
+        &__label{
+            display: inline-block;
+        }
+        &__input{
+            margin-left: 10px;
+            &--season{
+                padding-left: 10px;
+                width: 46px;
+                height: 30px;
+                line-height: 1;
+                background-color: #f1f1f1;
+                font-size: 1.6rem;
+                font-weight: bold;
+                border-width: 0;
+                border-radius: 8px;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+</style>

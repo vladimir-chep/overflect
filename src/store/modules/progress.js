@@ -2,7 +2,14 @@ const fb = require('@/firebaseConfig');
 
 const state = {
     numOfPlays: 0,
-    list: [],
+
+    selectedRole: 'tank',
+
+    activeList: [],
+    tankList: [],
+    damageList: [],
+    supportList: [],
+
     tierScheme: [
         {
             name: "Bronze",
@@ -56,29 +63,27 @@ const state = {
 };
 
 const getters = {
-    getResults: state => state.list,
+    getResults: state => state.activeList,
     getNum: state => state.numOfPlays,
 };
 
 const actions = {
     fetchResults ({
         commit
-    }) {
-        fb.resultsRef.on("value", snapshot => {
+    }, fbRef) {
+        fbRef.on("value", snapshot => {
             const resultList = [];
-            let order = 0;
 
             snapshot.forEach(child => {
                 let val = child.exportVal();
                 let obj = {
-                    order: order,
                     key: child.key,
                     rank: val.rank,
                     winStatus: val.winStatus,
                     created: val.created
                 };
                 resultList.push(obj);
-                order++;
+                // order++;
             });
 
             resultList.forEach((val, index, arr) => {
@@ -107,7 +112,7 @@ const actions = {
             });
 
             commit('updateNum', snapshot.numChildren());
-            commit('updateResults', resultList);
+            commit('updateActiveList', resultList);
         });
     },
     // add({commit}, payload){
@@ -122,8 +127,8 @@ const mutations = {
     updateNum(state, num){
         state.numOfPlays = num;
     },
-    updateResults(state, results){
-        state.list = results;
+    updateActiveList(state, results){
+        state.activeList = results;
     },
 };
 
