@@ -41,7 +41,9 @@ export default {
     data() {
         return {
             info: {
-                season: 17
+                season: 17,
+                created: '',
+                id: null,
             },
             // seasonNo: 17,
             role: 'tank',

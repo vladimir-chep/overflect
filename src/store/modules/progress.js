@@ -3,8 +3,6 @@ const fb = require('@/firebaseConfig');
 const state = {
     numOfPlays: 0,
 
-    selectedRole: 'tank',
-
     activeList: [],
     tankList: [],
     damageList: [],

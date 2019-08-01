@@ -8,15 +8,16 @@
                      viewBox="0 0 17 17"
                      fill="none"
                      xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.5 0C3.80591 0 0 3.80728 0 8.5C0 13.1955 3.80591 17 8.5 17C13.1941 17 17 13.1955 17 8.5C17 3.80728 13.1941 0 8.5 0ZM8.5 15.3548C4.71161 15.3548 1.64516 12.2897 1.64516 8.5C1.64516 4.71287 4.71174 1.64516 8.5 1.64516C12.287 1.64516 15.3548 4.71171 15.3548 8.5C15.3548 12.2883 12.2897 15.3548 8.5 15.3548ZM12.1757 6.60806C12.1757 8.90622 9.69353 8.94159 9.69353 9.79087V10.0081C9.69353 10.2352 9.50938 10.4194 9.28224 10.4194H7.71773C7.49059 10.4194 7.30644 10.2352 7.30644 10.0081V9.71128C7.30644 8.48615 8.23527 7.99641 8.93717 7.60287C9.53906 7.26544 9.90795 7.03594 9.90795 6.58908C9.90795 5.99798 9.15395 5.60565 8.54439 5.60565C7.7496 5.60565 7.3827 5.98188 6.86694 6.63281C6.72789 6.80829 6.47416 6.84089 6.29572 6.70561L5.34208 5.98249C5.16704 5.84978 5.12783 5.60321 5.25146 5.42166C6.06125 4.23255 7.0927 3.56452 8.69859 3.56452C10.3805 3.56452 12.1757 4.87736 12.1757 6.60806ZM9.93952 12.3387C9.93952 13.1325 9.29376 13.7782 8.5 13.7782C7.70624 13.7782 7.06048 13.1325 7.06048 12.3387C7.06048 11.545 7.70624 10.8992 8.5 10.8992C9.29376 10.8992 9.93952 11.545 9.93952 12.3387Z"
-                          fill="#242D44" />
+                    <path
+                        d="M8.5 0C3.80591 0 0 3.80728 0 8.5C0 13.1955 3.80591 17 8.5 17C13.1941 17 17 13.1955 17 8.5C17 3.80728 13.1941 0 8.5 0ZM8.5 15.3548C4.71161 15.3548 1.64516 12.2897 1.64516 8.5C1.64516 4.71287 4.71174 1.64516 8.5 1.64516C12.287 1.64516 15.3548 4.71171 15.3548 8.5C15.3548 12.2883 12.2897 15.3548 8.5 15.3548ZM12.1757 6.60806C12.1757 8.90622 9.69353 8.94159 9.69353 9.79087V10.0081C9.69353 10.2352 9.50938 10.4194 9.28224 10.4194H7.71773C7.49059 10.4194 7.30644 10.2352 7.30644 10.0081V9.71128C7.30644 8.48615 8.23527 7.99641 8.93717 7.60287C9.53906 7.26544 9.90795 7.03594 9.90795 6.58908C9.90795 5.99798 9.15395 5.60565 8.54439 5.60565C7.7496 5.60565 7.3827 5.98188 6.86694 6.63281C6.72789 6.80829 6.47416 6.84089 6.29572 6.70561L5.34208 5.98249C5.16704 5.84978 5.12783 5.60321 5.25146 5.42166C6.06125 4.23255 7.0927 3.56452 8.69859 3.56452C10.3805 3.56452 12.1757 4.87736 12.1757 6.60806ZM9.93952 12.3387C9.93952 13.1325 9.29376 13.7782 8.5 13.7782C7.70624 13.7782 7.06048 13.1325 7.06048 12.3387C7.06048 11.545 7.70624 10.8992 8.5 10.8992C9.29376 10.8992 9.93952 11.545 9.93952 12.3387Z"
+                        fill="#242D44" />
                 </svg>
             </div>
         </Header>
         <div v-if="filteredList.length"
              class="pageCore">
             <div class="pageCore__wrap">
-                <div v-if="editMode">
+                <!-- <div v-if="editMode">
                     <h4>Edit Item</h4>
                     <div>
                         <input type="radio"
@@ -43,7 +44,7 @@
                             @click="submitEdit">Submit</button>
                     <button type="submit"
                             @click="resetEdit">Cancel</button>
-                </div>
+                </div> -->
                 <div class="viewSettings">
                     <div class="viewSettings__item">
                         Season:
@@ -102,7 +103,7 @@
                                     </svg>
                                 </button>
                                 <button class="progBtn"
-                                        @click="startEdit(item.key)"
+                                        @click="startEdit(selectedRole, item.key)"
                                         :disabled="editMode">
                                     <svg class="progBtn__icon progBtn__icon--edit"
                                          viewBox="0 0 18 18"
@@ -150,7 +151,6 @@ export default {
     },
     data() {
         return {
-            selectedRole: 'tank',
             sortByNewest: true,
 
             // Edit mode
@@ -161,18 +161,20 @@ export default {
         };
     },
     computed: {
-        // store.dispatch('progress/fetchResults', fb.resultsRef);
+        selectedRole(){
+            return this.$store.state['editModule'].selectedRole;
+        },
         pagePaused() {
-            return this.$store.state["editModule"].visible;
+            return this.$store.state['editModule'].visible;
         },
         filteredList() {
-            return this.$store.state["progress"].activeList;
+            return this.$store.state['progress'].activeList;
         },
         numOfPlays() {
-            return this.$store.getters["progress/getNum"];
+            return this.$store.getters['progress/getNum'];
         },
         isSkipped() {
-            return this.$store.getters["auth/isSkipped"];
+            return this.$store.getters['auth/isSkipped'];
         }
     },
     methods: {
@@ -188,7 +190,6 @@ export default {
                     this.$store.dispatch('progress/fetchResults', fb.supportRef);
                     break;
                 default:
-                    console.warn('Ref doesnt found');
                     break;
             }
         },
@@ -197,21 +198,50 @@ export default {
             if (value === 1) return "isWin";
             if (value === 2) return "isDraw";
         },
-        startEdit(key) {
-            this.editMode = true;
-            this.editKey = key;
+        startEdit(role, key) {
+            // this.editMode = true;
+            // this.editKey = key;
 
-            fb.resultsRef.once("value", snapshot => {
-                const thisItem = snapshot.child(key).val();
+            // ref.once("value", snapshot => {
+            //     const thisItem = snapshot.child(key).val();
 
-                this.editStatus = thisItem.winStatus;
-                this.editRank = thisItem.rank;
+            //     this.editStatus = thisItem.winStatus;
+            //     this.editRank = thisItem.rank;
+            // });
+
+            let ref;
+            switch (role) {
+                case 'tank':
+                    ref = fb.tankRef;
+                    break;
+                case 'damage':
+                    ref = fb.damageRef;
+                    break;
+                case 'support':
+                    ref = fb.supportRef;
+                    break;
+                default:
+                    break;
+            }
+
+            this.$store.dispatch('editModule/showEdit');
+            // this.editMode = true;
+            // this.editKey = key;
+
+            ref.once('value', snapshot => {
+                const snap = snapshot.child(key).val();
+
+                console.log(snapshot.child(key));
+                this.$store.dispatch('editModule/getEditData', {key, snap});
+
+                // this.editStatus = snap.winStatus;
+                // this.editRank = snap.rank;
             });
         },
         submitEdit() {
             let newData = {
                 rank: this.editRank,
-                winStatus: this.editStatus
+                winStatus: this.editStatus,
             };
 
             fb.resultsRef

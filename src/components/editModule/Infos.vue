@@ -1,5 +1,15 @@
 <template>
     <div class="info">
+        <div
+            v-if="editMode"
+            class="info__item">
+            <p class="info__item__label">ID: <span>{{ value.id }}</span></p>
+        </div>
+        <div
+            v-if="editMode"
+            class="info__item">
+            <p class="info__item__label">Creation Date: <span>{{ value.created }}</span></p>
+        </div>
         <div class="info__item">
             <p class="info__item__label">Season:</p>
             <input
@@ -19,12 +29,14 @@ export default {
             required: true,
         },
     },
-    // model: {
-    //     event: `modified`,
-    // },
     watch: {
         value() {
             this.$emit('input', this.value);
+        }
+    },
+    computed: {
+        editMode(){
+            return this.$store.state['editModule'].editMode;
         }
     },
     methods: {
@@ -47,12 +59,15 @@ export default {
                 width: 46px;
                 height: 30px;
                 line-height: 1;
-                background-color: #f1f1f1;
+                /* background-color: #f1f1f1; */
                 font-size: 1.6rem;
                 font-weight: bold;
                 border-width: 0;
                 border-radius: 8px;
                 text-decoration: underline;
+                &:focus{
+                    background-color: #f1f1f1;
+                }
             }
         }
     }
