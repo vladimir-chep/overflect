@@ -14,7 +14,7 @@
             />
         <InsertScore
             placeholderText="Insert score"
-            v-model="newRank"
+            v-model="rank"
             />
         <SubmitButton
             text="Submit changes"
@@ -37,7 +37,6 @@ const fb = require("@/firebaseConfig.js");
 
 export default {
     mixins: [mixin],
-    // props: ['showed'],
     data() {
         return {
             info: {
@@ -45,10 +44,9 @@ export default {
                 created: '',
                 id: null,
             },
-            // seasonNo: 17,
             role: 'tank',
             winStatus: 1,
-            newRank: '',
+            rank: '',
         };
     },
     components:{
@@ -58,38 +56,67 @@ export default {
         InsertScore,
         SubmitButton,
     },
+    beforeMount() {
+        this.info = this.$store.state['editModule'].info;
+        this.role = this.$store.state['editModule'].role;
+        this.winStatus = this.$store.state['editModule'].winStatus;
+        this.rank = this.$store.state['editModule'].rank;
+    },
+    mounted() {
+        console.log(this.rank);
+    },
     computed: {
+        key(){
+            return this.$store.state['editModule'].key;
+        },
+        // info() {
+        //     return this.$store.state['editModule'].info;
+        // },
+        // role() {
+        //     return this.$store.state['editModule'].role;
+        // },
+        // winStatus() {
+        //     return this.$store.state['editModule'].winStatus;
+        // },
+        // rank() {
+        //     return this.$store.state['editModule'].rank;
+        // },
+        // rank:{
+        //     get() {
+        //         return this.rank;
+        //     },
+        //     set(rank) {
+        //         // this.$store.dispatch('editModule/updateRank', rank);
+        //         this.$store.commit('editModule/setRank', {rank});
+        //     }
+        // },
         isSkipped() {
             return this.$store.getters['auth/isSkipped'];
         },
         notActive() {
-            return this.newRank !== '' ? false : true;
+            return this.rank !== '' ? false : true;
         }
     },
     methods: {
         edit() {
             if (!checkWinStatus(this.winStatus)) return;
-            if (!checkNewRank(this.newRank)) return;
+            if (!checkNewRank(this.rank)) return;
 
             const targetRef = getTargetRef(this.role);
-            const newData = {
-                created: this.getCurrentData(),
+            const data = {
+                edited: this.getCurrentData(),
                 season: this.info.season,
-                role: this.role,
+                // role: this.role,
                 winStatus: this.winStatus,
-                rank: this.newRank,
+                rank: this.rank,
             };
-            const getID = new Promise((resolve, reject) => {
-                targetRef.once('value').then(function(snapshot) {
-                    resolve(snapshot.numChildren() + 1);
-                });
-            });
+            const key = targetRef.child(this.key);
+            key.child('edited').set(data.edited);
+            key.child('season').set(data.season);
+            key.child('winStatus').set(data.winStatus);
+            key.child('rank').set(data.rank);
 
-            getID.then(value =>{
-                newData.id = value;
-                targetRef.push(newData);
-            });
-            this.reset();
+            this.$store.dispatch('editModule/hideEdit');
 
             function checkNewRank(value) {
                 if (isNaN(value)) {

@@ -6,8 +6,11 @@ const state = {
 
     // Edit mode
     key: null,
-    created: '',
-    season: 17,
+    info: {
+        season: 17,
+        created: '',
+        id: null,
+    },
     role: 'tank',
     winStatus: 1,
     rank: null,
@@ -16,44 +19,76 @@ const state = {
 const getters = {};
 
 const actions = {
-    toggle ({commit}) {
-        if (state.visible){
+    toggle ({
+        commit
+    }) {
+        if (state.visible) {
             commit('setVisible', false);
+            commit('setEditMode', false);
         } else {
             commit('setVisible', true);
         }
     },
-    showEdit ({commit}) {
+    showEdit ({
+        commit
+    }) {
         commit('setVisible', true);
         commit('setEditMode', true);
     },
-    hideEdit ({commit}) {
+    hideEdit ({
+        commit
+    }) {
         commit('setVisible', false);
         commit('setEditMode', false);
     },
-    getEditData({commit}, snap) {
+    getEditData ({
+        commit
+    }, snap) {
         commit('updateEditMode', snap);
     },
+    switchRole({commit}, value){
+        commit('setCurRole', value);
+    },
+    // updateRank({commit}, value) {
+    //     commit('setRank', value);
+    // },
 };
 
 const mutations = {
-    setVisible(state, payload){
+    setVisible (state, payload) {
         state.visible = payload;
     },
-    setEditMode(state, payload){
+    setEditMode (state, payload) {
         state.editMode = payload;
     },
-    updateEditMode(state, payload){
-        // state.
-        const {key, snap} = payload;
-        console.log(key);
-        console.log(snap);
-        // created: "2019/7/30 - 15:59:20"
-        // id: 1
-        // rank: 1
-        // role: "tank"
-        // seasonNo: 17
-        // winStatus: 1
+    setCurRole (state, payload) {
+        state.selectedRole = payload;
+    },
+    setRank(state, rank){
+        // state.rank = rank;
+        state.rank = Object.assign({}, state.rank, rank);
+    },
+    updateEditMode (state, payload) {
+        const {
+            key,
+            snap
+        } = payload;
+        const {
+            created,
+            id,
+            rank,
+            role,
+            season,
+            winStatus
+        } = snap;
+
+        state.key = key;
+        state.info.season = season;
+        state.info.created = created;
+        state.info.id = id;
+        state.rank = rank;
+        state.role = role;
+        state.winStatus = winStatus;
     },
 };
 

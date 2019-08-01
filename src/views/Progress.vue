@@ -14,37 +14,14 @@
                 </svg>
             </div>
         </Header>
+        <br>
+        <button @click="switchList('tank')">Tank</button>|
+        <button @click="switchList('damage')">Damage</button>|
+        <button @click="switchList('support')">Support</button>
+        <br>
         <div v-if="filteredList.length"
              class="pageCore">
             <div class="pageCore__wrap">
-                <!-- <div v-if="editMode">
-                    <h4>Edit Item</h4>
-                    <div>
-                        <input type="radio"
-                               id="win"
-                               :value="1"
-                               v-model="editStatus">
-                        <label for="win">Win</label>
-                        <input type="radio"
-                               id="draw"
-                               :value="2"
-                               v-model="editStatus">
-                        <label for="draw">Draw</label>
-                        <input type="radio"
-                               id="lose"
-                               :value="0"
-                               v-model="editStatus">
-                        <label for="lose">Lose</label>
-                        <br>
-                    </div>
-                    <input type="number"
-                           placeholder="Insert new score"
-                           v-model.number="editRank">
-                    <button type="submit"
-                            @click="submitEdit">Submit</button>
-                    <button type="submit"
-                            @click="resetEdit">Cancel</button>
-                </div> -->
                 <div class="viewSettings">
                     <div class="viewSettings__item">
                         Season:
@@ -54,11 +31,6 @@
                         </select>
                     </div>
                 </div>
-                <br>
-                <button @click="switchList('tank')">Tank</button>|
-                <button @click="switchList('damage')">Damage</button>|
-                <button @click="switchList('support')">Support</button>
-                <br>
                 <div class="progressTable">
                     <div class="progressTable__header">
                         <p class="progressTable__header__item cell cell--plays">Plays ({{ numOfPlays }})</p>
@@ -182,12 +154,15 @@ export default {
             switch (value) {
                 case 'tank':
                     this.$store.dispatch('progress/fetchResults', fb.tankRef);
+                    this.$store.commit('editModule/setCurRole', 'tank');
                     break;
                 case 'damage':
                     this.$store.dispatch('progress/fetchResults', fb.damageRef);
+                    this.$store.commit('editModule/setCurRole', 'damage');
                     break;
                 case 'support':
                     this.$store.dispatch('progress/fetchResults', fb.supportRef);
+                    this.$store.commit('editModule/setCurRole', 'support');
                     break;
                 default:
                     break;
@@ -225,17 +200,12 @@ export default {
             }
 
             this.$store.dispatch('editModule/showEdit');
-            // this.editMode = true;
-            // this.editKey = key;
 
             ref.once('value', snapshot => {
                 const snap = snapshot.child(key).val();
 
-                console.log(snapshot.child(key));
+                console.log(snap);
                 this.$store.dispatch('editModule/getEditData', {key, snap});
-
-                // this.editStatus = snap.winStatus;
-                // this.editRank = snap.rank;
             });
         },
         submitEdit() {

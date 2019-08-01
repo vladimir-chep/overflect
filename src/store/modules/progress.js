@@ -94,7 +94,6 @@ const actions = {
                         let prev = arr[index - 1].rank;
                         result = cur - prev;
                     }
-                    // console.log(result);
 
                     return result;
                 }
@@ -113,12 +112,6 @@ const actions = {
             commit('updateActiveList', resultList);
         });
     },
-    // add({commit}, payload){
-    //     fb.resultsRef.push(payload);
-    // },
-    // remove({commit}, payload){
-    //     fb.resultsRef.child(payload).remove();
-    // },
 };
 
 const mutations = {
