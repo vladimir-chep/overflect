@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss">
 .info {
-    padding: 26px 0;
+    padding-bottom:  16px;
     &__item{
         text-align: left;
         &__label{

@@ -1,26 +1,26 @@
 <template>
-    <div>
-        <p class="ttl">
-            Add result
-        </p>
-        <InfoSection
-            v-model="info"
-            />
-        <Roles
-            v-model="role"
-            />
-        <Wins
-            v-model="winStatus"
-            />
-        <InsertScore
-            placeholderText="Insert score"
-            v-model="newRank"
-            />
-        <SubmitButton
-            text="Add"
-            :unactive="notActive"
-            @action="addResult"
-            />
+    <div class="">
+        <slot></slot>
+        <div class="editModule__wrapper__body">
+            <InfoSection
+                v-model="info"
+                />
+            <Roles
+                v-model="role"
+                />
+            <Wins
+                v-model="winStatus"
+                />
+            <InsertScore
+                placeholderText="Insert score"
+                v-model="newRank"
+                />
+            <SubmitButton
+                text="Add"
+                :unactive="notActive"
+                @action="addResult"
+                />
+        </div>
     </div>
 </template>
 
@@ -133,15 +133,10 @@ export default {
                 }
                 return result;
             }
-        }
+        },
     }
 };
 </script>
 
 <style lang="scss">
-.ttl {
-    font-size: 2.4rem;
-    font-weight: bold;
-    margin-bottom: 24px;
-}
 </style>

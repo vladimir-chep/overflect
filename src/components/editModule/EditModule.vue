@@ -1,12 +1,18 @@
 <template>
+    <div :class="['editModule', {'is-on': visible}]">
         <AddResult
             v-if="!editMode"
-            :class="['editModule', {'is-on': visible}]"
-            />
+            class="editModule__wrapper"
+            >
+            <p class="editModule__wrapper__ttl">Add result</p>
+            </AddResult>
         <EditResult
             v-else
-            :class="['editModule', {'is-on': visible}]"
-            />
+            class="editModule__wrapper"
+            >
+            <p class="editModule__wrapper__ttl">Edit result</p>
+            </EditResult>
+    </div>
 </template>
 
 <script>
@@ -63,6 +69,21 @@ export default {
 
     &.is-on {
         transform: translateY(0%);
+    }
+    &__wrapper{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        &__ttl {
+            font-size: 2.4rem;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        &__body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: 100%;
+        }
     }
 }
 </style>
