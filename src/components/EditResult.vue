@@ -2,15 +2,11 @@
     <div>
         <slot></slot>
         <div class="editModule__wrapper__body">
-            <InfoSection
-                v-model="info"
-                />
+            <InfoSection />
             <SelectedRoles
                 :role="role"
                 />
-            <Wins
-                v-model="winStatus"
-                />
+            <Wins />
             <InsertScore
                 placeholderText="Insert score"
                 v-model="rank"
@@ -42,17 +38,6 @@ const fb = require("@/firebaseConfig.js");
 
 export default {
     mixins: [mixin],
-    data() {
-        return {
-            info: {
-                season: 17,
-                created: '',
-                id: null,
-            },
-            winStatus: 1,
-            rank: '',
-        };
-    },
     components:{
         InfoSection,
         SelectedRoles,
@@ -61,17 +46,21 @@ export default {
         SubmitButton,
         RemoveButton,
     },
-    beforeMount() {
-        this.info = this.$store.state['editModule'].info;
-        this.winStatus = this.$store.state['editModule'].winStatus;
-        this.rank = this.$store.state['editModule'].rank;
-    },
     computed: {
+        info(){
+            return this.$store.getters['editModule/getInfo'];
+        },
+        winStatus(){
+            return this.$store.getters['editModule/getWinStatus'];
+        },
+        rank(){
+            return this.$store.getters['editModule/getRank'];
+        },
         key(){
-            return this.$store.state['editModule'].key;
+            return this.$store.getters['editModule/getKey'];
         },
         role() {
-            return this.$store.state['editModule'].role;
+            return this.$store.getters['editModule/getRole'];
         },
         isSkipped() {
             return this.$store.getters['auth/isSkipped'];
@@ -146,8 +135,10 @@ export default {
         },
         remove() {
             const targetRef = this.getTargetRef(this.role);
+
             targetRef.child(this.key).remove();
             this.$store.dispatch('editModule/hideEdit');
+            // this.$store.commit('editModule/reset');
         }
     }
 };

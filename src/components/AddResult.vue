@@ -2,15 +2,9 @@
     <div class="">
         <slot></slot>
         <div class="editModule__wrapper__body">
-            <InfoSection
-                v-model="info"
-                />
-            <Roles
-                v-model="role"
-                />
-            <Wins
-                v-model="winStatus"
-                />
+            <InfoSection />
+            <Roles />
+            <Wins />
             <InsertScore
                 placeholderText="Insert score"
                 v-model="newRank"
@@ -39,12 +33,12 @@ export default {
     mixins: [mixin],
     data() {
         return {
-            info: {
-                season: 17,
-            },
-            role: 'tank',
-            winStatus: 1,
-            newRank: '',
+            // info: {
+            //     season: 17,
+            // },
+            // role: 'tank',
+            // winStatus: 1,
+            // newRank: '',
         };
     },
     components:{
@@ -55,11 +49,28 @@ export default {
         SubmitButton,
     },
     computed: {
+        info(){
+            return this.$store.getters['editModule/getInfo'];
+        },
+        winStatus(){
+            return this.$store.getters['editModule/getWinStatus'];
+        },
+        newRank: {
+            get(){
+                return this.$store.getters['editModule/getRank'];
+            },
+            set(value){
+                this.$store.commit('editModule/setRank', Number(value));
+            }
+        },
+        role() {
+            return this.$store.getters['editModule/getRole'];
+        },
         isSkipped() {
             return this.$store.getters['auth/isSkipped'];
         },
         notActive() {
-            return this.newRank !== '' ? false : true;
+            return this.newRank !== null ? false : true;
         }
     },
     methods: {
@@ -86,9 +97,10 @@ export default {
                 targetRef.push(newData);
             });
 
-            this.role = 'tank';
-            this.winStatus = 1;
-            this.newRank = '';
+            // this.role = 'tank';
+            // this.winStatus = 1;
+            // this.newRank = null;
+            this.$store.commit('editModule/reset');
 
             function checkNewRank(value) {
                 if (isNaN(value)) {

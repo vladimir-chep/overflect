@@ -30,19 +30,15 @@ import IconDamage from '@/components/icons/competitive/Damage.vue';
 import IconSupport from '@/components/icons/competitive/Support.vue';
 
 export default {
-    props:{
-        value: {
-            type: String,
-            required: true
-        }
-    },
     computed: {
         role: {
-            get() {
-                return this.value;
+            get () {
+                return this.$store.getters['editModule/getRole'];
             },
-            set(role) {
-                this.$emit('input', role);
+            set (value) {
+                console.log(value);
+
+                this.$store.dispatch('editModule/updateRole', value);
             }
         }
     },

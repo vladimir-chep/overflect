@@ -40,9 +40,9 @@ export default {
     appearance: none;
     text-transform: uppercase;
     border-width: 0;
-    margin-bottom: 20px;
     background-color: $unactive-color;
     background-color: $text-light;
     background-color: $text-color;
+
 }
 </style>

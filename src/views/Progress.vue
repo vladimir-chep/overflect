@@ -3,15 +3,13 @@
         <Header>
             <slot>Progress</slot>
             <div slot="details">
-                <svg width="17"
-                     height="17"
-                     viewBox="0 0 17 17"
-                     fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M8.5 0C3.80591 0 0 3.80728 0 8.5C0 13.1955 3.80591 17 8.5 17C13.1941 17 17 13.1955 17 8.5C17 3.80728 13.1941 0 8.5 0ZM8.5 15.3548C4.71161 15.3548 1.64516 12.2897 1.64516 8.5C1.64516 4.71287 4.71174 1.64516 8.5 1.64516C12.287 1.64516 15.3548 4.71171 15.3548 8.5C15.3548 12.2883 12.2897 15.3548 8.5 15.3548ZM12.1757 6.60806C12.1757 8.90622 9.69353 8.94159 9.69353 9.79087V10.0081C9.69353 10.2352 9.50938 10.4194 9.28224 10.4194H7.71773C7.49059 10.4194 7.30644 10.2352 7.30644 10.0081V9.71128C7.30644 8.48615 8.23527 7.99641 8.93717 7.60287C9.53906 7.26544 9.90795 7.03594 9.90795 6.58908C9.90795 5.99798 9.15395 5.60565 8.54439 5.60565C7.7496 5.60565 7.3827 5.98188 6.86694 6.63281C6.72789 6.80829 6.47416 6.84089 6.29572 6.70561L5.34208 5.98249C5.16704 5.84978 5.12783 5.60321 5.25146 5.42166C6.06125 4.23255 7.0927 3.56452 8.69859 3.56452C10.3805 3.56452 12.1757 4.87736 12.1757 6.60806ZM9.93952 12.3387C9.93952 13.1325 9.29376 13.7782 8.5 13.7782C7.70624 13.7782 7.06048 13.1325 7.06048 12.3387C7.06048 11.545 7.70624 10.8992 8.5 10.8992C9.29376 10.8992 9.93952 11.545 9.93952 12.3387Z"
-                        fill="#242D44" />
-                </svg>
+                <div class="season">
+                    <select v-model="selectedSeason" name="seasonList" id="seasonList">
+                        <option v-for="(season, index, key) in seasons" :key="key" :value="season">
+                            {{ season === 0 ? 'all' : season }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </Header>
         <br>
@@ -19,17 +17,12 @@
         <button @click="switchList('damage')">Damage</button>|
         <button @click="switchList('support')">Support</button>
         <br>
-        <div v-if="filteredList.length"
-             class="pageCore">
+        <div
+            v-if="displayed"
+            class="pageCore"
+            >
             <div class="pageCore__wrap">
                 <div class="viewSettings">
-                    <div class="viewSettings__item">
-                        Season:
-                        <select name="" id="">
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="progressTable">
                     <div class="progressTable__header">
@@ -42,7 +35,7 @@
                     </div>
                     <ul class="progressTable__list">
                         <li class="progressTable__list__item"
-                            v-for="(item, key) in sorted(filteredList)"
+                            v-for="(item, key) in sorted(displayList)"
                             :key="key">
                             <div :class="['cell', 'cell--plays', addResultClass(item.winStatus)]">{{ item.id }}</div>
                             <div class="cell cell--rank">{{ item.rank }}</div>
@@ -105,7 +98,7 @@ import mixin from "@/mixins";
 import Header from "@/components/layout/Header.vue";
 
 export default {
-    name: "ProgressList",
+    name: 'ProgressList',
     mixins: [mixin],
     components: {
         Header
@@ -113,6 +106,8 @@ export default {
     data() {
         return {
             sortByNewest: true,
+            selectedSeason: 0,
+            // seasons: [0, 14, 15, 16, 17, 18],
 
             // Edit mode
             editMode: false,
@@ -128,8 +123,17 @@ export default {
         pagePaused() {
             return this.$store.state['editModule'].visible;
         },
-        filteredList() {
-            return this.$store.state['progress'].activeList;
+        masterList() {
+            return this.$store.getters['progress/getMasterList'];
+        },
+        seasons() {
+            return this.$store.getters['progress/getSeasons'];
+        },
+        displayList(){
+            return this.masterList[this.selectedSeason];
+        },
+        displayed(){
+            return this.displayList && this.displayList.length ? true : false;
         },
         numOfPlays() {
             return this.$store.getters['progress/getNum'];
@@ -143,36 +147,26 @@ export default {
             switch (value) {
                 case 'tank':
                     this.$store.dispatch('progress/fetchResults', fb.tankRef);
-                    this.$store.commit('editModule/setCurRole', 'tank');
+                    this.$store.commit('editModule/setRole', 'tank');
                     break;
                 case 'damage':
                     this.$store.dispatch('progress/fetchResults', fb.damageRef);
-                    this.$store.commit('editModule/setCurRole', 'damage');
+                    this.$store.commit('editModule/setRole', 'damage');
                     break;
                 case 'support':
                     this.$store.dispatch('progress/fetchResults', fb.supportRef);
-                    this.$store.commit('editModule/setCurRole', 'support');
+                    this.$store.commit('editModule/setRole', 'support');
                     break;
                 default:
                     break;
             }
         },
         addResultClass(value) {
-            if (value === 0) return "isLose";
-            if (value === 1) return "isWin";
-            if (value === 2) return "isDraw";
+            if (value === 0) return 'isLose';
+            if (value === 1) return 'isWin';
+            if (value === 2) return 'isDraw';
         },
         startEdit(role, key) {
-            // this.editMode = true;
-            // this.editKey = key;
-
-            // ref.once("value", snapshot => {
-            //     const thisItem = snapshot.child(key).val();
-
-            //     this.editStatus = thisItem.winStatus;
-            //     this.editRank = thisItem.rank;
-            // });
-
             let ref;
             switch (role) {
                 case 'tank':
@@ -193,7 +187,6 @@ export default {
             ref.once('value', snapshot => {
                 const snap = snapshot.child(key).val();
 
-                console.log(snap);
                 this.$store.dispatch('editModule/getEditData', {key, snap});
             });
         },
@@ -205,15 +198,15 @@ export default {
 
             fb.resultsRef
                 .child(this.editKey)
-                .child("rank")
+                .child('rank')
                 .set(newData.rank);
             fb.resultsRef
                 .child(this.editKey)
-                .child("winStatus")
+                .child('winStatus')
                 .set(newData.winStatus);
             fb.resultsRef
                 .child(this.editKey)
-                .child("edited")
+                .child('edited')
                 .set(this.getCurrentData());
             this.resetEdit();
         },
@@ -221,10 +214,6 @@ export default {
             this.editRank = null;
             this.editStatus = null;
             this.editMode = false;
-        },
-        remove(key) {
-            // this.$store.dispatch('progress/remove', key);
-            fb.resultsRef.child(key).remove();
         },
         sorted(arr) {
             if (this.sortByNewest) {
@@ -238,7 +227,39 @@ export default {
 
 <style lang="scss">
 @import "../styles/setup/_variables";
+.season{
+    position: relative;
+    display: inline-block;
+    margin: auto;
+    background: $theme;
 
+
+    display: inline-block;
+    border-radius: 8px;
+    border: none;
+
+
+    &:before {
+        position: absolute;
+        content: '▼';
+        color: #fff;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+
+    }
+    select{
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #fff;
+        text-transform: capitalize;
+        border: none;
+        padding: 4px;
+        background: transparent;
+        position: relative;
+    }
+}
 .progressTable {
     padding: 0 $l-px;
 
@@ -252,7 +273,6 @@ export default {
             color: $gray;
             font-weight: bold;
             font-size: 1.2rem;
-            /* flex: 1 1 0; */
             text-align: center;
         }
     }

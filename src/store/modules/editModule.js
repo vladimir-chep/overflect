@@ -16,7 +16,15 @@ const state = {
     rank: null,
 };
 
-const getters = {};
+const getters = {
+    isEditMode: state => state.editMode,
+    getKey: state => state.key,
+    getInfo: state => state.info,
+    getSeason: state => state.info.season,
+    getRole: state => state.role,
+    getWinStatus: state => state.winStatus,
+    getRank: state => state.rank,
+};
 
 const actions = {
     toggle ({
@@ -25,6 +33,7 @@ const actions = {
         if (state.visible) {
             commit('setVisible', false);
             commit('setEditMode', false);
+            commit('reset');
         } else {
             commit('setVisible', true);
         }
@@ -46,8 +55,20 @@ const actions = {
     }, snap) {
         commit('updateEditMode', snap);
     },
-    switchRole({commit}, value){
-        commit('setCurRole', value);
+    updateRole ({
+        commit
+    }, value) {
+        commit('setRole', value);
+    },
+    updateSeason ({
+        commit
+    }, value) {
+        commit('setSeason', value);
+    },
+    updateWinStatus ({
+        commit
+    }, value) {
+        commit('setWinStatus', value);
     },
     // updateRank({commit}, value) {
     //     commit('setRank', value);
@@ -61,13 +82,21 @@ const mutations = {
     setEditMode (state, payload) {
         state.editMode = payload;
     },
-    setCurRole (state, payload) {
+    setSelectedRole (state, payload) {
         state.selectedRole = payload;
     },
-    setRank(state, rank){
-        // state.rank = rank;
-        state.rank = Object.assign({}, state.rank, rank);
+    setRole (state, payload) {
+        state.role = payload;
     },
+    setWinStatus (state, payload) {
+        state.winStatus = payload;
+    },
+    setRank (state, payload) {
+        state.rank = payload;
+    },
+    // setRank (state, rank) {
+    //     state.rank = Object.assign({}, state.rank, rank);
+    // },
     updateEditMode (state, payload) {
         const {
             key,
@@ -89,6 +118,18 @@ const mutations = {
         state.rank = rank;
         state.role = role;
         state.winStatus = winStatus;
+    },
+    reset (state, payload) {
+        state.role = 'tank';
+        state.winStatus = 1;
+        state.rank = null;
+        state.key = null,
+        state.info.season = 17;
+        state.info.created = '';
+        state.info.id = null;
+    },
+    setSeason (state, payload) {
+        state.info.season = payload;
     },
 };
 

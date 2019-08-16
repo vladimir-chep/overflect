@@ -30,21 +30,15 @@ import IconDamage from '@/components/icons/competitive/Damage.vue';
 import IconSupport from '@/components/icons/competitive/Support.vue';
 
 export default {
-    props:{
-        value: {
-            type: Number,
-            required: true
-        }
-    },
     computed: {
         wins: {
-            get() {
-                return this.value;
+            get () {
+                return this.$store.getters['editModule/getWinStatus'];
             },
-            set(wins) {
-                this.$emit('input', wins);
-            },
-        }
+            set (value) {
+                this.$store.dispatch('editModule/updateWinStatus', Number(value));
+            }
+        },
     },
     components:{
         Radios,
