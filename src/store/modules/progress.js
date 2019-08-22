@@ -11,50 +11,51 @@ const state = {
     supportList: [],
     masterList: {},
 
-    tierScheme: [{
-            name: "Bronze",
+    tierScheme: [
+        {
+            name: 'Bronze',
             image: require('@/assets/images/ranks/Bronze.png'),
             min: 0,
             max: 1499
         },
         {
-            name: "Silver",
+            name: 'Silver',
             image: require('@/assets/images/ranks/Silver.png'),
             min: 1500,
             max: 1999
         },
         {
-            name: "Gold",
+            name: 'Gold',
             image: require('@/assets/images/ranks/Gold.png'),
             min: 2000,
             max: 2499
         },
         {
-            name: "Platinum",
+            name: 'Platinum',
             image: require('@/assets/images/ranks/Platinum.png'),
             min: 2500,
             max: 2999
         },
         {
-            name: "Diamond",
+            name: 'Diamond',
             image: require('@/assets/images/ranks/Diamond.png'),
             min: 3000,
             max: 3499
         },
         {
-            name: "Master",
+            name: 'Master',
             image: require('@/assets/images/ranks/Master.png'),
             min: 3500,
             max: 3999
         },
         {
-            name: "Grandmaster",
+            name: 'Grandmaster',
             image: require('@/assets/images/ranks/Grandmaster.png'),
             min: 4000,
             max: 4499
         },
         {
-            name: "Top500",
+            name: 'Top500',
             image: require('@/assets/images/ranks/Top500.png'),
             min: 4500,
             max: 5000

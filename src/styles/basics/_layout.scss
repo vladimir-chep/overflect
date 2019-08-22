@@ -73,7 +73,8 @@ body {
 .pageCore {
     padding-top: $l-py;
     padding-bottom: $l-py;
-    margin: 20px auto;
+    // margin: 20px auto;
+    margin: 0 auto 20px;
     position: relative;
     &--hasBG{
         box-shadow: $shadow3-1;
