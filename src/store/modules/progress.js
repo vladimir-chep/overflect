@@ -1,4 +1,4 @@
-const fb = require('@/firebaseConfig');
+// const fb = require('@/firebaseConfig');
 
 const state = {
     numOfPlays: 0,
@@ -71,6 +71,7 @@ const getters = {
     },
     getMasterList: state => state.masterList,
     getNum: state => state.numOfPlays,
+    getSelectedSeason: state => state.selectedSeason,
 };
 
 const actions = {
@@ -147,6 +148,9 @@ const mutations = {
     },
     updateMasterList (state, results) {
         state.masterList = results;
+    },
+    setSelectedSeason (state, payload) {
+        state.selectedSeason = payload;
     },
 };
 

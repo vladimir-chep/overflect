@@ -29,11 +29,6 @@ export default {
             },
         },
     },
-    methods: {
-        update(e){
-            // this.$emit('updateRole', e.target.value);
-        },
-    },
 }
 </script>
 

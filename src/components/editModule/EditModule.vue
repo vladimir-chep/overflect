@@ -28,21 +28,6 @@ export default {
             return this.$store.state['editModule'].visible;
         },
     },
-    watch: {
-        // visible(value) {
-        //     console.log(value);
-        //     if (!value) {
-        //         this.reset();
-        //     }
-        // }
-    },
-    methods: {
-        // reset() {
-        //     this.role = 'tank';
-        //     this.newRank = '';
-        //     this.winStatus = 1;
-        // },
-    },
     components:{
         AddResult,
         EditResult,
