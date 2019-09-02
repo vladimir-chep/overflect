@@ -18,7 +18,7 @@ export default {
         seasons() {
             return this.$store.getters['progress/getSeasons'];
         },
-         selectedSeason: {
+        selectedSeason: {
             get() {
                 return this.$store.getters['progress/getSelectedSeason'];
             },
@@ -34,8 +34,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../styles/setup/_variables';
-.seasonS{
+@import '../../styles/setup/variables';
+.seasons{
     position: relative;
     display: inline-block;
     margin: auto;

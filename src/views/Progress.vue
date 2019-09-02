@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/setup/_variables';
+@import '../styles/setup/variables';
 
 .card {
     &__header {
@@ -201,44 +201,6 @@ export default {
     }
 }
 
-/* .season{
-    position: relative;
-    display: inline-block;
-    margin: auto;
-    background: $theme;
-    display: inline-block;
-    border-radius: 8px;
-    border: none;
-
-    &:before {
-        position: absolute;
-        content: '▼';
-        color: #fff;
-        right: 4px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1rem;
-    }
-    &.disabled{
-        background: $unactive-color;
-        select{
-            color: $text-color;
-        }
-        &:before{
-            content: none;
-        }
-    }
-    select{
-        font-size: 1.4rem;
-        font-weight: bold;
-        color: #fff;
-        text-transform: capitalize;
-        border: none;
-        padding: 4px;
-        background: transparent;
-        position: relative;
-    }
-} */
 .progressTable {
     background: #fff;
     padding: $l-px $l-px 0;
