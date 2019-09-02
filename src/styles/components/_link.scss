@@ -1,0 +1,24 @@
+// default <a>
+a {
+    color: $theme;
+    transition: .25s color ease-in-out;
+
+    &:hover,
+    &:focus {
+        color: darken($theme, 15%);
+    }
+}
+
+.link {
+    cursor: pointer;
+
+    &-continue {
+        font-size: 1.2rem;
+        text-decoration: underline;
+        transition: .25s color ease-in-out;
+
+        &:hover {
+            color: #eee7ff;
+        }
+    }
+}

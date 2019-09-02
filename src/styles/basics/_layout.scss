@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+.appContainer{
+    @include height-overflow;
+}
+
+body {
+    font-variant-numeric: proportional-nums;
+    -webkit-font-feature-settings: 'pnum';
+            font-feature-settings: 'pnum';
+
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.appContainer {
+    overflow: hidden;
+
+    &.layout-default {
+        color: $text-color;
+        background: $bg-color;
+    }
+
+    .wrapper {
+        position: relative;
+        width: $wrap-width;
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .outherWrap {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .pageContent {
+            @include height-overflow;
+            position: relative;
+            &:after{
+                content: '';
+                width: 100%;
+                height: 100%;
+                // height: 0;
+                display: block;
+                position: absolute;
+                background: rgba(darken($theme, 55%), .5);
+                transition: all .35s ease-in-out;
+                bottom: 0;
+                left: 0;
+                opacity: 0;
+                visibility: hidden;
+            }
+            &.is-paused {
+                overflow-y: hidden !important;
+                &:after{
+                    // height: 100%;
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+.pageCore {
+    // padding-top: $l-py;
+    padding-bottom: $l-py;
+    // margin: 20px auto;
+    margin: 0 auto 20px;
+    position: relative;
+    &--hasBG{
+        box-shadow: $shadow3-1;
+        background: #fff;
+    }
+
+    &__wrap {
+        @include wrapper;
+    }
+}
+
+// Header
+.pageHeader {
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: $shadow-pageHeader;
+    background: #fff;
+
+    &__wrapper {
+        @include wrapper;
+        display: flex;
+        height: 59px;
+        justify-content: space-between;
+        align-items: center;
+
+        &__ttl {
+            margin: 0;
+            padding: $l-py 0;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        &__aside {
+            width: 100%;
+            max-width: calc(100% / 12 * 2);
+        }
+    }
+}
+
+// display
+.d-block {
+    display: block;
+}
+
+.d-inline {
+    display: inline;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-none {
+    display: none;
+}
+
+// aligns
+.u-tac {
+    text-align: center;
+}
+
+.u-tal {
+    text-align: left;
+}
+
+.u-tar {
+    text-align: right;
+}
+
+// margins
+@include spacing('m', 'margin', 'auto');
+@include spacing('mt', 'margin-top', 5);
+@include spacing('mb', 'margin-bottom', 5);
+@include spacing('ml', 'margin-left', 5);
+@include spacing('mr', 'margin-right', 5);
+// paddings
+@include spacing('pt', 'padding-top', 5);
+@include spacing('pb', 'padding-bottom', 5);
+@include spacing('pl', 'padding-left', 5);
+@include spacing('pr', 'padding-right', 5);

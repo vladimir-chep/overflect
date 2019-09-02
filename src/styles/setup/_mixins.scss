@@ -1,0 +1,25 @@
+@mixin spacing($className, $prop, $val: 5) {
+    @if type-of($val)==string {
+        .#{$className}-#{$val} {
+            #{$prop}: #{$val};
+        }
+    }
+    @else {
+        @for $i from 1 through $val {
+            .#{$className}-#{$i} {
+                #{$prop}: #{$i}rem;
+            }
+        }
+    }
+}
+
+@mixin wrapper {
+    position: relative;
+    width: $wrap-width;
+    max-width: 100%;
+    margin: auto;
+}
+@mixin height-overflow{
+    height: 100%;
+    overflow: auto;
+}
