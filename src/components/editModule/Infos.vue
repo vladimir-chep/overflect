@@ -52,7 +52,7 @@ export default {
 @import '../../styles/setup/_variables';
 
 .info {
-    padding-bottom:  16px;
+    margin-bottom:  2rem;
 
     &__item{
         text-align: left;
@@ -60,6 +60,7 @@ export default {
         align-items: center;
         line-height: 1;
         font-size: 1.2rem;
+        margin-bottom: 4px;
 
         &__label{
             display: inline-block;
@@ -69,15 +70,16 @@ export default {
 
         &__input{
             margin-left: 10px;
-            padding: 4px;
+            /* padding: 4px; */
             color: $text-light;
             font-weight: bold;
             border-width: 0;
             border-radius: 8px;
             border: 2px solid transparent;
+            text-align: center;
 
             &--season{
-                padding-left: 14px;
+                /* padding-left: 14px; */
                 width: 50px;
                 color: $text-color;
                 background-color: #f1f1f1;

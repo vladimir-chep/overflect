@@ -1,18 +1,18 @@
 <template>
-    <div :class="['editModule', {'is-on': visible}]">
+    <transition name="slide-fade">
+    <div v-if="visible" class="editModule">
         <AddResult
             v-if="!editMode"
             class="editModule__wrapper"
-            >
-            <p class="editModule__wrapper__ttl">Add result</p>
-            </AddResult>
+            ttl="Add result"
+            />
         <EditResult
             v-else
             class="editModule__wrapper"
-            >
-            <p class="editModule__wrapper__ttl">Edit result</p>
-            </EditResult>
+            ttl="Edit result"
+            />
     </div>
+    </transition>
 </template>
 
 <script>
@@ -38,23 +38,29 @@ export default {
 <style lang="scss">
 @import "../../styles/setup/_variables";
 
+.slide-fade-enter-active {
+  transition: all .25s ease-in-out;
+}
+
+.slide-fade-leave-active {
+  transition: all .25s ease-in-out;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
 .editModule {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 90vh;
     border-radius: 8px 8px 0 0;
     padding: 36px;
     padding-bottom: 100px;
     background: #fff;
-    transform: translateY(100%);
-    transition: 0.25s all ease-in-out;
-    box-shadow: $shadow2;
 
-    &.is-on {
-        transform: translateY(0%);
-    }
     &__wrapper{
         display: flex;
         flex-direction: column;

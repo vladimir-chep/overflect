@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <slot></slot>
+        <p class="editModule__wrapper__ttl">{{ ttl }}</p>
         <div class="editModule__wrapper__body">
             <InfoSection />
             <Roles />
@@ -31,6 +31,7 @@ const fb = require("@/firebaseConfig.js");
 
 export default {
     mixins: [mixin],
+    props: ['ttl'],
     data() {
         return {
             // info: {

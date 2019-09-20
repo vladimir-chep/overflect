@@ -36,7 +36,7 @@ export default {
     appearance: none;
     text-transform: uppercase;
     border-width: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     &:disabled {
         background-color: $unactive-color;
     }

@@ -7,20 +7,13 @@
                 <div class="mainContent__visual">
 
                 </div>
-                <!--
                 <div class="mainContent__msg">
                     <p class="mainContent__msg__head">OverFlect</p>
                     <p class="mainContent__msg__txt">OverFlect is a tool for monitoring your individual performance in <a href="https://playoverwatch.com/" target="_blank" rel="noopener nofollow">Overwatch</a>’s competetive mode</p>
                 </div>
-                -->
-                <div class="mainContent__msg">
-                    <p class="mainContent__msg__head">My Vue App</p>
-                    <p class="mainContent__msg__txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cupiditate modi quam corrupti, et sapiente fuga. Distinctio, assumenda voluptatum doloribus soluta eligendi aliquid debitis aliquam quo, deserunt ut aperiam nihil.</p>
-                </div>
                 <div class="mb-3">
                     <div class="u-tac mb-1">
-                        <button type="button" class="btn btn-connect" @click.prevent="nextSlide">
-                            Connect</button>
+                        <button type="button" class="btn btn-connect" @click.prevent="nextSlide">Connect</button>
                     </div>
                     <div class="u-tac">
                         <a @click="skip" class="link link-continue">Watch without login</a>
@@ -147,7 +140,6 @@ export default {
     display: flex;
     width: 100%;
     height: 100%;
-    min-height: 100vh;
     flex-direction: column;
     padding: $padding;
 }

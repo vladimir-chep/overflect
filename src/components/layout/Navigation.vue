@@ -1,16 +1,5 @@
 <template>
-    <nav id="nav"
-         class="navigation">
-        <div class="navBackground">
-            <svg class="navBackground__core"
-                 fill="none"
-                 preserveAspectRatio="xMidYMin slice"
-                 xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 80 60">
-                <path d="M80 3.23057e-05C77.2386 3.23057e-05 75.0375 2.25142 74.6477 4.98519C72.2279 21.9539 57.6375 35 40 35C22.3625 35 7.77206 21.9539 5.35232 4.98515C4.96249 2.2514 2.76141 1.78419e-05 0 0V60H80V3.23057e-05Z"
-                      fill="white" />
-            </svg>
-        </div>
+    <nav id="nav" class="navigation">
         <div class="navigation__wrapper">
             <div class="navList">
                 <router-link to="/profile"
@@ -170,13 +159,7 @@ export default {
     max-height: 60px;
     height: 100%;
     text-align: center;
-    &:after {
-        content: "";
-        width: 100%;
-        position: absolute;
-        box-shadow: 0 -5px 30px 50px rgba(50, 50, 93, 0.15);
-        left: 0;
-    }
+    background: #fff;
 
     &__wrapper {
         position: relative;
@@ -250,49 +233,20 @@ export default {
     height: 56px;
     box-shadow: $shadow1;
     z-index: 3;
-    transition: background-color 0.15s ease-in;
+    transition: background-color .15s ease-in;
+
     &__button {
         width: 100%;
         height: 100%;
         position: relative;
         display: block;
         transition: transform 0.15s ease-in;
-        svg {
-            /* width: 24px;
-            height: 24px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); */
-        }
     }
     &--close {
         background-color: $error-color;
         #{$parentClass}__button {
             transform: rotate(45deg);
         }
-    }
-}
-
-.navBackground {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    z-index: 1;
-
-    &:before,
-    &:after {
-        content: "";
-        background: #fff;
-        flex: 1 1 auto;
-    }
-
-    &__core {
-        width: 100%;
-        max-width: 80px;
     }
 }
 </style>
