@@ -1,4 +1,8 @@
-# Overflect
+# [In progress] Overflect 
+
+VueJS application with firebase integration
+
+  NodeJS, VueJS, SPA, Firebase
 
 ## Project setup
 ```
