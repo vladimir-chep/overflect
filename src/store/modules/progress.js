@@ -72,6 +72,10 @@ const getters = {
     getMasterList: state => state.masterList,
     getNum: state => state.numOfPlays,
     getSelectedSeason: state => state.selectedSeason,
+    getDisplayStatus: state => {
+        const masterList = state.masterList[state.selectedSeason];
+        return masterList && masterList.length ? true : false;
+    }
 };
 
 const actions = {
