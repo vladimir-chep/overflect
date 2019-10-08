@@ -82,7 +82,7 @@ export default {
             const targetRef = getTargetRef(this.role);
             const newData = {
                 created: this.getCurrentData(),
-                season: this.info.season,
+                // season: this.info.season,
                 role: this.role,
                 winStatus: this.winStatus,
                 rank: this.newRank,

@@ -16,14 +16,6 @@
                 class="info__item__input info__item__input--number"
                 >{{ info.id }}</span>
         </div>
-        <div class="info__item">
-            <p class="info__item__label">Season:</p>
-            <input
-                class="info__item__input info__item__input--season"
-                type="number"
-                v-model="season"
-                >
-        </div>
     </div>
 </template>
 

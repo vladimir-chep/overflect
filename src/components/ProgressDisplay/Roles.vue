@@ -58,7 +58,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../../styles/setup/_variables';
+@import '../../styles/setup/_variables';
 
 .roles {
     display: flex;

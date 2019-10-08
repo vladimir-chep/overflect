@@ -7,7 +7,7 @@ const state = {
     // Edit mode
     key: null,
     info: {
-        season: 17,
+        season: 0,
         created: '',
         id: null,
     },
@@ -107,12 +107,12 @@ const mutations = {
             id,
             rank,
             role,
-            season,
+            // season,
             winStatus
         } = snap;
 
         state.key = key;
-        state.info.season = season;
+        // state.info.season = season;
         state.info.created = created;
         state.info.id = id;
         state.rank = rank;
@@ -124,7 +124,7 @@ const mutations = {
         state.winStatus = 1;
         state.rank = null;
         state.key = null,
-        state.info.season = 17;
+        // state.info.season = 17;
         state.info.created = '';
         state.info.id = null;
     },

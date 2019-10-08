@@ -21,8 +21,8 @@ export default {}
 @import '../../styles/setup/variables.scss';
 
 .notFound {
-    margin-top: 30%;
     text-align: center;
+    padding: 50px 0;
 
     &__icon {
         width: 34px;

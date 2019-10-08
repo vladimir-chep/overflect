@@ -68,7 +68,7 @@ export default {
         &__ttl {
             font-size: 2.4rem;
             font-weight: bold;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
         }
         &__body {
             overflow-y: auto;

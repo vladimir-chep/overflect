@@ -160,6 +160,7 @@ export default {
     height: 100%;
     text-align: center;
     background: #fff;
+    box-shadow: $shadow-navigation;
 
     &__wrapper {
         position: relative;

@@ -39,6 +39,11 @@ const fb = require("@/firebaseConfig.js");
 export default {
     mixins: [mixin],
     props: ['ttl'],
+    data() {
+        return {
+            rank: '',
+        }
+    },
     components:{
         InfoSection,
         SelectedRoles,
@@ -47,6 +52,9 @@ export default {
         SubmitButton,
         RemoveButton,
     },
+    mounted() {
+        this.rank = this.$store.getters['editModule/getRank'];
+    },
     computed: {
         info(){
             return this.$store.getters['editModule/getInfo'];
@@ -54,9 +62,9 @@ export default {
         winStatus(){
             return this.$store.getters['editModule/getWinStatus'];
         },
-        rank(){
-            return this.$store.getters['editModule/getRank'];
-        },
+        // rank(){
+        //     return this.$store.getters['editModule/getRank'];
+        // },
         key(){
             return this.$store.getters['editModule/getKey'];
         },
@@ -97,14 +105,14 @@ export default {
             const targetRef = this.getTargetRef(this.role);
             const data = {
                 edited: this.getCurrentData(),
-                season: this.info.season,
+                // season: this.info.season,
                 winStatus: this.winStatus,
                 rank: this.rank,
             };
             const key = targetRef.child(this.key);
 
             key.child('edited').set(data.edited);
-            key.child('season').set(data.season);
+            // key.child('season').set(data.season);
             key.child('winStatus').set(data.winStatus);
             key.child('rank').set(data.rank);
 
