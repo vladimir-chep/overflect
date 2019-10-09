@@ -1,5 +1,5 @@
 <template>
-    <div :class="['pageContent', {'is-paused': pagePaused}]">
+    <div class="pageContent">
         <Header>Progress</Header>
         <div class="pageCore">
             <div class="pageCore__wrap">

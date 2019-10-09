@@ -15,7 +15,7 @@ const state = {
 const getters = {};
 
 const actions = {
-    getData ({
+    fetchData ({
         commit
     }) {
         axios.get(state.url).then(result => {

@@ -15,3 +15,33 @@
 export default {
 }
 </script>
+
+<style lang="scss">
+@import '../../styles/pages/settings.scss';
+.pageHeader {
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: $shadow-card;
+    background: #fff;
+
+    &__wrapper {
+        @include wrapper;
+        display: flex;
+        height: 59px;
+        justify-content: space-between;
+        align-items: center;
+
+        &__ttl {
+            margin: 0;
+            padding: $l-py 0;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        &__aside {
+            width: 100%;
+            max-width: calc(100% / 12 * 2);
+        }
+    }
+}
+</style>

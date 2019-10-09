@@ -1,6 +1,6 @@
 <template>
 <div id="app" class="appContainer" :class="layout">
-    <component :is="layout"></component>
+    <component :class="{'isPaused': pagePaused}" :is="layout"></component>
 </div>
 </template>
 
@@ -14,9 +14,12 @@ export default {
         }
     },
     computed: {
+        pagePaused() {
+            return this.$store.state['editModule'].visible;
+        },
         layout() {
             return `layout-${this.$route.meta.layout || defaultLayout}`;
-        }
+        },
     },
 }
 </script>

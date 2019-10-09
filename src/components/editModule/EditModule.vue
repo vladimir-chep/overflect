@@ -65,6 +65,7 @@ export default {
         display: flex;
         flex-direction: column;
         height: 100%;
+        max-height: calc(100vh - 136px);
         &__ttl {
             font-size: 2.4rem;
             font-weight: bold;

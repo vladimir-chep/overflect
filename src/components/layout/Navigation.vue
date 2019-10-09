@@ -119,11 +119,6 @@ import IconPluse from '@/components/icons/Pluse.vue';
 import IconSignIn from '@/components/icons/SignIn.vue';
 
 export default {
-    data() {
-        return {
-            // visible: false,
-        };
-    },
     computed: {
         visible() {
             return this.$store.state['editModule'].visible;
@@ -137,7 +132,6 @@ export default {
     },
     components: {
         EditModule,
-        //Icons
         IconPluse,
         IconSignIn,
     },
@@ -145,7 +139,6 @@ export default {
         toggleEditModule() {
             if (this.skipped) return;
             this.$store.dispatch("editModule/toggle");
-            // this.visible = !this.visible;
         },
     },
 };
@@ -168,7 +161,7 @@ export default {
         max-width: 100%;
         height: 100%;
         margin: auto;
-        z-index: 2;
+        z-index: 200;
     }
 }
 
@@ -205,7 +198,6 @@ export default {
 
         &--editModule {
             max-width: 80px;
-            /* background: red; */
         }
 
         &__icon {
@@ -233,7 +225,7 @@ export default {
     width: 56px;
     height: 56px;
     box-shadow: $shadow1;
-    z-index: 3;
+    z-index: 201;
     transition: background-color .15s ease-in;
 
     &__button {

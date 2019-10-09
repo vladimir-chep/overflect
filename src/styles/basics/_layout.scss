@@ -53,7 +53,6 @@ ul {
             position: relative;
 
             &:after {
-                // height: 0;
                 display: block;
                 position: absolute;
                 bottom: 0;
@@ -65,16 +64,15 @@ ul {
                 opacity: 0;
                 content: '';
                 transition: all .35s ease-in-out;
+                z-index: 100;
             }
+        }
+        &.isPaused > div {
+            overflow-y: hidden !important;
 
-            &.is-paused {
-                overflow-y: hidden !important;
-
-                &:after {
-                    visibility: visible;
-                    // height: 100%;
-                    opacity: 1;
-                }
+            &:after {
+                visibility: visible;
+                opacity: 1;
             }
         }
     }
@@ -82,9 +80,7 @@ ul {
 
 .pageCore {
     position: relative;
-    // margin: 20px auto;
     margin: 0 auto 20px;
-    // padding-top: $l-py;
     padding-bottom: $l-py;
 
     &--hasBG {
@@ -97,33 +93,6 @@ ul {
     }
 }
 
-// Header
-.pageHeader {
-    position: relative;
-    margin-bottom: 20px;
-    box-shadow: $shadow-pageHeader;
-    background: #fff;
-
-    &__wrapper {
-        @include wrapper;
-        display: flex;
-        height: 59px;
-        justify-content: space-between;
-        align-items: center;
-
-        &__ttl {
-            margin: 0;
-            padding: $l-py 0;
-            font-weight: bold;
-            font-size: 1.6rem;
-        }
-
-        &__aside {
-            width: 100%;
-            max-width: calc(100% / 12 * 2);
-        }
-    }
-}
 
 // display
 .d-block {
