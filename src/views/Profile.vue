@@ -3,15 +3,15 @@
     <div class="profileHeader">
         <transition name="slide" mode="out-in">
             <div class="profileHeader__wrapper" v-if="loading" key="0">
-                <div class="profileLogo" @click="loading = !loading">
+                <div class="profileLogo">
                     <div class="profileLogo__img isLoading"></div>
                 </div>
                 <div class="profileName dummyBlock isLoading" style="width:30%; height:20px;"></div>
                 <div class="profileLabel dummyBlock isLoading" style="width:9%; height:17px;"></div>
-                <div class="dummyBlock isLoading" style="width:70%; height:16px; margin: 21px 0;"></div>
+                <div class="dummyBlock isLoading" style="width:70%; height:18px; margin: 21px 0;"></div>
             </div>
             <div class="profileHeader__wrapper" v-else key="1">
-                <div class="profileLogo" @click="loading = !loading">
+                <div class="profileLogo">
                     <img :src="info.icon" alt="" class="profileLogo__img">
                 </div>
                 <p class="profileName">{{ info.name }}</p>

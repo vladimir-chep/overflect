@@ -67,7 +67,6 @@ export default {
     data() {
         return {
             password: '',
-            // password: '321506',
             alert: false,
             slided: false,
         }
@@ -197,11 +196,12 @@ export default {
         &__head {
             margin-bottom: 2rem;
             font-weight: bold;
-            font-size: 2.4rem;
+            font-size: 3rem;
         }
 
         &__txt {
-            font-size: 1.2rem;
+            font-size: 1.6rem;
+            line-height: 1.75;
 
             a {
                 color: #fff;
@@ -283,12 +283,6 @@ export default {
             }
         }
     }
-}
-
-.link-continue {
-    color: #fff;
-    padding: 1rem;
-    display: inline-block;
 }
 
 .slide-right-enter-active,

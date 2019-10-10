@@ -70,9 +70,6 @@ const actions = {
     }, value) {
         commit('setWinStatus', value);
     },
-    // updateRank({commit}, value) {
-    //     commit('setRank', value);
-    // },
 };
 
 const mutations = {
@@ -94,9 +91,6 @@ const mutations = {
     setRank (state, payload) {
         state.rank = payload;
     },
-    // setRank (state, rank) {
-    //     state.rank = Object.assign({}, state.rank, rank);
-    // },
     updateEditMode (state, payload) {
         const {
             key,
@@ -119,7 +113,7 @@ const mutations = {
         state.role = role;
         state.winStatus = winStatus;
     },
-    reset (state, payload) {
+    reset (state) {
         state.role = 'tank';
         state.winStatus = 1;
         state.rank = null;

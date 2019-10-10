@@ -1,5 +1,3 @@
-// const fb = require('@/firebaseConfig');
-
 const state = {
     numOfPlays: 0,
 
@@ -11,8 +9,7 @@ const state = {
     supportList: [],
     masterList: {},
 
-    tierScheme: [
-        {
+    tierScheme: [{
             name: 'Bronze',
             image: require('@/assets/images/ranks/Bronze.png'),
             min: 0,

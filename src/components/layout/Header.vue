@@ -36,7 +36,7 @@ export default {}
             margin: 0;
             padding: $l-py 0;
             font-weight: bold;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
         }
 
         &__aside {

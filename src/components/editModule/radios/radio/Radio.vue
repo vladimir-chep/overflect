@@ -49,14 +49,12 @@ export default {
         display: flex;
         width: 100%;
         justify-content: center;
-        /* padding: $padding; */
         padding: 14px;
         border-width: 0;
         border-radius: 8px;
-        /* color: #fff; */
         background-color: $unactive-color;
         font-weight: bold;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         text-transform: uppercase;
         outline-style: none;
 

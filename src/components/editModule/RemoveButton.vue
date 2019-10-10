@@ -28,21 +28,17 @@ export default {
 @import "../../styles/setup/_variables";
 
 .removeButton {
-    background: $success-color;
     display: block;
     width: 100%;
-    padding: 15px;
+    padding: 14px;
     border-radius: 8px;
-    color: #fff;
     font-weight: bold;
     font-size: 1.8rem;
     outline-style: none;
     appearance: none;
     text-transform: uppercase;
-    border-width: 0;
-    background-color: $unactive-color;
-    background-color: $text-light;
-    background-color: $text-color;
-
+    color: $text-color;
+    background-color: #fff;
+    border: 1px solid $text-color;
 }
 </style>

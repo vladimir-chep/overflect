@@ -153,7 +153,7 @@ export default {
         @include cell;
         color: $gray;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         text-align: center;
     }
 }

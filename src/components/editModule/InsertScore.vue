@@ -35,7 +35,7 @@ export default {
         border-radius: 8px;
         box-shadow: inset 0 0 0 1px #f1f1f1;
         background-color: #f1f1f1;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         text-align: center;
         transition-property: all;
         transition-duration: 80ms;

@@ -83,7 +83,7 @@
         border-radius: 8px;
         color: $text-light;
         font-weight: bold;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         text-align: center;
         cursor: pointer;
 
@@ -114,12 +114,12 @@
             margin: 0 auto 4px;
             color: $theme;
             font-weight: bold;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
         }
 
         &__name {
             margin: auto;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
     }
 }
@@ -128,7 +128,7 @@
     &__ttl {
         margin: 0 auto $sps;
         font-weight: bold;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         text-align: center;
     }
 
@@ -171,7 +171,7 @@
 
     &__level {
         color: $theme;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -196,9 +196,7 @@
 
 .isLoading {
     $bg: rgba($theme, .2);
-    // $bg: #cabcef;
     $bg2: rgba($theme, .4);
-    // $bg2: #bdade9;
     position: relative;
     background: #f6f7f8;
     background: $bg;

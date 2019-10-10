@@ -3,13 +3,12 @@
     <div class="progressDisplay">
         <Roles />
         <slot v-if="isDisplayed"></slot>
-        <NothingDisplay v-else/>
+        <NothingDisplay v-else />
     </div>
 </div>
 </template>
 
 <script>
-// import Seasons from '@/components/Progress/Seasons.vue';
 import Roles from '@/components/ProgressDisplay/Roles.vue';
 import NothingDisplay from '@/components/ProgressDisplay/NothingDisplay.vue';
 export default {
@@ -19,22 +18,7 @@ export default {
         NothingDisplay,
     },
     computed: {
-        // selectedRole(){
-        //     return this.$store.state['editModule'].selectedRole;
-        // },
-        // masterList() {
-        //     return this.$store.getters['progress/getMasterList'];
-        // },
-        // seasons() {
-        //     return this.$store.getters['progress/getSeasons'];
-        // },
-        // selectedSeason() {
-        //     return this.$store.getters['progress/getSelectedSeason'];
-        // },
-        // displayList(){
-        //     return this.masterList[this.selectedSeason];
-        // },
-        isDisplayed(){
+        isDisplayed() {
             return this.$store.getters['progress/getDisplayStatus'];
         },
     },
