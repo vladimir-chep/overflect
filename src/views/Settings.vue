@@ -56,5 +56,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/pages/settings.scss';
+@import '../styles/views/settings.scss';
 </style>

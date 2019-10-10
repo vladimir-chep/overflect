@@ -5,7 +5,7 @@ import {
 
 export default {
     extends: Line,
-    props: ["data"],
+    props: ['chartData'],
     mounted() {
         this.renderLineChart();
     },
@@ -20,10 +20,10 @@ export default {
     },
     computed: {
         labels: function () {
-            return this.data.order;
+            return this.chartData.order;
         },
         ranks: function () {
-            return this.data.ranks;
+            return this.chartData.ranks;
         },
     },
     methods: {
@@ -35,7 +35,7 @@ export default {
             this.renderChart({
                 labels: this.labels,
                 datasets: [{
-                    label: "Rank",
+                    label: 'Rank',
                     borderColor: '#7b4bff',
                     backgroundColor: this.gradient,
                     pointBackgroundColor: '#7b4bff',
@@ -44,14 +44,13 @@ export default {
                     data: this.ranks
                 }]
             }, this.options);
-        }
+        },
     },
     watch: {
-        data() {
+        chartData() {
             if (this.$data._chart) {
                 this.$data._chart.destroy();
             }
-            //this.renderChart(this.data, this.options);
             this.renderLineChart();
         }
     }

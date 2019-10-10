@@ -1,21 +1,14 @@
 <template>
-    <div class="">
-        <slot></slot>
-        <div class="editModule__wrapper__body">
-            <InfoSection />
-            <Roles />
-            <Wins />
-            <InsertScore
-                placeholderText="Insert score"
-                v-model="newRank"
-                />
-            <SubmitButton
-                text="Add"
-                :unactive="notActive"
-                @action="addResult"
-                />
-        </div>
+<div class="">
+    <p class="editModule__wrapper__ttl">{{ ttl }}</p>
+    <div class="editModule__wrapper__body">
+        <InfoSection />
+        <Roles />
+        <Wins />
+        <InsertScore placeholderText="Insert score" v-model="newRank" />
+        <SubmitButton text="Add" :unactive="notActive" @action="addResult" />
     </div>
+</div>
 </template>
 
 <script>
@@ -28,20 +21,10 @@ import SubmitButton from '@/components/editModule/SubmitButton.vue';
 
 const fb = require("@/firebaseConfig.js");
 
-
 export default {
     mixins: [mixin],
-    data() {
-        return {
-            // info: {
-            //     season: 17,
-            // },
-            // role: 'tank',
-            // winStatus: 1,
-            // newRank: '',
-        };
-    },
-    components:{
+    props: ['ttl'],
+    components: {
         InfoSection,
         Roles,
         Wins,
@@ -49,17 +32,17 @@ export default {
         SubmitButton,
     },
     computed: {
-        info(){
+        info() {
             return this.$store.getters['editModule/getInfo'];
         },
-        winStatus(){
+        winStatus() {
             return this.$store.getters['editModule/getWinStatus'];
         },
         newRank: {
-            get(){
+            get() {
                 return this.$store.getters['editModule/getRank'];
             },
-            set(value){
+            set(value) {
                 this.$store.commit('editModule/setRank', Number(value));
             }
         },
@@ -81,25 +64,22 @@ export default {
             const targetRef = getTargetRef(this.role);
             const newData = {
                 created: this.getCurrentData(),
-                season: this.info.season,
+                // season: this.info.season,
                 role: this.role,
                 winStatus: this.winStatus,
                 rank: this.newRank,
             };
-            const getID = new Promise((resolve, reject) => {
-                targetRef.once('value').then(function(snapshot) {
+            const getID = new Promise((resolve) => {
+                targetRef.once('value').then(function (snapshot) {
                     resolve(snapshot.numChildren() + 1);
                 });
             });
 
-            getID.then(value =>{
+            getID.then(value => {
                 newData.id = value;
                 targetRef.push(newData);
             });
 
-            // this.role = 'tank';
-            // this.winStatus = 1;
-            // this.newRank = null;
             this.$store.commit('editModule/reset');
 
             function checkNewRank(value) {

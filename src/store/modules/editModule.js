@@ -7,7 +7,7 @@ const state = {
     // Edit mode
     key: null,
     info: {
-        season: 17,
+        season: 0,
         created: '',
         id: null,
     },
@@ -70,9 +70,6 @@ const actions = {
     }, value) {
         commit('setWinStatus', value);
     },
-    // updateRank({commit}, value) {
-    //     commit('setRank', value);
-    // },
 };
 
 const mutations = {
@@ -94,9 +91,6 @@ const mutations = {
     setRank (state, payload) {
         state.rank = payload;
     },
-    // setRank (state, rank) {
-    //     state.rank = Object.assign({}, state.rank, rank);
-    // },
     updateEditMode (state, payload) {
         const {
             key,
@@ -107,24 +101,24 @@ const mutations = {
             id,
             rank,
             role,
-            season,
+            // season,
             winStatus
         } = snap;
 
         state.key = key;
-        state.info.season = season;
+        // state.info.season = season;
         state.info.created = created;
         state.info.id = id;
         state.rank = rank;
         state.role = role;
         state.winStatus = winStatus;
     },
-    reset (state, payload) {
+    reset (state) {
         state.role = 'tank';
         state.winStatus = 1;
         state.rank = null;
         state.key = null,
-        state.info.season = 17;
+        // state.info.season = 17;
         state.info.created = '';
         state.info.id = null;
     },

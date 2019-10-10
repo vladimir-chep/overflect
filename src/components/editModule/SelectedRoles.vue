@@ -36,11 +36,6 @@ export default {
             required: true
         }
     },
-    // computed: {
-    //     role(){
-    //         return this.$store.state['editModule'].role;
-    //     }
-    // },
     components:{
         IconTank,
         IconDamage,

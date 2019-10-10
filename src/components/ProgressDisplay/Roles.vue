@@ -58,7 +58,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../../styles/setup/_variables';
+@import '../../styles/setup/_variables';
 
 .roles {
     display: flex;
@@ -72,6 +72,7 @@ export default {
     background: #fff;
     padding: 14px 0;
     font-weight: bold;
+    font-size: 1.6rem;
     color: $text-light;
     position: relative;
     text-transform: capitalize;

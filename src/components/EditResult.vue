@@ -1,27 +1,15 @@
 <template>
-    <div>
-        <slot></slot>
-        <div class="editModule__wrapper__body">
-            <InfoSection />
-            <SelectedRoles
-                :role="role"
-                />
-            <Wins />
-            <InsertScore
-                placeholderText="Insert score"
-                v-model="rank"
-                />
-            <SubmitButton
-                text="Submit changes"
-                :unactive="notActive"
-                @action="edit"
-                />
-            <RemoveButton
-                text="Remove"
-                @action="remove"
-                />
-        </div>
+<div>
+    <p class="editModule__wrapper__ttl">{{ ttl }}</p>
+    <div class="editModule__wrapper__body">
+        <InfoSection />
+        <SelectedRoles :role="role" />
+        <Wins />
+        <InsertScore placeholderText="Insert score" v-model="rank" />
+        <SubmitButton text="Submit changes" :unactive="notActive" @action="edit" />
+        <RemoveButton text="Remove" @action="remove" />
     </div>
+</div>
 </template>
 
 <script>
@@ -35,10 +23,15 @@ import RemoveButton from '@/components/editModule/RemoveButton.vue';
 
 const fb = require("@/firebaseConfig.js");
 
-
 export default {
     mixins: [mixin],
-    components:{
+    props: ['ttl'],
+    data() {
+        return {
+            rank: '',
+        }
+    },
+    components: {
         InfoSection,
         SelectedRoles,
         Wins,
@@ -46,17 +39,17 @@ export default {
         SubmitButton,
         RemoveButton,
     },
+    mounted() {
+        this.rank = this.$store.getters['editModule/getRank'];
+    },
     computed: {
-        info(){
+        info() {
             return this.$store.getters['editModule/getInfo'];
         },
-        winStatus(){
+        winStatus() {
             return this.$store.getters['editModule/getWinStatus'];
         },
-        rank(){
-            return this.$store.getters['editModule/getRank'];
-        },
-        key(){
+        key() {
             return this.$store.getters['editModule/getKey'];
         },
         role() {
@@ -70,7 +63,7 @@ export default {
         }
     },
     methods: {
-        getTargetRef(curentRole){
+        getTargetRef(curentRole) {
             let result;
 
             switch (curentRole) {
@@ -96,14 +89,14 @@ export default {
             const targetRef = this.getTargetRef(this.role);
             const data = {
                 edited: this.getCurrentData(),
-                season: this.info.season,
+                // season: this.info.season,
                 winStatus: this.winStatus,
                 rank: this.rank,
             };
             const key = targetRef.child(this.key);
 
             key.child('edited').set(data.edited);
-            key.child('season').set(data.season);
+            // key.child('season').set(data.season);
             key.child('winStatus').set(data.winStatus);
             key.child('rank').set(data.rank);
 
@@ -138,7 +131,6 @@ export default {
 
             targetRef.child(this.key).remove();
             this.$store.dispatch('editModule/hideEdit');
-            // this.$store.commit('editModule/reset');
         }
     }
 };

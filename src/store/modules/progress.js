@@ -1,5 +1,3 @@
-// const fb = require('@/firebaseConfig');
-
 const state = {
     numOfPlays: 0,
 
@@ -11,8 +9,7 @@ const state = {
     supportList: [],
     masterList: {},
 
-    tierScheme: [
-        {
+    tierScheme: [{
             name: 'Bronze',
             image: require('@/assets/images/ranks/Bronze.png'),
             min: 0,
@@ -72,6 +69,10 @@ const getters = {
     getMasterList: state => state.masterList,
     getNum: state => state.numOfPlays,
     getSelectedSeason: state => state.selectedSeason,
+    getDisplayStatus: state => {
+        const masterList = state.masterList[state.selectedSeason];
+        return masterList && masterList.length ? true : false;
+    }
 };
 
 const actions = {

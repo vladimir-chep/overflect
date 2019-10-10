@@ -35,8 +35,8 @@ export default {
     outline-style: none;
     appearance: none;
     text-transform: uppercase;
-    border-width: 0;
-    margin-bottom: 20px;
+    border: 1px solid;
+    margin-bottom: 1rem;
     &:disabled {
         background-color: $unactive-color;
     }
