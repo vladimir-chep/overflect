@@ -1,53 +1,58 @@
-const fb = require('@/firebaseConfig');
-
 const state = {
     numOfPlays: 0,
-    list: [],
-    tierScheme: [
-        {
-            name: "Bronze",
+
+    seasons: [],
+    selectedSeason: 0,
+
+    tankList: [],
+    damageList: [],
+    supportList: [],
+    masterList: {},
+
+    tierScheme: [{
+            name: 'Bronze',
             image: require('@/assets/images/ranks/Bronze.png'),
             min: 0,
             max: 1499
         },
         {
-            name: "Silver",
+            name: 'Silver',
             image: require('@/assets/images/ranks/Silver.png'),
             min: 1500,
             max: 1999
         },
         {
-            name: "Gold",
+            name: 'Gold',
             image: require('@/assets/images/ranks/Gold.png'),
             min: 2000,
             max: 2499
         },
         {
-            name: "Platinum",
+            name: 'Platinum',
             image: require('@/assets/images/ranks/Platinum.png'),
             min: 2500,
             max: 2999
         },
         {
-            name: "Diamond",
+            name: 'Diamond',
             image: require('@/assets/images/ranks/Diamond.png'),
             min: 3000,
             max: 3499
         },
         {
-            name: "Master",
+            name: 'Master',
             image: require('@/assets/images/ranks/Master.png'),
             min: 3500,
             max: 3999
         },
         {
-            name: "Grandmaster",
+            name: 'Grandmaster',
             image: require('@/assets/images/ranks/Grandmaster.png'),
             min: 4000,
             max: 4499
         },
         {
-            name: "Top500",
+            name: 'Top500',
             image: require('@/assets/images/ranks/Top500.png'),
             min: 4500,
             max: 5000
@@ -56,74 +61,97 @@ const state = {
 };
 
 const getters = {
-    getResults: state => state.list,
+    getSeasons: state => {
+        const seasons = [];
+        Object.keys(state.masterList).forEach(key => seasons.push(Number(key)));
+        return seasons;
+    },
+    getMasterList: state => state.masterList,
     getNum: state => state.numOfPlays,
+    getSelectedSeason: state => state.selectedSeason,
+    getDisplayStatus: state => {
+        const masterList = state.masterList[state.selectedSeason];
+        return masterList && masterList.length ? true : false;
+    }
 };
 
 const actions = {
     fetchResults ({
         commit
-    }) {
-        fb.resultsRef.on("value", snapshot => {
-            const resultList = [];
-            let order = 0;
+    }, fbRef) {
+        fbRef.on('value', snapshot => {
+            const master = {};
 
             snapshot.forEach(child => {
                 let val = child.exportVal();
                 let obj = {
-                    order: order,
-                    key: child.key,
+                    created: val.created,
+                    id: val.id,
                     rank: val.rank,
+                    role: val.role,
                     winStatus: val.winStatus,
-                    created: val.created
+                    key: child.key,
+                    season: val.season,
                 };
-                resultList.push(obj);
-                order++;
+
+                if (val.edited) {
+                    obj.edited = val.edited;
+                }
+
+                if (!master[val.season]) {
+                    master[val.season] = [];
+                }
+                master[val.season].push(obj);
             });
 
-            resultList.forEach((val, index, arr) => {
-                val.diff = calcDiff();
-                val.tier = calcTier();
-                function calcDiff() {
-                    let result = 0;
-                    if (index !== 0) {
-                        let cur = val.rank;
-                        let prev = arr[index - 1].rank;
-                        result = cur - prev;
+            Object.keys(master).forEach(key => {
+                master[key].forEach((val, index, arr) => {
+                    val.diff = calcDiff();
+                    val.tier = calcTier();
+
+                    function calcDiff () {
+                        let result = 0;
+                        if (index !== 0) {
+                            let cur = val.rank;
+                            let prev = arr[index - 1].rank;
+                            result = cur - prev;
+                        }
+
+                        return result;
                     }
-                    // console.log(result);
 
-                    return result;
-                }
-                function calcTier() {
-                    let foundOne = state.tierScheme.find(e => {
-                        if (val.rank >= e.min && val.rank <= e.max) return e;
-                    });
-                    return {
-                        name: foundOne.name,
-                        url: foundOne.image || "none"
-                    };
-                }
+                    function calcTier () {
+                        let foundOne = state.tierScheme.find(e => {
+                            if (val.rank >= e.min && val.rank <= e.max) return e;
+                        });
+                        return {
+                            name: foundOne.name,
+                            url: foundOne.image || "none"
+                        };
+                    }
+                });
             });
+
+            // Array with all results
+            let allResults = [];
+            Object.keys(master).forEach(key => allResults.push(master[key]));
+            master['0'] = allResults.flat();
 
             commit('updateNum', snapshot.numChildren());
-            commit('updateResults', resultList);
+            commit('updateMasterList', master);
         });
     },
-    // add({commit}, payload){
-    //     fb.resultsRef.push(payload);
-    // },
-    // remove({commit}, payload){
-    //     fb.resultsRef.child(payload).remove();
-    // },
 };
 
 const mutations = {
-    updateNum(state, num){
+    updateNum (state, num) {
         state.numOfPlays = num;
     },
-    updateResults(state, results){
-        state.list = results;
+    updateMasterList (state, results) {
+        state.masterList = results;
+    },
+    setSelectedSeason (state, payload) {
+        state.selectedSeason = payload;
     },
 };
 

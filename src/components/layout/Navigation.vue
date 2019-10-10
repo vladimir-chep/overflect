@@ -1,16 +1,5 @@
 <template>
-    <nav id="nav"
-         class="navigation">
-        <div class="navBackground">
-            <svg class="navBackground__core"
-                 fill="none"
-                 preserveAspectRatio="xMidYMin slice"
-                 xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 80 60">
-                <path d="M80 3.23057e-05C77.2386 3.23057e-05 75.0375 2.25142 74.6477 4.98519C72.2279 21.9539 57.6375 35 40 35C22.3625 35 7.77206 21.9539 5.35232 4.98515C4.96249 2.2514 2.76141 1.78419e-05 0 0V60H80V3.23057e-05Z"
-                      fill="white" />
-            </svg>
-        </div>
+    <nav id="nav" class="navigation">
         <div class="navigation__wrapper">
             <div class="navList">
                 <router-link to="/profile"
@@ -70,33 +59,17 @@
                               fill="#AFB2BC" />
                     </svg>
                 </router-link>
-                <div class="navList__item navList__item--addResult">
-                    <div :class="['addResult',{'addResult--close': isShowed}]">
+                <div class="navList__item navList__item--centralBtn">
+                    <div :class="['centralBtn',{'centralBtn--close': visible}]">
                         <router-link to="/signin"
-                                     class="addResult__button"
-                                     v-if="isSkipped">
-                            <svg viewBox="0 0 24 24"
-                                 fill="none"
-                                 preserveAspectRatio="xMidYMin slice"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.5 19C19.5 19.2761 19.2761 19.5 19 19.5H14C13.7239 19.5 13.5 19.7239 13.5 20V23.5C13.5 23.7761 13.7239 24 14 24H22.5C23.3284 24 24 23.3284 24 22.5V1.5C24 0.671573 23.3284 0 22.5 0H14C13.7239 0 13.5 0.223858 13.5 0.5V4C13.5 4.27614 13.7239 4.5 14 4.5H19C19.2761 4.5 19.5 4.72386 19.5 5V19Z"
-                                      fill="white" />
-                                <path d="M0 9.74999C0 9.33578 0.335786 8.99999 0.75 8.99999H6.75C7.16421 8.99999 7.5 8.66421 7.5 8.24999V4.63066C7.5 3.9899 8.25159 3.64421 8.73809 4.06122L17.3357 11.4306C17.6849 11.7299 17.6849 12.2701 17.3357 12.5694L8.73809 19.9388C8.25159 20.3558 7.5 20.0101 7.5 19.3693V15.75C7.5 15.3358 7.16421 15 6.75 15H0.75C0.335787 15 0 14.6642 0 14.25V9.74999Z"
-                                      fill="white" />
-                            </svg>
+                                     class="centralBtn__button"
+                                     v-if="skipped">
+                            <IconSignIn />
                         </router-link>
-                        <div class="addResult__button"
+                        <div class="centralBtn__button"
                              v-else
-                             @click="show">
-                            <svg viewBox="0 0 24 24"
-                                 fill="none"
-                                 preserveAspectRatio="xMidYMin slice"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                      clip-rule="evenodd"
-                                      d="M24 12.75V11.25C24 10.5871 23.4576 10.0446 22.7946 10.0446H13.9554V1.20536C13.9554 0.54241 13.4129 0 12.75 0H11.25C10.5871 0 10.0446 0.54241 10.0446 1.20536V10.0446H1.20536C0.54241 10.0446 0 10.5871 0 11.25V12.75C0 13.4129 0.54241 13.9554 1.20536 13.9554H10.0446V22.7946C10.0446 23.4576 10.5871 24 11.25 24H12.75C13.4129 24 13.9554 23.4576 13.9554 22.7946V13.9554H22.7946C23.4576 13.9554 24 13.4129 24 12.75Z"
-                                      fill="white" />
-                            </svg>
+                             @click="toggleEditModule">
+                            <IconPluse />
                         </div>
                     </div>
                 </div>
@@ -134,36 +107,38 @@
                     </svg>
                 </router-link>
             </div>
-            <add-result :showed="isShowed" />
+            <EditModule />
         </div>
     </nav>
 </template>
 
 <script>
-import AddResult from "@/components/AddResult.vue";
+import EditModule from "@/components/editModule/EditModule.vue";
+
+import IconPluse from '@/components/icons/Pluse.vue';
+import IconSignIn from '@/components/icons/SignIn.vue';
 
 export default {
-    data() {
-        return {
-            isShowed: false,
-        };
-    },
     computed: {
+        visible() {
+            return this.$store.state['editModule'].visible;
+        },
         isAuthenticated() {
             return this.$store.getters["auth/isAuthenticated"];
         },
-        isSkipped() {
+        skipped() {
             return this.$store.getters["auth/isSkipped"];
-        }
+        },
     },
     components: {
-        AddResult
+        EditModule,
+        IconPluse,
+        IconSignIn,
     },
     methods: {
-        show() {
-            if (this.isSkipped) return;
-            this.$store.dispatch("common/switchPageScroll");
-            this.isShowed = !this.isShowed;
+        toggleEditModule() {
+            if (this.skipped) return;
+            this.$store.dispatch("editModule/toggle");
         },
     },
 };
@@ -177,13 +152,8 @@ export default {
     max-height: 60px;
     height: 100%;
     text-align: center;
-    &:after {
-        content: "";
-        width: 100%;
-        position: absolute;
-        box-shadow: 0 -5px 30px 50px rgba(50, 50, 93, 0.15);
-        left: 0;
-    }
+    background: #fff;
+    box-shadow: $shadow-navigation;
 
     &__wrapper {
         position: relative;
@@ -191,7 +161,7 @@ export default {
         max-width: 100%;
         height: 100%;
         margin: auto;
-        z-index: 2;
+        z-index: 200;
     }
 }
 
@@ -226,9 +196,8 @@ export default {
             left: 0;
         }
 
-        &--addResult {
+        &--editModule {
             max-width: 80px;
-            /* background: red; */
         }
 
         &__icon {
@@ -244,7 +213,7 @@ export default {
         }
     }
 }
-.addResult {
+.centralBtn {
     $parentClass: "#{&}";
     position: absolute;
     top: 0;
@@ -256,50 +225,21 @@ export default {
     width: 56px;
     height: 56px;
     box-shadow: $shadow1;
-    z-index: 3;
-    transition: background-color 0.15s ease-in;
+    z-index: 201;
+    transition: background-color .15s ease-in;
+
     &__button {
         width: 100%;
         height: 100%;
         position: relative;
         display: block;
         transition: transform 0.15s ease-in;
-        svg {
-            width: 24px;
-            height: 24px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
     }
     &--close {
         background-color: $error-color;
         #{$parentClass}__button {
             transform: rotate(45deg);
         }
-    }
-}
-
-.navBackground {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    z-index: 1;
-
-    &:before,
-    &:after {
-        content: "";
-        background: #fff;
-        flex: 1 1 auto;
-    }
-
-    &__core {
-        width: 100%;
-        max-width: 80px;
     }
 }
 </style>

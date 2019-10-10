@@ -1,12 +1,13 @@
 <template>
-<div class="">
+<div>
     <p class="editModule__wrapper__ttl">{{ ttl }}</p>
     <div class="editModule__wrapper__body">
         <InfoSection />
-        <Roles />
+        <SelectedRoles :role="role" />
         <Wins />
-        <InsertScore placeholderText="Insert score" v-model="newRank" />
-        <SubmitButton text="Add" :unactive="notActive" @action="addResult" />
+        <InsertScore placeholderText="Insert score" v-model="rank" />
+        <SubmitButton text="Submit changes" :unactive="notActive" @action="edit" />
+        <RemoveButton text="Remove" @action="remove" />
     </div>
 </div>
 </template>
@@ -14,22 +15,32 @@
 <script>
 import mixin from "@/mixins";
 import InfoSection from '@/components/editModule/Infos.vue';
-import Roles from '@/components/editModule/Roles.vue';
+import SelectedRoles from '@/components/editModule/SelectedRoles.vue';
 import Wins from '@/components/editModule/Wins.vue';
 import InsertScore from '@/components/editModule/InsertScore.vue';
 import SubmitButton from '@/components/editModule/SubmitButton.vue';
+import RemoveButton from '@/components/editModule/RemoveButton.vue';
 
 const fb = require("@/firebaseConfig.js");
 
 export default {
     mixins: [mixin],
     props: ['ttl'],
+    data() {
+        return {
+            rank: '',
+        }
+    },
     components: {
         InfoSection,
-        Roles,
+        SelectedRoles,
         Wins,
         InsertScore,
         SubmitButton,
+        RemoveButton,
+    },
+    mounted() {
+        this.rank = this.$store.getters['editModule/getRank'];
     },
     computed: {
         info() {
@@ -38,13 +49,8 @@ export default {
         winStatus() {
             return this.$store.getters['editModule/getWinStatus'];
         },
-        newRank: {
-            get() {
-                return this.$store.getters['editModule/getRank'];
-            },
-            set(value) {
-                this.$store.commit('editModule/setRank', Number(value));
-            }
+        key() {
+            return this.$store.getters['editModule/getKey'];
         },
         role() {
             return this.$store.getters['editModule/getRole'];
@@ -53,34 +59,48 @@ export default {
             return this.$store.getters['auth/isSkipped'];
         },
         notActive() {
-            return this.newRank !== null ? false : true;
+            return this.rank !== '' ? false : true;
         }
     },
     methods: {
-        addResult() {
+        getTargetRef(curentRole) {
+            let result;
+
+            switch (curentRole) {
+                case 'tank':
+                    result = fb.tankRef;
+                    break;
+                case 'damage':
+                    result = fb.damageRef;
+                    break;
+                case 'support':
+                    result = fb.supportRef;
+                    break;
+                default:
+                    result = fb.resultsRef;
+                    break;
+            }
+            return result;
+        },
+        edit() {
             if (!checkWinStatus(this.winStatus)) return;
-            if (!checkNewRank(this.newRank)) return;
+            if (!checkNewRank(this.rank)) return;
 
-            const targetRef = getTargetRef(this.role);
-            const newData = {
-                created: this.getCurrentData(),
+            const targetRef = this.getTargetRef(this.role);
+            const data = {
+                edited: this.getCurrentData(),
                 // season: this.info.season,
-                role: this.role,
                 winStatus: this.winStatus,
-                rank: this.newRank,
+                rank: this.rank,
             };
-            const getID = new Promise((resolve) => {
-                targetRef.once('value').then(function (snapshot) {
-                    resolve(snapshot.numChildren() + 1);
-                });
-            });
+            const key = targetRef.child(this.key);
 
-            getID.then(value => {
-                newData.id = value;
-                targetRef.push(newData);
-            });
+            key.child('edited').set(data.edited);
+            // key.child('season').set(data.season);
+            key.child('winStatus').set(data.winStatus);
+            key.child('rank').set(data.rank);
 
-            this.$store.commit('editModule/reset');
+            this.$store.dispatch('editModule/hideEdit');
 
             function checkNewRank(value) {
                 if (isNaN(value)) {
@@ -105,27 +125,13 @@ export default {
                 }
                 return true;
             }
-
-            function getTargetRef(curentRole) {
-                let result;
-
-                switch (curentRole) {
-                    case 'tank':
-                        result = fb.tankRef;
-                        break;
-                    case 'damage':
-                        result = fb.damageRef;
-                        break;
-                    case 'support':
-                        result = fb.supportRef;
-                        break;
-                    default:
-                        result = fb.resultsRef;
-                        break;
-                }
-                return result;
-            }
         },
+        remove() {
+            const targetRef = this.getTargetRef(this.role);
+
+            targetRef.child(this.key).remove();
+            this.$store.dispatch('editModule/hideEdit');
+        }
     }
 };
 </script>

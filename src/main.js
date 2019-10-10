@@ -26,7 +26,7 @@ fb.auth.onAuthStateChanged(firebaseUser => {
                 if (firebaseUser) {
                     store.dispatch('auth/autoSignIn', firebaseUser);
                 }
-                store.dispatch('progress/fetchResults');
+                store.dispatch('progress/fetchResults', fb.tankRef);
             },
         });
     }
