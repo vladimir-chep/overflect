@@ -7,7 +7,7 @@ import axios from 'axios';
  */
 
 const state = {
-    url:"https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile",
+    url: 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile',
     data: {},
     isFilled: false,
 };
@@ -18,19 +18,25 @@ const actions = {
     fetchData ({
         commit
     }) {
-        axios.get(state.url).then(result => {
-            commit('setData', result.data);
-        });
-        commit('switchFlag', true);
+        axios
+            .get(state.url)
+            .then(result => {
+                commit('setData', result.data);
+            })
+            .catch(error => {
+                console.error(`${error}. Is this url '${state.url}' ok? `);
+            });
     }
 };
 
 const mutations = {
-    switchFlag(state, payload){
+    setFilled (state, payload) {
         state.isFilled = payload;
     },
     setData (state, payload) {
         state.data = payload;
+        state.isFilled = true;
+
     }
 };
 

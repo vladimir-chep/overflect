@@ -1,5 +1,5 @@
 <template>
-<div class="">
+<div>
     <transition-group :name="slide" mode="out-in">
         <div v-if="!slided" class="signin" :key="0">
             <div class="topNav"></div>
@@ -25,10 +25,10 @@
             <div class="topNav">
                 <div class="topNav__cell topNav__cell--aside">
                     <a href="" class="backIcon" @click.prevent="backSlide">
-                    <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.75825 9.07203L9.72271 1.94223C10.166 1.48866 10.1573 0.765881 9.70516 0.325481C9.25305 -0.119308 8.53027 -0.103214 8.08841 0.343039L0.32654 8.29218C-0.116786 8.74575 -0.106544 9.47 0.344098 9.90893L8.29324 17.6737C8.51564 17.8903 8.80534 18 9.09357 18C9.39059 18 9.6876 17.883 9.91146 17.6547C10.3548 17.2026 10.3431 16.4798 9.8939 16.0394L2.75825 9.07203Z" fill="white"/>
-                    </svg>
-                </a>
+                        <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.75825 9.07203L9.72271 1.94223C10.166 1.48866 10.1573 0.765881 9.70516 0.325481C9.25305 -0.119308 8.53027 -0.103214 8.08841 0.343039L0.32654 8.29218C-0.116786 8.74575 -0.106544 9.47 0.344098 9.90893L8.29324 17.6737C8.51564 17.8903 8.80534 18 9.09357 18C9.39059 18 9.6876 17.883 9.91146 17.6547C10.3548 17.2026 10.3431 16.4798 9.8939 16.0394L2.75825 9.07203Z" fill="white" />
+                        </svg>
+                    </a>
                 </div>
                 <div class="topNav__cell topNav__cell--center">Verification</div>
                 <div class="topNav__cell topNav__cell--aside"></div>
@@ -42,18 +42,12 @@
                     <p class="mainContent__msg__txt">Enter your password to get access to edit mode</p>
                 </div>
                 <form class="mainContent__card">
-                    <input
-                    class="mainContent__card__input"
-                    :class="{'error': alert}"
-                    placeholder="Insert here..."
-                    type="password"
-                    id="password"
-                    v-model="password">
+                    <input class="mainContent__card__input" :class="{'error': alert}" placeholder="Insert here..." type="password" id="password" v-model="password">
                     <transition name="error" mode="out-in">
                         <p class="mainContent__card__error" v-if="alert">{{ error }}</p>
                     </transition>
                     <button type="submit" class="mainContent__card__btn" @click.prevent="userSignIn" :disabled="loading">
-                        <Loading v-if="loading"/>
+                        <Loading v-if="loading" />
                         <span v-if="!loading">Check it</span>
                     </button>
                 </form>
@@ -102,7 +96,7 @@ export default {
     },
     methods: {
         userSignIn() {
-            if(this.password === '') {
+            if (this.password === '') {
                 this.$store.commit('auth/setError', 'Insert password plz');
             } else {
                 this.$store.dispatch('auth/userSignIn', {
@@ -282,14 +276,16 @@ export default {
             background: $theme;
             font-weight: bold;
             font-size: 1.8rem;
-            &:disabled{
+
+            &:disabled {
                 background: lighten($theme, 30%);
                 border-color: transparent;
             }
         }
     }
 }
-.link-continue{
+
+.link-continue {
     color: #fff;
     padding: 1rem;
     display: inline-block;

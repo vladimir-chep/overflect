@@ -1,14 +1,14 @@
 <template>
-    <div class="pageContent">
-        <Header>Progress</Header>
-        <div class="pageCore">
-            <div class="pageCore__wrap">
-                <ProgressDisplay>
-                    <ProgressTable/>
-                </ProgressDisplay>
-            </div>
+<div class="pageContent">
+    <Header>Progress</Header>
+    <div class="pageCore">
+        <div class="pageCore__wrap">
+            <ProgressDisplay>
+                <ProgressTable />
+            </ProgressDisplay>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
         pagePaused() {
             return this.$store.state['editModule'].visible;
         },
-        selectedRole(){
+        selectedRole() {
             return this.$store.state['editModule'].selectedRole;
         },
         numOfPlays() {
@@ -39,7 +39,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-
-</style>

@@ -1,23 +1,24 @@
 <template>
-    <header class="pageHeader">
-        <div class="pageHeader__wrapper">
-            <div class="pageHeader__wrapper__aside"></div>
-            <h1 class="pageHeader__wrapper__ttl">
-                <slot name="default">Header</slot>
-            </h1>
-            <div class="pageHeader__wrapper__aside">
-                <slot name="details"></slot>
-            </div>
+<header class="pageHeader">
+    <div class="pageHeader__wrapper">
+        <div class="pageHeader__wrapper__aside"></div>
+        <h1 class="pageHeader__wrapper__ttl">
+            <slot name="default">Header</slot>
+        </h1>
+        <div class="pageHeader__wrapper__aside">
+            <slot name="details"></slot>
         </div>
-    </header>
+    </div>
+</header>
 </template>
+
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style lang="scss">
-@import '../../styles/pages/settings.scss';
+@import '../../styles/views/settings.scss';
+
 .pageHeader {
     position: relative;
     margin-bottom: 20px;

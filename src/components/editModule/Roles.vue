@@ -1,24 +1,15 @@
 <template>
-    <Radios>
-        <Radio
-            name="tank"
-            v-model="role"
-            >
-            <IconTank />
-        </Radio>
-        <Radio
-            name="damage"
-            v-model="role"
-            >
-            <IconDamage />
-        </Radio>
-        <Radio
-            name="support"
-            v-model="role"
-            >
-            <IconSupport />
-        </Radio>
-    </Radios>
+<Radios>
+    <Radio name="tank" v-model="role">
+        <IconTank />
+    </Radio>
+    <Radio name="damage" v-model="role">
+        <IconDamage />
+    </Radio>
+    <Radio name="support" v-model="role">
+        <IconSupport />
+    </Radio>
+</Radios>
 </template>
 
 <script>
@@ -32,17 +23,15 @@ import IconSupport from '@/components/icons/competitive/Support.vue';
 export default {
     computed: {
         role: {
-            get () {
+            get() {
                 return this.$store.getters['editModule/getRole'];
             },
-            set (value) {
-                console.log(value);
-
+            set(value) {
                 this.$store.dispatch('editModule/updateRole', value);
             }
         }
     },
-    components:{
+    components: {
         Radios,
         Radio,
         IconTank,

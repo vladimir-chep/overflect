@@ -7,7 +7,6 @@ export default {
     extends: Line,
     props: ['chartData'],
     mounted() {
-        console.log(this.chartData);
         this.renderLineChart();
     },
     data() {
@@ -52,7 +51,6 @@ export default {
             if (this.$data._chart) {
                 this.$data._chart.destroy();
             }
-            //this.renderChart(this.data, this.options);
             this.renderLineChart();
         }
     }

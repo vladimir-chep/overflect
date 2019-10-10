@@ -88,7 +88,6 @@ export default {
 
             ref.once('value', snapshot => {
                 const snap = snapshot.child(key).val();
-                console.log(snap);
 
                 this.$store.dispatch('editModule/getEditData', {
                     key,
@@ -139,11 +138,13 @@ export default {
 
 <style lang="scss">
 @import '../../styles/setup/variables';
+
 @mixin cell {
     flex: 1 1 0;
     padding: $sps 0;
     text-align: center;
 }
+
 .progressHeader {
     display: flex;
     margin-bottom: 5px;
@@ -156,36 +157,38 @@ export default {
         text-align: center;
     }
 }
+
 .progressList {
     &__item {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid $hr;
-            list-style: none;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid $hr;
+        list-style: none;
 
-            .cell {
-                &--rank {
-                    font-weight: bold;
-                }
+        .cell {
+            &--rank {
+                font-weight: bold;
+            }
 
-                &--diff {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-weight: bold;
+            &--diff {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: bold;
 
-                    svg {
-                        width: 8px;
-                        margin-right: 4px;
+                svg {
+                    width: 8px;
+                    margin-right: 4px;
 
-                        path {
-                            fill: black;
-                        }
+                    path {
+                        fill: black;
                     }
                 }
             }
         }
+    }
 }
+
 .progressTable {
     padding: $l-px $l-px 0;
     background: #fff;
@@ -222,7 +225,7 @@ export default {
         &.isWin {
             color: $success-color;
 
-            svg > path {
+            svg>path {
                 fill: $success-color;
             }
         }
@@ -242,12 +245,11 @@ export default {
         &.isDraw {
             color: $neutral-color;
 
-            svg > path {
+            svg>path {
                 fill: $neutral-color;
             }
         }
     }
-
 
 }
 
@@ -277,5 +279,4 @@ export default {
     max-width: 22px;
     height: auto;
 }
-
 </style>
