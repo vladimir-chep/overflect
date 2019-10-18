@@ -2,7 +2,9 @@
 
 VueJS application with firebase integration
 
-  NodeJS, VueJS, SPA, Firebase
+https://vladimir-chep.github.io/overflect/
+
+
 
 ## Project setup
 ```
