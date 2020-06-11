@@ -1,14 +1,14 @@
 <template>
-<div class="pageContent">
-    <Header>Progress</Header>
-    <div class="pageCore">
-        <div class="pageCore__wrap">
-            <ProgressDisplay>
-                <ProgressTable />
-            </ProgressDisplay>
+    <div class="pageContent">
+        <Header>Progress</Header>
+        <div class="pageCore">
+            <div class="pageCore__wrap">
+                <ProgressDisplay>
+                    <ProgressTable />
+                </ProgressDisplay>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
         },
         isSkipped() {
             return this.$store.getters['auth/isSkipped'];
-        }
+        },
     },
 };
 </script>

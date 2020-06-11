@@ -17,19 +17,17 @@ const state = {
 };
 
 const getters = {
-    isEditMode: state => state.editMode,
-    getKey: state => state.key,
-    getInfo: state => state.info,
-    getSeason: state => state.info.season,
-    getRole: state => state.role,
-    getWinStatus: state => state.winStatus,
-    getRank: state => state.rank,
+    isEditMode: (state) => state.editMode,
+    getKey: (state) => state.key,
+    getInfo: (state) => state.info,
+    getSeason: (state) => state.info.season,
+    getRole: (state) => state.role,
+    getWinStatus: (state) => state.winStatus,
+    getRank: (state) => state.rank,
 };
 
 const actions = {
-    toggle ({
-        commit
-    }) {
+    toggle({ commit }) {
         if (state.visible) {
             commit('setVisible', false);
             commit('setEditMode', false);
@@ -38,91 +36,67 @@ const actions = {
             commit('setVisible', true);
         }
     },
-    showEdit ({
-        commit
-    }) {
+    showEdit({ commit }) {
         commit('setVisible', true);
         commit('setEditMode', true);
     },
-    hideEdit ({
-        commit
-    }) {
+    hideEdit({ commit }) {
         commit('setVisible', false);
         commit('setEditMode', false);
     },
-    getEditData ({
-        commit
-    }, snap) {
+    getEditData({ commit }, snap) {
         commit('updateEditMode', snap);
     },
-    updateRole ({
-        commit
-    }, value) {
+    updateRole({ commit }, value) {
         commit('setRole', value);
     },
-    updateSeason ({
-        commit
-    }, value) {
+    updateSeason({ commit }, value) {
         commit('setSeason', value);
     },
-    updateWinStatus ({
-        commit
-    }, value) {
+    updateWinStatus({ commit }, value) {
         commit('setWinStatus', value);
     },
 };
 
 const mutations = {
-    setVisible (state, payload) {
+    setVisible(state, payload) {
         state.visible = payload;
     },
-    setEditMode (state, payload) {
+    setEditMode(state, payload) {
         state.editMode = payload;
     },
-    setSelectedRole (state, payload) {
+    setSelectedRole(state, payload) {
         state.selectedRole = payload;
     },
-    setRole (state, payload) {
+    setRole(state, payload) {
         state.role = payload;
     },
-    setWinStatus (state, payload) {
+    setWinStatus(state, payload) {
         state.winStatus = payload;
     },
-    setRank (state, payload) {
+    setRank(state, payload) {
         state.rank = payload;
     },
-    updateEditMode (state, payload) {
-        const {
-            key,
-            snap
-        } = payload;
-        const {
-            created,
-            id,
-            rank,
-            role,
-            // season,
-            winStatus
-        } = snap;
+    updateEditMode(state, payload) {
+        const { key, snap } = payload;
+        const { created, id, rank, role, winStatus } = snap;
 
         state.key = key;
-        // state.info.season = season;
         state.info.created = created;
         state.info.id = id;
         state.rank = rank;
         state.role = role;
         state.winStatus = winStatus;
     },
-    reset (state) {
+    reset(state) {
         state.role = 'tank';
         state.winStatus = 1;
         state.rank = null;
-        state.key = null,
-        // state.info.season = 17;
+        state.key = null;
         state.info.created = '';
         state.info.id = null;
     },
-    setSeason (state, payload) {
+    setSeason(state, payload) {
         state.info.season = payload;
     },
 };
@@ -132,5 +106,5 @@ export default {
     state,
     getters,
     actions,
-    mutations
-}
+    mutations,
+};

@@ -1,7 +1,7 @@
 <template>
-<div id="app" class="appContainer" :class="layout">
-    <component :class="{'isPaused': pagePaused}" :is="layout"></component>
-</div>
+    <div id="app" class="appContainer" :class="layout">
+        <component :class="{ isPaused: pagePaused }" :is="layout"></component>
+    </div>
 </template>
 
 <script>
@@ -9,9 +9,7 @@ const defaultLayout = 'default';
 
 export default {
     data() {
-        return {
-
-        }
+        return {};
     },
     computed: {
         pagePaused() {
@@ -21,7 +19,7 @@ export default {
             return `layout-${this.$route.meta.layout || defaultLayout}`;
         },
     },
-}
+};
 </script>
 
 <style lang="scss">

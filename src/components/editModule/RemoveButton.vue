@@ -1,9 +1,5 @@
 <template>
-    <button
-        type="submit"
-        class="removeButton"
-        @click="commit"
-        >
+    <button type="submit" class="removeButton" @click="commit">
         <Remove />
         {{ text }}
     </button>
@@ -13,15 +9,15 @@
 import Remove from '../icons/Remove.vue';
 export default {
     props: ['text'],
-    components:{
+    components: {
         Remove,
     },
     methods: {
-        commit(){
+        commit() {
             this.$emit('action');
-        }
+        },
     },
-}
+};
 </script>
 
 <style lang="scss">

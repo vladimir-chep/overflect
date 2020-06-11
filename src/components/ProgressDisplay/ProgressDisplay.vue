@@ -1,11 +1,11 @@
 <template>
-<div>
-    <div class="progressDisplay">
-        <Roles />
-        <slot v-if="isDisplayed"></slot>
-        <NothingDisplay v-else />
+    <div>
+        <div class="progressDisplay">
+            <Roles />
+            <slot v-if="isDisplayed"></slot>
+            <NothingDisplay v-else />
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
             return this.$store.getters['progress/getDisplayStatus'];
         },
     },
-}
+};
 </script>
 
 <style lang="scss">

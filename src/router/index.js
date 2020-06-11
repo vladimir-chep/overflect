@@ -12,7 +12,8 @@ import SignUp from '@/components/Signup.vue';
 import SignIn from '@/components/Signin.vue';
 import NotFound from '@/components/NotFound.vue';
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         redirect: '/profile',
     },
@@ -20,7 +21,7 @@ const routes = [{
         path: '/profile',
         name: 'profile',
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
         },
         component: Profile,
     },
@@ -28,7 +29,7 @@ const routes = [{
         path: '/progress',
         name: 'progress',
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
         },
         component: Progress,
     },
@@ -36,7 +37,7 @@ const routes = [{
         path: '/chart',
         name: 'chart',
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
         },
         component: Chart,
     },
@@ -44,14 +45,14 @@ const routes = [{
         path: '/settings',
         name: 'settings',
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
         },
         component: Settings,
     },
     {
         path: '/signup',
         name: 'signup',
-        component: SignUp
+        component: SignUp,
     },
     {
         path: '/signin',
@@ -59,11 +60,11 @@ const routes = [{
         meta: {
             layout: 'login',
         },
-        component: SignIn
+        component: SignIn,
     },
     {
         path: '*',
-        component: NotFound
+        component: NotFound,
     },
 ];
 
@@ -76,7 +77,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     const isAuthenticated = fb.auth.currentUser;
     const skipStatus = store.getters['auth/isSkipped'];
 

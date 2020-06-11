@@ -5,9 +5,13 @@
             name="seasonList"
             id="seasonList"
             :disabled="seasons.length <= 1"
+        >
+            <option
+                v-for="(season, index, key) in seasons"
+                :key="key"
+                :value="season"
             >
-            <option v-for="(season, index, key) in seasons" :key="key" :value="season">
-                {{ season === 0 ? 'all' : season }}
+                {{ season === 0 ? "all" : season }}
             </option>
         </select>
     </div>
@@ -26,16 +30,16 @@ export default {
                 this.$store.commit('progress/setSelectedSeason', Number(value));
             },
         },
-        disabled(){
+        disabled() {
             return this.seasons.length <= 1 ? 'disabled' : '';
         },
     },
-}
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/setup/variables';
-.seasons{
+@import "../../styles/setup/variables";
+.seasons {
     position: relative;
     display: inline-block;
     margin: auto;
@@ -46,23 +50,23 @@ export default {
 
     &:before {
         position: absolute;
-        content: '▼';
+        content: "▼";
         color: #fff;
         right: 4px;
         top: 50%;
         transform: translateY(-50%);
         font-size: 1rem;
     }
-    &.disabled{
+    &.disabled {
         background: $unactive-color;
-        select{
+        select {
             color: $text-color;
         }
-        &:before{
+        &:before {
             content: none;
         }
     }
-    select{
+    select {
         font-size: 1.4rem;
         font-weight: bold;
         color: #fff;

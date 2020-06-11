@@ -15,29 +15,26 @@ const state = {
 const getters = {};
 
 const actions = {
-    fetchData ({
-        commit
-    }) {
+    fetchData({ commit }) {
         axios
             .get(state.url)
-            .then(result => {
+            .then((result) => {
                 commit('setData', result.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error(`${error}. Is this url '${state.url}' ok? `);
             });
-    }
+    },
 };
 
 const mutations = {
-    setFilled (state, payload) {
+    setFilled(state, payload) {
         state.isFilled = payload;
     },
-    setData (state, payload) {
+    setData(state, payload) {
         state.data = payload;
         state.isFilled = true;
-
-    }
+    },
 };
 
 export default {
@@ -45,5 +42,5 @@ export default {
     state,
     getters,
     actions,
-    mutations
-}
+    mutations,
+};

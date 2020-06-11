@@ -1,31 +1,59 @@
 <template>
-<div class="progressTable">
-    <div class="progressHeader">
-        <p class="progressHeader__item">Plays ({{ numOfPlays }})</p>
-        <p class="progressHeader__item">Rank</p>
-        <p class="progressHeader__item">Tier</p>
-        <p class="progressHeader__item">Diff</p>
-        <p class="progressHeader__item details" v-if="!isSkipped">Details</p>
+    <div class="progressTable">
+        <div class="progressHeader">
+            <p class="progressHeader__item">Plays ({{ numOfPlays }})</p>
+            <p class="progressHeader__item">Rank</p>
+            <p class="progressHeader__item">Tier</p>
+            <p class="progressHeader__item">Diff</p>
+            <p class="progressHeader__item details" v-if="!isSkipped">
+                Details
+            </p>
+        </div>
+        <ul class="progressList">
+            <li
+                class="progressList__item"
+                v-for="(item, key) in sorted()"
+                :key="key"
+            >
+                <div
+                    :class="[
+                        'cell',
+                        'cell--plays',
+                        addResultClass(item.winStatus)
+                    ]"
+                >
+                    {{ item.id }}
+                </div>
+                <div class="cell cell--rank">{{ item.rank }}</div>
+                <div class="cell cell--tier">
+                    <img
+                        class="rankImg"
+                        :src="item.tier.url"
+                        alt="item.tier.name"
+                    />
+                </div>
+                <div
+                    :class="[
+                        'cell',
+                        'cell--diff',
+                        addResultClass(item.winStatus)
+                    ]"
+                >
+                    <IconCarpet v-if="item.order !== 0" />
+                    {{ item.diff }}
+                </div>
+                <div class="cell details" v-if="!isSkipped">
+                    <button
+                        class="progBtn"
+                        @click="startEdit(selectedRole, item.key)"
+                        :disabled="editMode"
+                    >
+                        <IconEdit />
+                    </button>
+                </div>
+            </li>
+        </ul>
     </div>
-    <ul class="progressList">
-        <li class="progressList__item" v-for="(item, key) in sorted()" :key="key">
-            <div :class="['cell', 'cell--plays', addResultClass(item.winStatus)]">{{ item.id }}</div>
-            <div class="cell cell--rank">{{ item.rank }}</div>
-            <div class="cell cell--tier">
-                <img class="rankImg" :src="item.tier.url" alt="item.tier.name">
-            </div>
-            <div :class="['cell', 'cell--diff', addResultClass(item.winStatus)]">
-                <IconCarpet v-if="item.order !== 0" />
-                {{ item.diff }}
-            </div>
-            <div class="cell details" v-if="!isSkipped">
-                <button class="progBtn" @click="startEdit(selectedRole, item.key)" :disabled="editMode">
-                    <IconEdit />
-                </button>
-            </div>
-        </li>
-    </ul>
-</div>
 </template>
 
 <script>
@@ -48,8 +76,8 @@ export default {
             editMode: false,
             editKey: null,
             editStatus: null,
-            editRank: null
-        }
+            editRank: null,
+        };
     },
     computed: {
         selectedRole() {
@@ -60,7 +88,7 @@ export default {
         },
         isSkipped() {
             return this.$store.getters['auth/isSkipped'];
-        }
+        },
     },
     methods: {
         addResultClass(value) {
@@ -71,17 +99,17 @@ export default {
         startEdit(role, key) {
             let ref;
             switch (role) {
-                case 'tank':
-                    ref = fb.tankRef;
-                    break;
-                case 'damage':
-                    ref = fb.damageRef;
-                    break;
-                case 'support':
-                    ref = fb.supportRef;
-                    break;
-                default:
-                    break;
+            case 'tank':
+                ref = fb.tankRef;
+                break;
+            case 'damage':
+                ref = fb.damageRef;
+                break;
+            case 'support':
+                ref = fb.supportRef;
+                break;
+            default:
+                break;
             }
 
             this.$store.dispatch('editModule/showEdit');
@@ -91,7 +119,7 @@ export default {
 
                 this.$store.dispatch('editModule/getEditData', {
                     key,
-                    snap
+                    snap,
                 });
             });
         },
@@ -122,7 +150,9 @@ export default {
         },
         sorted() {
             // const arr = this.masterList[this.selectedSeason];
-            const arr = this.$store.getters['progress/getMasterList'][this.$store.getters['progress/getSelectedSeason']];
+            const arr = this.$store.getters['progress/getMasterList'][
+                this.$store.getters['progress/getSelectedSeason']
+            ];
 
             const condition = arr && arr.length ? true : false;
 
@@ -130,14 +160,13 @@ export default {
                 return arr.map(e => e).reverse();
             }
             return arr;
-        }
-    }
-
-}
+        },
+    },
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/setup/variables';
+@import "../../styles/setup/variables";
 
 @mixin cell {
     flex: 1 1 0;
@@ -205,7 +234,7 @@ export default {
             margin-right: 10px;
             border-radius: 50%;
             background-color: $bgColor;
-            content: '';
+            content: "";
         }
 
         &.isWin:before {
@@ -225,7 +254,7 @@ export default {
         &.isWin {
             color: $success-color;
 
-            svg>path {
+            svg > path {
                 fill: $success-color;
             }
         }
@@ -245,12 +274,11 @@ export default {
         &.isDraw {
             color: $neutral-color;
 
-            svg>path {
+            svg > path {
                 fill: $neutral-color;
             }
         }
     }
-
 }
 
 .details {

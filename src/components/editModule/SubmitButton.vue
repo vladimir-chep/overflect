@@ -4,7 +4,7 @@
         class="submitButton"
         :disabled="unactive"
         @click="commit"
-        >
+    >
         {{ text }}
     </button>
 </template>
@@ -13,11 +13,11 @@
 export default {
     props: ['unactive', 'text'],
     methods: {
-        commit(){
+        commit() {
             this.$emit('action');
-        }
+        },
     },
-}
+};
 </script>
 
 <style lang="scss">

@@ -15,7 +15,7 @@ const store = new Vuex.Store({
         auth,
         profile,
         progress,
-        editModule
+        editModule,
     },
     strict: debug,
 });

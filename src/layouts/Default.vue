@@ -1,8 +1,8 @@
 <template>
-<div class="outherWrap">
-    <router-view />
-    <navigation />
-</div>
+    <div class="outherWrap">
+        <router-view />
+        <navigation />
+    </div>
 </template>
 
 <script>
@@ -12,5 +12,5 @@ export default {
     components: {
         Navigation,
     },
-}
+};
 </script>

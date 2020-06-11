@@ -1,17 +1,13 @@
 <template>
     <transition name="slide-fade">
-    <div v-if="visible" class="editModule">
-        <AddResult
-            v-if="!editMode"
-            class="editModule__wrapper"
-            ttl="Add result"
+        <div v-if="visible" class="editModule">
+            <AddResult
+                v-if="!editMode"
+                class="editModule__wrapper"
+                ttl="Add result"
             />
-        <EditResult
-            v-else
-            class="editModule__wrapper"
-            ttl="Edit result"
-            />
-    </div>
+            <EditResult v-else class="editModule__wrapper" ttl="Edit result" />
+        </div>
     </transition>
 </template>
 
@@ -28,10 +24,10 @@ export default {
             return this.$store.state['editModule'].visible;
         },
     },
-    components:{
+    components: {
         AddResult,
         EditResult,
-    }
+    },
 };
 </script>
 
@@ -39,16 +35,17 @@ export default {
 @import "../../styles/setup/_variables";
 
 .slide-fade-enter-active {
-  transition: all .25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 }
 
 .slide-fade-leave-active {
-  transition: all .25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 }
 
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
+.slide-fade-enter,
+.slide-fade-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
 }
 
 .editModule {
@@ -61,7 +58,7 @@ export default {
     padding-bottom: 100px;
     background: #fff;
 
-    &__wrapper{
+    &__wrapper {
         display: flex;
         flex-direction: column;
         height: 100%;

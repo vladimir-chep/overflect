@@ -1,19 +1,23 @@
 <template>
-<div>
-    <p class="editModule__wrapper__ttl">{{ ttl }}</p>
-    <div class="editModule__wrapper__body">
-        <InfoSection />
-        <SelectedRoles :role="role" />
-        <Wins />
-        <InsertScore placeholderText="Insert score" v-model="rank" />
-        <SubmitButton text="Submit changes" :unactive="notActive" @action="edit" />
-        <RemoveButton text="Remove" @action="remove" />
+    <div>
+        <p class="editModule__wrapper__ttl">{{ ttl }}</p>
+        <div class="editModule__wrapper__body">
+            <InfoSection />
+            <SelectedRoles :role="role" />
+            <Wins />
+            <InsertScore placeholderText="Insert score" v-model="rank" />
+            <SubmitButton
+                text="Submit changes"
+                :unactive="notActive"
+                @action="edit"
+            />
+            <RemoveButton text="Remove" @action="remove" />
+        </div>
     </div>
-</div>
 </template>
 
 <script>
-import mixin from "@/mixins";
+import mixin from '@/mixins';
 import InfoSection from '@/components/editModule/Infos.vue';
 import SelectedRoles from '@/components/editModule/SelectedRoles.vue';
 import Wins from '@/components/editModule/Wins.vue';
@@ -21,7 +25,7 @@ import InsertScore from '@/components/editModule/InsertScore.vue';
 import SubmitButton from '@/components/editModule/SubmitButton.vue';
 import RemoveButton from '@/components/editModule/RemoveButton.vue';
 
-const fb = require("@/firebaseConfig.js");
+const fb = require('@/firebaseConfig.js');
 
 export default {
     mixins: [mixin],
@@ -29,7 +33,7 @@ export default {
     data() {
         return {
             rank: '',
-        }
+        };
     },
     components: {
         InfoSection,
@@ -60,25 +64,25 @@ export default {
         },
         notActive() {
             return this.rank !== '' ? false : true;
-        }
+        },
     },
     methods: {
         getTargetRef(curentRole) {
             let result;
 
             switch (curentRole) {
-                case 'tank':
-                    result = fb.tankRef;
-                    break;
-                case 'damage':
-                    result = fb.damageRef;
-                    break;
-                case 'support':
-                    result = fb.supportRef;
-                    break;
-                default:
-                    result = fb.resultsRef;
-                    break;
+            case 'tank':
+                result = fb.tankRef;
+                break;
+            case 'damage':
+                result = fb.damageRef;
+                break;
+            case 'support':
+                result = fb.supportRef;
+                break;
+            default:
+                result = fb.resultsRef;
+                break;
             }
             return result;
         },
@@ -116,11 +120,11 @@ export default {
 
             function checkWinStatus(value) {
                 if (isNaN(value)) {
-                    console.log("Win status: Not a number!");
+                    console.log('Win status: Not a number!');
                     return false;
                 }
                 if (value === null) {
-                    console.log("Win status: Empty!");
+                    console.log('Win status: Empty!');
                     return false;
                 }
                 return true;
@@ -131,8 +135,8 @@ export default {
 
             targetRef.child(this.key).remove();
             this.$store.dispatch('editModule/hideEdit');
-        }
-    }
+        },
+    },
 };
 </script>
 

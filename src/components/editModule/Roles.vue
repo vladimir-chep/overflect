@@ -1,15 +1,15 @@
 <template>
-<Radios>
-    <Radio name="tank" v-model="role">
-        <IconTank />
-    </Radio>
-    <Radio name="damage" v-model="role">
-        <IconDamage />
-    </Radio>
-    <Radio name="support" v-model="role">
-        <IconSupport />
-    </Radio>
-</Radios>
+    <Radios>
+        <Radio name="tank" v-model="role">
+            <IconTank />
+        </Radio>
+        <Radio name="damage" v-model="role">
+            <IconDamage />
+        </Radio>
+        <Radio name="support" v-model="role">
+            <IconSupport />
+        </Radio>
+    </Radios>
 </template>
 
 <script>
@@ -28,8 +28,8 @@ export default {
             },
             set(value) {
                 this.$store.dispatch('editModule/updateRole', value);
-            }
-        }
+            },
+        },
     },
     components: {
         Radios,
@@ -38,7 +38,7 @@ export default {
         IconDamage,
         IconSupport,
     },
-}
+};
 </script>
 
 <style lang="scss">

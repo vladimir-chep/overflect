@@ -8,10 +8,10 @@ import support from './Support.vue';
 
 export default {
     props: ['iconName'],
-    components:{
+    components: {
         tank,
         damage,
-        support
+        support,
     },
-}
+};
 </script>

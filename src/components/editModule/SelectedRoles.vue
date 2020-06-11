@@ -1,23 +1,17 @@
 <template>
     <div class="selectedRow">
         <div class="selectedItem">
-            <div
-                class="selectedIcon"
-                :class="{'selected': role === 'tank'}">
+            <div class="selectedIcon" :class="{ selected: role === 'tank' }">
                 <IconTank />
             </div>
         </div>
         <div class="selectedItem">
-            <div
-                class="selectedIcon"
-                :class="{'selected': role === 'damage'}">
+            <div class="selectedIcon" :class="{ selected: role === 'damage' }">
                 <IconDamage />
             </div>
         </div>
         <div class="selectedItem">
-            <div
-                class="selectedIcon"
-                :class="{'selected': role === 'support'}">
+            <div class="selectedIcon" :class="{ selected: role === 'support' }">
                 <IconSupport />
             </div>
         </div>
@@ -30,24 +24,24 @@ import IconDamage from '@/components/icons/competitive/Damage.vue';
 import IconSupport from '@/components/icons/competitive/Support.vue';
 
 export default {
-    props:{
+    props: {
         role: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
-    components:{
+    components: {
         IconTank,
         IconDamage,
         IconSupport,
     },
-}
+};
 </script>
 
 <style lang="scss">
 @import "../../styles/setup/_variables";
 
-.selectedRow{
+.selectedRow {
     margin-bottom: 20px;
     display: flex;
     align-content: center;
@@ -73,24 +67,24 @@ export default {
             appearance: none;
 
             svg {
-                opacity: .25;
+                opacity: 0.25;
                 max-height: 20px;
                 path {
                     fill: $text-color;
                 }
             }
             &.selected {
-            color: #fff;
-            background-color: $theme;
+                color: #fff;
+                background-color: $theme;
 
-            svg {
-                opacity: 1;
-                path,
-                rect {
-                    fill: #fff;
+                svg {
+                    opacity: 1;
+                    path,
+                    rect {
+                        fill: #fff;
+                    }
                 }
             }
-        }
         }
     }
 }

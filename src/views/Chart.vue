@@ -1,18 +1,18 @@
 <template>
-<div class="pageContent">
-    <Header>Chart</Header>
-    <div class="pageCore">
-        <div class="pageCore__wrap">
-            <div class="card">
-                <Roles />
-                <div class="progressTable" v-if="isDisplayed">
-                    <line-chart :chartData="getChartData" />
+    <div class="pageContent">
+        <Header>Chart</Header>
+        <div class="pageCore">
+            <div class="pageCore__wrap">
+                <div class="card">
+                    <Roles />
+                    <div class="progressTable" v-if="isDisplayed">
+                        <line-chart :chartData="getChartData" />
+                    </div>
+                    <NothingDisplay v-else />
                 </div>
-                <NothingDisplay v-else />
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -29,9 +29,6 @@ export default {
         Roles,
         NothingDisplay,
     },
-    data() {
-        return {}
-    },
     computed: {
         masterList() {
             return this.$store.getters['progress/getMasterList'];
@@ -39,7 +36,7 @@ export default {
         selectedSeason() {
             return this.$store.getters['progress/getSelectedSeason'];
         },
-        displayList(){
+        displayList() {
             return this.masterList[this.selectedSeason];
         },
         isDisplayed() {
@@ -51,13 +48,14 @@ export default {
                 ranks: [],
             };
 
-            this.$store.getters['progress/getMasterList'][0].forEach((el, index) => {
-                result.order.push(index);
-                result.ranks.push(el.rank);
-            });
+            this.$store.getters['progress/getMasterList'][0].forEach(
+                (el, index) => {
+                    result.order.push(index);
+                    result.ranks.push(el.rank);
+                }
+            );
             return result;
         },
-
     },
-}
+};
 </script>

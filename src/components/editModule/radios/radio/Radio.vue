@@ -6,19 +6,16 @@
             :id="name"
             :value="name"
             v-model="radio"
-            >
-        <label
-            :for="name"
-            >
+        />
+        <label :for="name">
             <slot></slot>
         </label>
     </div>
 </template>
 
 <script>
-
 export default {
-    props: ['value','name'],
+    props: ['value', 'name'],
     computed: {
         radio: {
             get() {
@@ -29,7 +26,7 @@ export default {
             },
         },
     },
-}
+};
 </script>
 
 <style lang="scss">
@@ -80,5 +77,4 @@ export default {
         }
     }
 }
-
 </style>

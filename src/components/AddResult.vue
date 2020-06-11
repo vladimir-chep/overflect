@@ -1,25 +1,29 @@
 <template>
-<div class="">
-    <p class="editModule__wrapper__ttl">{{ ttl }}</p>
-    <div class="editModule__wrapper__body">
-        <InfoSection />
-        <Roles />
-        <Wins />
-        <InsertScore placeholderText="Insert score" v-model="newRank" />
-        <SubmitButton text="Add" :unactive="notActive" @action="addResult" />
+    <div class="">
+        <p class="editModule__wrapper__ttl">{{ ttl }}</p>
+        <div class="editModule__wrapper__body">
+            <InfoSection />
+            <Roles />
+            <Wins />
+            <InsertScore placeholderText="Insert score" v-model="newRank" />
+            <SubmitButton
+                text="Add"
+                :unactive="notActive"
+                @action="addResult"
+            />
+        </div>
     </div>
-</div>
 </template>
 
 <script>
-import mixin from "@/mixins";
+import mixin from '@/mixins';
 import InfoSection from '@/components/editModule/Infos.vue';
 import Roles from '@/components/editModule/Roles.vue';
 import Wins from '@/components/editModule/Wins.vue';
 import InsertScore from '@/components/editModule/InsertScore.vue';
 import SubmitButton from '@/components/editModule/SubmitButton.vue';
 
-const fb = require("@/firebaseConfig.js");
+const fb = require('@/firebaseConfig.js');
 
 export default {
     mixins: [mixin],
@@ -44,7 +48,7 @@ export default {
             },
             set(value) {
                 this.$store.commit('editModule/setRank', Number(value));
-            }
+            },
         },
         role() {
             return this.$store.getters['editModule/getRole'];
@@ -54,7 +58,7 @@ export default {
         },
         notActive() {
             return this.newRank !== null ? false : true;
-        }
+        },
     },
     methods: {
         addResult() {
@@ -69,8 +73,8 @@ export default {
                 winStatus: this.winStatus,
                 rank: this.newRank,
             };
-            const getID = new Promise((resolve) => {
-                targetRef.once('value').then(function (snapshot) {
+            const getID = new Promise(resolve => {
+                targetRef.once('value').then(function(snapshot) {
                     resolve(snapshot.numChildren() + 1);
                 });
             });
@@ -96,11 +100,11 @@ export default {
 
             function checkWinStatus(value) {
                 if (isNaN(value)) {
-                    console.log("Win status: Not a number!");
+                    console.log('Win status: Not a number!');
                     return false;
                 }
                 if (value === null) {
-                    console.log("Win status: Empty!");
+                    console.log('Win status: Empty!');
                     return false;
                 }
                 return true;
@@ -110,23 +114,23 @@ export default {
                 let result;
 
                 switch (curentRole) {
-                    case 'tank':
-                        result = fb.tankRef;
-                        break;
-                    case 'damage':
-                        result = fb.damageRef;
-                        break;
-                    case 'support':
-                        result = fb.supportRef;
-                        break;
-                    default:
-                        result = fb.resultsRef;
-                        break;
+                case 'tank':
+                    result = fb.tankRef;
+                    break;
+                case 'damage':
+                    result = fb.damageRef;
+                    break;
+                case 'support':
+                    result = fb.supportRef;
+                    break;
+                default:
+                    result = fb.resultsRef;
+                    break;
                 }
                 return result;
             }
         },
-    }
+    },
 };
 </script>
 

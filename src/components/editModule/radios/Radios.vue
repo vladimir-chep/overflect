@@ -4,15 +4,10 @@
     </div>
 </template>
 
-<script>
-
-export default {}
-</script>
-
 <style lang="scss">
 @import "../../../styles/setup/_variables";
 
-.radioRow{
+.radioRow {
     margin-bottom: 20px;
     display: flex;
     align-content: center;
