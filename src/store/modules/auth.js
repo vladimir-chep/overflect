@@ -1,42 +1,23 @@
 import router from '@/router';
-const fb = require('@/firebaseConfig');
+import { auth } from '@/firebase/config';
 
 const state = {
-    email: 'web00chepvl@gmail.com',
     user: null,
     error: null,
-    without: false,
+    skip: false,
     loading: false,
 };
 
 const getters = {
-    isAuthenticated(state) {
-        return state.user !== null && state.user !== undefined;
-    },
-    isSkipped(state) {
-        return state.without;
-    },
+    isAuthenticated: (state) => state.user !== null && state.user !== undefined,
+    skip: (state) => state.skip,
 };
 
 const actions = {
-    userSignUp({ commit }, payload) {
-        fb.auth
-            .createUserWithEmailAndPassword(payload.email, payload.password)
-            .then((firebaseUser) => {
-                commit('setUser', {
-                    email: firebaseUser.user.email,
-                });
-                router.push('/profile');
-            })
-            .catch((error) => {
-                commit('setError', error.message);
-            });
-    },
-    userSignIn({ commit }, payload) {
+    manualSignIn({ commit }, payload) {
         commit('setLoading', true);
-        commit('setWithout', false);
-        fb.auth
-            .signInWithEmailAndPassword(state.email, payload.password)
+        commit('setSkip', false);
+        auth.signInWithEmailAndPassword(payload.email, payload.password)
             .then((firebaseUser) => {
                 commit('setUser', {
                     email: firebaseUser.user.email,
@@ -50,18 +31,18 @@ const actions = {
                 commit('setError', error.message);
             });
     },
+    manualSignOut({ commit }) {
+        auth.signOut();
+        commit('setUser', null);
+        router.push('/sign-in');
+    },
     autoSignIn({ commit }, payload) {
         commit('setUser', {
             email: payload.email,
         });
     },
-    userSignOut({ commit }) {
-        fb.auth.signOut();
-        commit('setUser', null);
-        router.push('/signin');
-    },
-    continueWithout({ commit }) {
-        commit('setWithout', true);
+    skipSignIn({ commit }) {
+        commit('setSkip', true);
         router.push('/profile');
     },
 };
@@ -76,8 +57,8 @@ const mutations = {
     setLoading(state, payload) {
         state.loading = payload;
     },
-    setWithout(state, payload) {
-        state.without = payload;
+    setSkip(state, payload) {
+        state.skip = payload;
     },
 };
 

@@ -1,41 +1,17 @@
 <template>
-    <div class="pageContent">
-        <Header>Progress</Header>
-        <div class="pageCore">
-            <div class="pageCore__wrap">
-                <ProgressDisplay>
-                    <ProgressTable />
-                </ProgressDisplay>
-            </div>
-        </div>
-    </div>
+    <div><ViewHeader>Progress</ViewHeader></div>
 </template>
 
 <script>
-import Header from '@/components/layout/Header.vue';
-import ProgressDisplay from '@/components/ProgressDisplay/ProgressDisplay.vue';
-import ProgressTable from '@/components/ProgressDisplay/ProgressTable.vue';
+import ViewHeader from '@/components/View/ViewHeader.vue';
 
 export default {
-    name: 'ProgressView',
+    name: 'Progress',
     components: {
-        Header,
-        ProgressDisplay,
-        ProgressTable,
-    },
-    computed: {
-        pagePaused() {
-            return this.$store.state['editModule'].visible;
-        },
-        selectedRole() {
-            return this.$store.state['editModule'].selectedRole;
-        },
-        numOfPlays() {
-            return this.$store.getters['progress/getNum'];
-        },
-        isSkipped() {
-            return this.$store.getters['auth/isSkipped'];
-        },
+        ViewHeader,
     },
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

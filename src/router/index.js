@@ -1,74 +1,68 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { auth } from '@/firebase/config';
 import store from '@/store';
-const fb = require('@/firebaseConfig');
 
+import SignIn from '@/layouts/SignIn.vue';
 import Profile from '@/views/Profile.vue';
-import Progress from '@/views/Progress.vue';
-import Chart from '@/views/Chart.vue';
-import Settings from '@/views/Settings.vue';
+import Progress from '../views/Progress.vue';
+import Chart from '../views/Chart.vue';
+import Settings from '../views/Settings.vue';
 
-import SignUp from '@/components/Signup.vue';
-import SignIn from '@/components/Signin.vue';
-import NotFound from '@/components/NotFound.vue';
+Vue.use(Router);
 
 const routes = [
     {
         path: '/',
-        redirect: '/profile',
-    },
-    {
-        path: '/profile',
-        name: 'profile',
-        meta: {
-            requiresAuth: true,
+        redirect: {
+            name: 'Profile',
         },
-        component: Profile,
     },
     {
-        path: '/progress',
-        name: 'progress',
+        path: '/sign-in',
+        name: 'SignIn',
         meta: {
-            requiresAuth: true,
-        },
-        component: Progress,
-    },
-    {
-        path: '/chart',
-        name: 'chart',
-        meta: {
-            requiresAuth: true,
-        },
-        component: Chart,
-    },
-    {
-        path: '/settings',
-        name: 'settings',
-        meta: {
-            requiresAuth: true,
-        },
-        component: Settings,
-    },
-    {
-        path: '/signup',
-        name: 'signup',
-        component: SignUp,
-    },
-    {
-        path: '/signin',
-        name: 'signin',
-        meta: {
-            layout: 'login',
+            layout: 'SignIn',
         },
         component: SignIn,
     },
     {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '/progress',
+        name: 'Progress',
+        component: Progress,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '/chart',
+        name: 'Chart',
+        component: Chart,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: Settings,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
         path: '*',
-        component: NotFound,
+        redirect: '/',
     },
 ];
-
-Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
@@ -78,11 +72,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-    const isAuthenticated = fb.auth.currentUser;
-    const skipStatus = store.getters['auth/isSkipped'];
+    const currentUser = auth.currentUser;
+    const skipStatus = store.getters['auth/skip'];
 
-    if (requiresAuth && !isAuthenticated && !skipStatus) {
-        next('/signin');
+    if (requiresAuth && !currentUser && !skipStatus) {
+        next('/sign-in');
     } else {
         next();
     }

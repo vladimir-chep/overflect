@@ -8,18 +8,21 @@ import axios from 'axios';
 
 const state = {
     url: 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile',
-    data: {},
+    data: null,
     isFilled: false,
 };
 
-const getters = {};
+const getters = {
+    info: (state) => state.data,
+    hasData: (state) => state.data !== null,
+};
 
 const actions = {
-    fetchData({ commit }) {
-        axios
+    getData({ state, commit }) {
+        return axios
             .get(state.url)
             .then((result) => {
-                commit('setData', result.data);
+                commit('updateData', result.data);
             })
             .catch((error) => {
                 console.error(`${error}. Is this url '${state.url}' ok? `);
@@ -28,10 +31,7 @@ const actions = {
 };
 
 const mutations = {
-    setFilled(state, payload) {
-        state.isFilled = payload;
-    },
-    setData(state, payload) {
+    updateData(state, payload) {
         state.data = payload;
         state.isFilled = true;
     },

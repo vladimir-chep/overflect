@@ -59,7 +59,7 @@
 }
 
 .profileName {
-    margin-bottom: $sps / 2;
+    margin-bottom: $spacing / 2;
     font-weight: bold;
     font-size: 1.8rem;
 }
@@ -104,7 +104,7 @@
 
 .shortInfo {
     display: flex;
-    margin-bottom: $sps * 2;
+    margin-bottom: $spacing * 2;
 
     &__item {
         flex: 1 1 0;
@@ -126,7 +126,7 @@
 
 .compInfo {
     &__ttl {
-        margin: 0 auto $sps;
+        margin: 0 auto $spacing;
         font-weight: bold;
         font-size: 1.8rem;
         text-align: center;
