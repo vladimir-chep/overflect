@@ -109,9 +109,9 @@ export default {
     padding: 6px;
     border-radius: 50%;
     transition: 0.15s background-color ease-in-out;
+    cursor: pointer;
 
     &:hover {
-        cursor: pointer;
         background-color: rgba(#fff, 0.15);
     }
     img {
@@ -207,7 +207,7 @@ export default {
     &__btn {
         display: block;
         width: 100%;
-        padding: $spacing;
+        padding: $spacing-x;
         border: none;
         border-radius: $border-radius;
         color: #fff;

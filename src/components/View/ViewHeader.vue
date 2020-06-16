@@ -1,7 +1,7 @@
 <template>
-    <header class="pageHeader">
-        <div class="pageHeader__wrapper">
-            <h1 class="pageHeader__wrapper__ttl">
+    <header class="viewHeader">
+        <div class="viewHeader__wrapper">
+            <h1 class="viewHeader__wrapper__ttl">
                 <slot>Header</slot>
             </h1>
         </div>
@@ -14,11 +14,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/styles/setup/variables';
 @import '~@/styles/setup/mixin';
 
-.pageHeader {
+.viewHeader {
     position: relative;
     margin-bottom: 20px;
     box-shadow: $shadow-card;
@@ -33,7 +33,7 @@ export default {
 
         &__ttl {
             margin: 0;
-            padding: $spacing $spacing;
+            padding: $spacing-x;
             font-weight: bold;
             font-size: 1.8rem;
             width: 100%;

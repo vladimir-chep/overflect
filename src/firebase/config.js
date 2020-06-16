@@ -19,15 +19,20 @@ const db = firebase.database();
 const auth = firebase.auth();
 
 // firebase collections
-const resultsRef = db.ref('results');
-const tankRef = db.ref('tankComp');
-const damageRef = db.ref('damageComp');
-const supportRef = db.ref('supportComp');
+// const resultsRef = db.ref('results');
+// const _tankRef = db.ref('tankComp');
+// const _damageRef = db.ref('damageComp');
+// const _supportRef = db.ref('supportComp');
+const competitiveRef = db.ref('competitive');
+const tankRef = db.ref('competitive/tank');
+const damageRef = db.ref('competitive/damage');
+const supportRef = db.ref('competitive/support');
 
+const getRef = (refName) => db.ref(`competitive/${refName}`);
 const checkAuth = new Promise((resolve) => {
     auth.onAuthStateChanged((user) => {
         resolve(user);
     });
 });
 
-export { firebase, db, auth, resultsRef, tankRef, damageRef, supportRef, checkAuth };
+export { firebase, db, auth, competitiveRef, tankRef, damageRef, supportRef, checkAuth, getRef };

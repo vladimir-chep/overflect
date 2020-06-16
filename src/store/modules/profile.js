@@ -7,9 +7,7 @@ import axios from 'axios';
  */
 
 const state = {
-    url: 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile',
     data: null,
-    isFilled: false,
 };
 
 const getters = {
@@ -18,14 +16,14 @@ const getters = {
 };
 
 const actions = {
-    getData({ state, commit }) {
+    getData({ commit }) {
         return axios
-            .get(state.url)
+            .get('https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile')
             .then((result) => {
                 commit('updateData', result.data);
             })
             .catch((error) => {
-                console.error(`${error}. Is this url '${state.url}' ok? `);
+                console.error(`${error}. Is this url ok? `);
             });
     },
 };

@@ -1,14 +1,4 @@
 <template>
-    <!-- <div class="centerItem">
-        <div :class="['actionBtn', { 'centralBtn--close': visible }]">
-            <router-link v-if="skip" to="/sign-in" class="actionBtn__button">
-                <img src="@/assets/images/icon/SignIn.svg" alt="" />
-            </router-link>
-            <a v-else class="actionBtn__button" @click="toggleEditModule">
-                <img src="@/assets/images/icon/Plus.svg" alt="" />
-            </a>
-        </div>
-    </div> -->
     <div class="centerItem">
         <router-link v-if="skip" to="/sign-in" class="actionBtn">
             <img src="@/assets/images/icon/SignIn.svg" alt="" />
@@ -42,7 +32,6 @@ export default {
     },
     methods: {
         toggleEditModule() {
-            // if (this.skipped) return;
             // this.$store.dispatch('editModule/toggle');
             this.visible = !this.visible;
         },
@@ -73,11 +62,17 @@ export default {
     align-items: center;
     border-radius: 50%;
     box-shadow: $shadow-card;
-    background-color: $theme-color;
+    background: $theme-color;
     transform: translate(-50%, -50%);
-    transition: background-color .15s ease-in;
+    transition: background-color .25s ease-in-out;
+    cursor: pointer;
 
-    img {
+    &:hover,
+    &:focus {
+        background: darken($theme-color, 5%);
+    }
+
+    > img {
         width: 24px;
         height: 24px;
         transition: transform .15s ease-in;
@@ -85,6 +80,11 @@ export default {
 
     &.is-close {
         background-color: $error-color;
+
+        &:hover,
+        &:focus {
+            background: darken($error-color, 5%);
+        }
 
         > img {
             transform: rotate(45deg);

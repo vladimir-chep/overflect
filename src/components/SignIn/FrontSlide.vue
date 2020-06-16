@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="frontVisual">
-            <!-- <h1 class="frontVisual__ttl">
+            <h1 class="frontVisual__ttl">
                 OverFlect
             </h1>
             <p class="frontVisual__txt">
@@ -13,12 +13,6 @@
                     rel="noopener nofollow"
                     >Overwatch</a
                 >’s competitive mode
-            </p> -->
-            <h1 class="frontVisual__ttl">
-                Test Vue App
-            </h1>
-            <p class="frontVisual__txt">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
         </div>
         <div class="control">
@@ -88,7 +82,7 @@ export default {
         width: 100%;
         max-width: 380px;
         margin: 0 auto 1rem;
-        padding: $spacing;
+        padding: $spacing-x;
         border: none;
         border-radius: $border-radius;
         color: $theme-color;
