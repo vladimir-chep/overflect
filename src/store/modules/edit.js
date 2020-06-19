@@ -1,8 +1,14 @@
 const state = {
     visible: false,
+    newItem: {
+        role: 'tank',
+        winStatus: 1,
+        score: '',
+    },
     editMode: false,
-
-    selectedRole: 'tank',
+    editRole: 'tank',
+    editItem: null,
+    // selectedRole: 'tank',
 
     // Edit mode
     key: null,
@@ -17,6 +23,14 @@ const state = {
 };
 
 const getters = {
+    visible: (state) => state.visible,
+    editMode: (state) => state.editMode,
+    role: (state) => state.newItem.role,
+    winStatus: (state) => state.newItem.winStatus,
+    score: (state) => state.newItem.score,
+    editRole: (state) => state.editRole,
+    editItem: (state) => state.editItem,
+
     selectedRole: (state) => state.selectedRole,
     isEditMode: (state) => state.editMode,
     getKey: (state) => state.key,
@@ -28,77 +42,138 @@ const getters = {
 };
 
 const actions = {
-    toggle({ commit }) {
+    toggle({ state, commit }) {
         if (state.visible) {
-            commit('setVisible', false);
-            commit('setEditMode', false);
+            commit('updateVisible', false);
+            commit('switchEditMode', false);
             commit('reset');
         } else {
-            commit('setVisible', true);
+            commit('updateVisible', true);
         }
     },
-    showEdit({ commit }) {
-        commit('setVisible', true);
-        commit('setEditMode', true);
+    // toggleAddCard ({
+    //     commit,
+    // }, payload) {
+    //     commit('updateEditItem', payload);
+    //     commit('switchEditMode', true);
+    //     commit('updateVisible', true);
+    // },
+    openEditCard({ commit }, payload) {
+        commit('updateEditItem', payload);
+        commit('switchEditMode', true);
+        commit('updateVisible', true);
     },
-    hideEdit({ commit }) {
-        commit('setVisible', false);
-        commit('setEditMode', false);
-    },
-    getEditData({ commit }, snap) {
-        commit('updateEditMode', snap);
-    },
-    updateRole({ commit }, value) {
-        commit('setRole', value);
-    },
-    updateSeason({ commit }, value) {
-        commit('setSeason', value);
-    },
-    updateWinStatus({ commit }, value) {
-        commit('setWinStatus', value);
-    },
+    // closeEditCard ({
+    //     commit,
+    // }) {
+    //     // commit('updateEditItem', null);
+    //     commit('switchEditMode', false);
+    //     commit('updateVisible', false);
+    // },
+    // hideEdit({ commit }) {
+    //     commit('updateVisible', false);
+    //     commit('setEditMode', false);
+    // },
+    // getEditData({ commit }, snap) {
+    //     commit('switchEditMode', snap);
+    // },
+    // updateRole({ commit }, value) {
+    //     commit('setRole', value);
+    // },
+    // updateWinStatus({ commit }, value) {
+    //     commit('setWinStatus', value);
+    // },
 };
 
 const mutations = {
-    setVisible(state, payload) {
+    updateVisible(state, payload) {
         state.visible = payload;
     },
-    setEditMode(state, payload) {
+    updateRole(state, payload) {
+        state.newItem.role = payload;
+    },
+    updateWinStatus(state, payload) {
+        state.newItem.winStatus = payload;
+    },
+    updateScore(state, payload) {
+        state.newItem.score = payload;
+    },
+    switchEditMode(state, payload) {
         state.editMode = payload;
     },
-    setSelectedRole(state, payload) {
-        state.selectedRole = payload;
+    switchEditRole(state, payload) {
+        state.editRole = payload;
     },
-    setRole(state, payload) {
-        state.role = payload;
+
+    // setEditMode(state, payload) {
+    //     state.editMode = payload;
+    // },
+    // setSelectedRole(state, payload) {
+    //     state.selectedRole = payload;
+    // },
+    updateEditItem (state, payload) {
+        const {
+            key,
+            snap,
+        } = payload;
+        // const {
+        //     created,
+        //     id,
+        //     rank,
+        //     role,
+        //     winStatus,
+        // } = snap;
+
+        state.editItem = {
+            ...snap,
+            key,
+        };
+        // console.log(state.editItem);
+
+
+        // state.key = key;
+        // state.info.created = created;
+        // state.info.id = id;
+        // state.rank = rank;
+        // state.role = role;
+        // state.winStatus = winStatus;
     },
-    setWinStatus(state, payload) {
-        state.winStatus = payload;
-    },
+    // setRole(state, payload) {
+    //     state.role = payload;
+    // },
+    // setWinStatus(state, payload) {
+    //     state.winStatus = payload;
+    // },
     setRank(state, payload) {
         state.rank = payload;
     },
-    updateEditMode(state, payload) {
-        const { key, snap } = payload;
-        const { created, id, rank, role, winStatus } = snap;
+    // updateEditMode(state, payload) {
+    //     const { key, snap } = payload;
+    //     const { created, id, rank, role, winStatus } = snap;
 
-        state.key = key;
-        state.info.created = created;
-        state.info.id = id;
-        state.rank = rank;
-        state.role = role;
-        state.winStatus = winStatus;
-    },
+    //     state.key = key;
+    //     state.info.created = created;
+    //     state.info.id = id;
+    //     state.rank = rank;
+    //     state.role = role;
+    //     state.winStatus = winStatus;
+    // },
     reset(state) {
-        state.role = 'tank';
-        state.winStatus = 1;
-        state.rank = null;
-        state.key = null;
+        // state.role = 'tank';
+        // state.winStatus = 1;
+        // state.rank = null;
+        // state.key = null;
+
         state.info.created = '';
         state.info.id = null;
-    },
-    setSeason(state, payload) {
-        state.info.season = payload;
+
+        state.newItem = {
+            // role: state.editRole,
+            role: 'tank',
+            winStatus: 1,
+            score: '',
+        };
+        state.editItem = null;
     },
 };
 

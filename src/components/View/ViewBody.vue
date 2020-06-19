@@ -13,19 +13,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .viewBody {
     position: relative;
     margin: 0 auto 20px;
-    box-shadow: $shadow-3-1;
-    background: #fff;
 
     &__wrapper {
         position: relative;
         width: 756px;
         max-width: 100%;
         margin: auto;
+        box-shadow: $shadow-3-1;
+        background: #fff;
     }
 }
+
 </style>

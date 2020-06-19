@@ -1,12 +1,12 @@
 <template>
     <div class="centerItem">
-        <router-link v-if="skip" to="/sign-in" class="actionBtn">
+        <router-link v-if="skip" to="/sign-in" class="toggleBtn">
             <img src="@/assets/images/icon/SignIn.svg" alt="" />
         </router-link>
         <a
             v-else
-            :class="['actionBtn', { 'is-close': visible }]"
-            @click="toggleEditModule"
+            :class="['toggleBtn', { 'is-close': visible }]"
+            @click="toggleActionCard"
         >
             <img src="@/assets/images/icon/Plus.svg" alt="" />
         </a>
@@ -17,23 +17,14 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'ActionButton',
-    data() {
-        return {
-            visible: false,
-        };
-    },
+    name: 'ToggleButton',
     computed: {
         ...mapGetters('auth', ['isAuthenticated', 'skip']),
-        // visible() {
-        //     // return this.$store.state['editModule'].visible;
-        //     return false;
-        // },
+        ...mapGetters('edit', ['visible']),
     },
     methods: {
-        toggleEditModule() {
-            // this.$store.dispatch('editModule/toggle');
-            this.visible = !this.visible;
+        toggleActionCard() {
+            this.$store.dispatch('edit/toggle');
         },
     },
 };
@@ -50,7 +41,7 @@ export default {
     flex: 1 1 0;
 }
 
-.actionBtn {
+.toggleBtn {
     display: flex;
     position: absolute;
     top: 0;

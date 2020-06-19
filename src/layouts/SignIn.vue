@@ -98,6 +98,7 @@ export default {
     &-enter-active,
     &-leave-active {
         transition: opacity 0.5s;
+        will-change: opacity;
     }
     &-enter,
     &-leave-to {

@@ -2,10 +2,18 @@
     <ul class="roles">
         <li v-for="(role, index, key) in roles" :key="key" class="roles__item">
             <a
-                :class="['roleBtn', { 'is-active': selectedRole === role }]"
+                :class="['roleBtn', { 'is-active': currentRole === role }]"
                 @click="switchList(role)"
             >
-                <RoleIcon :role="role" class="roleBtn__icon" />
+                <svg
+                    class="roleBtn__icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none"
+                >
+                    <component :is="role"></component>
+                </svg>
                 {{ role }}
             </a>
         </li>
@@ -14,8 +22,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import { tankRef, damageRef, supportRef } from '@/firebase/config';
-import RoleIcon from '@/components/Symbols/Role/RoleIcon.vue';
 
 export default {
     name: 'RoleTabs',
@@ -25,34 +31,24 @@ export default {
         };
     },
     components: {
-        RoleIcon,
+        Tank: () => import('@/components/Symbols/Role/Tank.vue'),
+        Damage: () => import('@/components/Symbols/Role/Damage.vue'),
+        Support: () => import('@/components/Symbols/Role/Support.vue'),
     },
     computed: {
-        ...mapGetters('edit', ['selectedRole']),
+        ...mapGetters('progress', ['currentRole']),
     },
     methods: {
-        switchList(value) {
-            // switch (value) {
-            // case 'tank':
-            //     this.$store.dispatch('progress/fetchResults', tankRef);
-            //     break;
-            // case 'damage':
-            //     this.$store.dispatch('progress/fetchResults', damageRef);
-            //     break;
-            // case 'support':
-            //     this.$store.dispatch('progress/fetchResults', supportRef);
-            //     break;
-            // default:
-            //     break;
-            // }
-            this.$store.dispatch('progress/fetchResults', value);
-            this.$store.commit('edit/setRole', value);
-            this.$store.commit('edit/setSelectedRole', value);
+        switchList(role) {
+            // this.$store.commit('progress/updateLoadingStatus', true);
+            this.$store.dispatch('progress/switchRole', role);
+            // this.$store.commit('edit/setRole', role);
+            // this.$store.commit('edit/setSelectedRole', role);
         },
     },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/setup/variables";
 
 .roles {
@@ -68,6 +64,10 @@ export default {
 .roleBtn {
     display: block;
     position: relative;
+    /* display: flex; */
+    /* position: relative; */
+    /* justify-content: center; */
+    align-items: center;
     padding: 14px 0;
     color: $text-light;
     font-weight: bold;
@@ -87,6 +87,19 @@ export default {
         content: "";
     }
 
+    &:hover {
+        background: rgba($theme-color, 0.05);
+    }
+
+    svg {
+        width: 12px;
+        margin-right: 4px;
+
+        g {
+            fill: $text-light;
+        }
+    }
+
     &.is-active {
         color: $theme-color;
 
@@ -94,39 +107,9 @@ export default {
             background: $theme-color;
         }
 
-        svg {
-            path,
-            rect {
-                fill: $theme-color;
-            }
+        svg g {
+            fill: $theme-color;
         }
-    }
-
-    /* &__icon {
-        svg {
-            width: 11px;
-            height: 11px;
-            margin-right: 4px;
-
-            path,
-            rect {
-                fill: $text-light;
-            }
-        }
-    } */
-    &__icon {
-        width: 11px;
-        height: 11px;
-        margin-right: 4px;
-
-        path,
-        rect {
-            fill: $text-light;
-        }
-    }
-
-    &:hover {
-        background: rgba($theme-color, 0.05);
     }
 }
 </style>

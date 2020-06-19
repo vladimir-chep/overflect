@@ -2,12 +2,8 @@
     <div>
         <ViewHeader>Progress</ViewHeader>
         <ViewBody>
-            <!-- <div class="progressDisplay"> -->
-                <RoleTabs />
-                <!-- <ProgressTable v-if="isDisplayed"/> -->
-                <img v-if="isDisplayed"/>
-                <NotFound v-else />
-            <!-- </div> -->
+            <RoleTabs />
+            <ProgressTable />
         </ViewBody>
     </div>
 </template>
@@ -15,8 +11,8 @@
 <script>
 import ViewHeader from '@/components/View/ViewHeader.vue';
 import ViewBody from '@/components/View/ViewBody.vue';
-import RoleTabs from '../components/Common/RoleTabs.vue';
-import NotFound from '../components/Common/NotFound.vue';
+import RoleTabs from '@/components/Common/RoleTabs.vue';
+import ProgressTable from '@/components/Progress/ProgressTable.vue';
 
 export default {
     name: 'Progress',
@@ -24,15 +20,7 @@ export default {
         ViewHeader,
         ViewBody,
         RoleTabs,
-        NotFound,
-    },
-    data() {
-        return {
-            isDisplayed: false,
-        };
+        ProgressTable,
     },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

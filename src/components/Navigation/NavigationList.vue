@@ -2,7 +2,7 @@
     <div class="navigationList">
         <NavigationItem to="/profile" icon="profile" />
         <NavigationItem to="/progress" icon="list" />
-        <ActionButton />
+        <ToggleButton />
         <NavigationItem to="/chart" icon="graph" />
         <NavigationItem to="/settings" icon="settings" />
     </div>
@@ -10,13 +10,13 @@
 
 <script>
 import NavigationItem from '@/components/Navigation/NavigationItem.vue';
-import ActionButton from '../Navigation/ActionButton/ActionButton.vue';
+import ToggleButton from '@/components/Action/ToggleButton.vue';
 
 export default {
     name: 'NavigationList',
     components: {
         NavigationItem,
-        ActionButton,
+        ToggleButton,
     },
 };
 </script>

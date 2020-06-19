@@ -1,22 +1,34 @@
-<template>
-    <component :is="role"></component>
-</template>
 <script>
-import Tank from './Tank.vue';
-import Damage from './Damage.vue';
-import Support from './Support.vue';
-
 export default {
     props: {
-        role: {
-            type: String,
+        isActive: {
+            type: Boolean,
             required: true,
         },
     },
-    components: {
-        Tank,
-        Damage,
-        Support,
-    },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@/styles/setup/variables';
+
+.roleIcon {
+    width: 11px;
+    margin-right: 4px;
+
+    path,
+    rect {
+        fill: $text-light;
+    }
+
+    &.is-active {
+        color: $theme-color;
+
+        path,
+        rect {
+            fill: $theme-color;
+        }
+    }
+}
+
+</style>

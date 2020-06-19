@@ -2,23 +2,25 @@
     <nav class="navigationPanel">
         <div class="navigationPanel__wrapper">
             <NavigationList />
-            <!-- <EditModule /> -->
+            <ActionCard />
         </div>
     </nav>
 </template>
 
 <script>
 import NavigationList from '@/components/Navigation/NavigationList.vue';
+import ActionCard from '@/components/Action/ActionCard.vue';
 
 export default {
     name: 'Navigation',
     components: {
         NavigationList,
+        ActionCard,
     },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/styles/setup/variables";
 .navigationPanel {
     position: relative;

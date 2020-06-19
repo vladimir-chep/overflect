@@ -1,16 +1,14 @@
 <template>
     <transition name="fade" appear>
         <div class="view">
-            <!-- <div class="view__content">
-                <router-view class=""/>
-            </div> -->
-            <router-view class="view__content"/>
+            <router-view :class="['view__content', { 'is-fixed': visible }]" />
             <Navigation />
         </div>
     </transition>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Navigation from '@/components/Navigation/Navigation.vue';
 
 export default {
@@ -18,11 +16,15 @@ export default {
     components: {
         Navigation,
     },
+    computed: {
+        ...mapGetters('edit', ['visible']),
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '~@/styles/setup/variables';
+
 @import '~@/styles/setup/mixin';
 
 .view {
@@ -59,6 +61,15 @@ export default {
             content: '';
             transition: all .35s ease-in-out;
         }
+
+        &.is-fixed {
+            overflow-y: hidden;
+
+            &:after {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -66,6 +77,7 @@ export default {
     &-enter-active,
     &-leave-active {
         transition: opacity 1.5s;
+        will-change: opacity;
     }
 
     &-enter,

@@ -14,15 +14,11 @@ var config = {
 
 firebase.initializeApp(config);
 
-// firebase utils
+// utils
 const db = firebase.database();
 const auth = firebase.auth();
 
-// firebase collections
-// const resultsRef = db.ref('results');
-// const _tankRef = db.ref('tankComp');
-// const _damageRef = db.ref('damageComp');
-// const _supportRef = db.ref('supportComp');
+// collections
 const competitiveRef = db.ref('competitive');
 const tankRef = db.ref('competitive/tank');
 const damageRef = db.ref('competitive/damage');
