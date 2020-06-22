@@ -5,39 +5,35 @@ import axios from 'axios';
  * @description https://ow-api.com/docs/
  * @access https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile
  */
+const apiURL = 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile';
 
 const state = {
-    url: 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile',
-    data: {},
-    isFilled: false,
+    data: null,
 };
 
-const getters = {};
+const getters = {
+    info: (state) => state.data,
+    hasData: (state) => state.data !== null,
+};
 
 const actions = {
-    fetchData ({
-        commit
-    }) {
-        axios
-            .get(state.url)
-            .then(result => {
-                commit('setData', result.data);
+    getData({ commit }) {
+        return axios
+            .get(apiURL)
+            .then((result) => {
+                commit('updateData', result.data);
             })
-            .catch(error => {
-                console.error(`${error}. Is this url '${state.url}' ok? `);
+            .catch((error) => {
+                console.error(`${error}. Is this url ok? `);
             });
-    }
+    },
 };
 
 const mutations = {
-    setFilled (state, payload) {
-        state.isFilled = payload;
-    },
-    setData (state, payload) {
+    updateData(state, payload) {
         state.data = payload;
         state.isFilled = true;
-
-    }
+    },
 };
 
 export default {
@@ -45,5 +41,5 @@ export default {
     state,
     getters,
     actions,
-    mutations
-}
+    mutations,
+};

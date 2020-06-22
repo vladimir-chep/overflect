@@ -1,0 +1,33 @@
+@mixin spacing($className, $prop, $val: 5) {
+    @if type-of($val)==string {
+        .#{$className}-#{$val} {
+            #{$prop}: #{$val};
+        }
+    }
+    @else {
+        @for $i from 1 through $val {
+            .#{$className}-#{$i} {
+                #{$prop}: #{$i}rem;
+            }
+        }
+    }
+}
+
+@mixin wrapper {
+    position: relative;
+    width: $wrapper-width;
+    max-width: 100%;
+    margin: auto;
+}
+
+@mixin height-overflow {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@mixin transition-default($property: all, $duration: .25s) {
+    transition-property: $property;
+    transition-duration: .25s;
+    transition-timing-function: ease-in-out;
+}

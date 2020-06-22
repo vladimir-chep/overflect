@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import profile from './modules/profile';
 import progress from './modules/progress';
-import editModule from './modules/editModule';
+import edit from './modules/edit';
 
 Vue.use(Vuex);
 
@@ -14,8 +14,8 @@ const store = new Vuex.Store({
     modules: {
         auth,
         profile,
+        edit,
         progress,
-        editModule
     },
     strict: debug,
 });

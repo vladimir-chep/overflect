@@ -1,12 +1,9 @@
-@charset "utf-8";
+@charset 'utf-8';
 
 @import './setup/variables';
-@import './setup/mixins';
+@import './setup/mixin';
 
 @import './basics/normalize';
-
 @import './basics/typography';
 @import './basics/layout';
-
-@import './components/button';
-@import './components/link';
+@import './basics/animations';

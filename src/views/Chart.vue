@@ -1,63 +1,106 @@
 <template>
-<div class="pageContent">
-    <Header>Chart</Header>
-    <div class="pageCore">
-        <div class="pageCore__wrap">
-            <div class="card">
-                <Roles />
-                <div class="progressTable" v-if="isDisplayed">
-                    <line-chart :chartData="getChartData" />
+    <div>
+        <ViewHeader>Chart</ViewHeader>
+        <ViewBody>
+            <RoleTabs />
+            <transition name="slide" mode="out-in">
+                <div v-if="loading" class="loading">
+                    <div class="halfCircleSpinner">
+                        <span class="halfCircleSpinner__one"></span>
+                        <span class="halfCircleSpinner__two"></span>
+                    </div>
                 </div>
-                <NothingDisplay v-else />
-            </div>
-        </div>
+                <ul v-else-if="hasResults" class="chart">
+                    <LineChart :chartData="chartSource" />
+                </ul>
+                <NotFound v-else />
+            </transition>
+        </ViewBody>
     </div>
-</div>
 </template>
 
 <script>
-import Header from '@/components/layout/Header.vue';
-import Roles from '@/components/ProgressDisplay/Roles.vue';
-import LineChart from '@/components/LineChart.vue';
-import NothingDisplay from '@/components/ProgressDisplay/NothingDisplay.vue';
+import { mapGetters } from 'vuex';
+import ViewHeader from '@/components/View/ViewHeader.vue';
+import ViewBody from '@/components/View/ViewBody.vue';
+import RoleTabs from '@/components/Common/RoleTabs.vue';
+import LineChart from '@/components/Chart/Chart.vue';
+import NotFound from '@/components/Common/NotFound.vue';
 
 export default {
     name: 'Chart',
     components: {
-        Header,
+        ViewHeader,
+        ViewBody,
+        RoleTabs,
         LineChart,
-        Roles,
-        NothingDisplay,
-    },
-    data() {
-        return {}
+        NotFound,
     },
     computed: {
-        masterList() {
-            return this.$store.getters['progress/getMasterList'];
+        ...mapGetters('progress', ['loading', 'currentRole', 'currentResults']),
+        hasResults() {
+            return this.currentResults.length !== 0;
         },
-        selectedSeason() {
-            return this.$store.getters['progress/getSelectedSeason'];
-        },
-        displayList(){
-            return this.masterList[this.selectedSeason];
-        },
-        isDisplayed() {
-            return this.displayList && this.displayList.length ? true : false;
-        },
-        getChartData() {
-            let result = {
+        chartSource() {
+            const result = {
                 order: [],
-                ranks: [],
+                score: [],
             };
 
-            this.$store.getters['progress/getMasterList'][0].forEach((el, index) => {
-                result.order.push(index);
-                result.ranks.push(el.rank);
-            });
+            this.$store.getters['progress/currentResults'].forEach(
+                (el, index) => {
+                    result.order.push(index);
+                    result.score.push(el.score);
+                }
+            );
             return result;
         },
-
     },
-}
+    beforeMount() {
+        this.$store.dispatch('progress/switchRole', this.currentRole);
+    },
+    beforeDestroy() {
+        this.$store.commit('progress/updateLoadingStatus', true);
+    },
+};
 </script>
+
+<style lang="scss" scoped>
+@import '~@/styles/setup/variables';
+
+.loading {
+    padding: 80px $spacing-x;
+}
+
+.halfCircleSpinner {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    border-radius: 100%;
+
+    span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: calc(60px / 10) solid transparent;
+        border-radius: 100%;
+        content: '';
+
+        &__one {
+            border-top-color: lighten($theme-color, 15%);
+            animation: halfCircleSpinnerAnimation 1s infinite;
+        }
+
+        &__two {
+            border-bottom-color: lighten($theme-color, 15%);
+            animation: halfCircleSpinnerAnimation 1s infinite alternate;
+        }
+    }
+}
+
+.chart {
+    padding: 14px;
+}
+
+</style>
