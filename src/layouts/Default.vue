@@ -24,7 +24,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/setup/variables';
-
 @import '~@/styles/setup/mixin';
 
 .view {
@@ -48,6 +47,7 @@ export default {
         position: relative;
 
         &:after {
+            @include transition-default;
             display: block;
             position: absolute;
             bottom: 0;
@@ -59,7 +59,10 @@ export default {
             background: rgba(darken($theme-color, 55%), .5);
             opacity: 0;
             content: '';
-            transition: all .35s ease-in-out;
+            will-change: all;
+            transition: $transition-default;
+            transition-duration: .35s;
+
         }
 
         &.is-fixed {
@@ -70,19 +73,6 @@ export default {
                 opacity: 1;
             }
         }
-    }
-}
-
-.fade {
-    &-enter-active,
-    &-leave-active {
-        transition: opacity 1.5s;
-        will-change: opacity;
-    }
-
-    &-enter,
-    &-leave-to {
-        opacity: 0;
     }
 }
 

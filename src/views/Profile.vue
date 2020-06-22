@@ -204,8 +204,8 @@ export default {
             font-weight: bold;
             font-size: 1.6rem;
             text-align: center;
+            transition: $transition-default;
             cursor: pointer;
-            transition: .25s all ease-in-out;
 
             &:hover {
                 color: $theme-color;
@@ -225,23 +225,6 @@ export default {
 
     &__wrapper {
         @include wrapper;
-    }
-}
-
-.slide {
-    &-leave-active,
-    &-enter-active {
-        transition: all .35s cubic-bezier(.25, .46, .45, .94);
-    }
-
-    &-enter {
-        opacity: 0;
-        transform: translate(0, 10px);
-    }
-
-    &-leave-to {
-        opacity: 0;
-        transform: translate(0, -10px);
     }
 }
 

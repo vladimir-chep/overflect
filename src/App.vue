@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="container">
+    <div id="app" :class="['container', `container--${layout}`]">
         <component :is="layout"></component>
     </div>
 </template>
@@ -15,9 +15,6 @@ export default {
         SignIn,
     },
     computed: {
-        // pagePaused() {
-        //     return this.$store.state['editModule'].visible;
-        // },
         layout() {
             return `${this.$route.meta.layout || 'Default'}`;
         },
@@ -26,12 +23,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .container {
     height: 100%;
     overflow: hidden;
-    /* background: $theme-color; */
+
+    &--SignIn {
+        background: $theme-color;
+    }
 }
 
 </style>

@@ -40,16 +40,14 @@ export default {
     },
     methods: {
         switchList(role) {
-            // this.$store.commit('progress/updateLoadingStatus', true);
             this.$store.dispatch('progress/switchRole', role);
-            // this.$store.commit('edit/setRole', role);
-            // this.$store.commit('edit/setSelectedRole', role);
         },
     },
 };
 </script>
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
 
 .roles {
     display: flex;
@@ -62,18 +60,15 @@ export default {
 }
 
 .roleBtn {
+    @include transition-default('background-color');
     display: block;
     position: relative;
-    /* display: flex; */
-    /* position: relative; */
-    /* justify-content: center; */
     align-items: center;
     padding: 14px 0;
     color: $text-light;
     font-weight: bold;
     font-size: 1.6rem;
     text-transform: capitalize;
-    transition: 0.25s all ease-in-out;
     cursor: pointer;
 
     &:after {
@@ -84,11 +79,11 @@ export default {
         height: 2px;
         border-radius: 4px;
         background: $hr-color;
-        content: "";
+        content: '';
     }
 
     &:hover {
-        background: rgba($theme-color, 0.05);
+        background: rgba($theme-color, .05);
     }
 
     svg {
@@ -96,6 +91,7 @@ export default {
         margin-right: 4px;
 
         g {
+            @include transition-default('fill');
             fill: $text-light;
         }
     }
@@ -112,4 +108,5 @@ export default {
         }
     }
 }
+
 </style>

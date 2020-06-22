@@ -5,7 +5,7 @@
             <p class="progressTable__header__col">Score</p>
             <p class="progressTable__header__col">Tier</p>
             <p class="progressTable__header__col">Diff</p>
-            <p class="progressTable__header__details" v-if="!skip">
+            <p v-if="!skip" class="progressTable__header__details">
                 Details
             </p>
         </div>
@@ -60,9 +60,6 @@ export default {
     beforeMount() {
         this.$store.dispatch('progress/switchRole', this.currentRole);
     },
-    mounted() {
-        // this.$store.dispatch('progress/switchRole', this.currentRole);
-    },
     beforeDestroy() {
         this.$store.commit('progress/updateLoadingStatus', true);
     },
@@ -70,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 @mixin cell {
     flex: 1 1 0;
@@ -92,10 +89,10 @@ export default {
         border-radius: 5px;
         color: transparent;
         background: linear-gradient(
-            to right,
-            rgba($theme-color, 0.2) 8%,
-            rgba($theme-color, 0.4) 18%,
-            rgba($theme-color, 0.2) 33%
+        to right,
+        rgba($theme-color, .2) 8%,
+        rgba($theme-color, .4) 18%,
+        rgba($theme-color, .2) 33%
         );
         background-size: 800px 104px;
         animation-name: placeHolderShimmer;
@@ -103,16 +100,6 @@ export default {
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-fill-mode: forwards;
-    }
-}
-
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0;
-    }
-
-    100% {
-        background-position: 468px 0;
     }
 }
 
@@ -139,20 +126,4 @@ export default {
     }
 }
 
-.slide {
-    &-leave-active,
-    &-enter-active {
-        transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    &-enter {
-        opacity: 0;
-        transform: translate(0, 10px);
-    }
-
-    &-leave-to {
-        opacity: 0;
-        transform: translate(0, -10px);
-    }
-}
 </style>

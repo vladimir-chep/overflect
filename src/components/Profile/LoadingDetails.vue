@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .loading {
     display: flex;
@@ -30,10 +30,10 @@ export default {
         border-radius: 5px;
         color: transparent;
         background: linear-gradient(
-            to right,
-            rgba($theme-color, 0.2) 8%,
-            rgba($theme-color, 0.4) 18%,
-            rgba($theme-color, 0.2) 33%
+        to right,
+        rgba($theme-color, .2) 8%,
+        rgba($theme-color, .4) 18%,
+        rgba($theme-color, .2) 33%
         );
         background-size: 800px 104px;
         animation-name: placeHolderShimmer;
@@ -44,13 +44,4 @@ export default {
     }
 }
 
-@keyframes placeHolderShimmer {
-    0% {
-        background-position: -468px 0;
-    }
-
-    100% {
-        background-position: 468px 0;
-    }
-}
 </style>

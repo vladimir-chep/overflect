@@ -75,6 +75,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
+
 @mixin col {
     flex: 1 1 0;
     padding: $spacing-x 0;
@@ -185,6 +187,12 @@ export default {
             border: none;
             border-radius: 8px;
             background: #f7f7f7;
+            transition: $transition-default;
+            cursor: pointer;
+
+            &:hover {
+                background: darken(#f7f7f7, 5%);
+            }
 
             svg {
                 height: 16px;

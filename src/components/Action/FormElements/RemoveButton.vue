@@ -23,24 +23,34 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
 
 .removeButton {
+    @include transition-default('background-color');
     display: block;
     width: 100%;
     padding: 14px;
+    border: 1px solid $text-color;
     border-radius: 8px;
+    color: $text-color;
+    background: #fff;
     font-weight: bold;
     font-size: 1.8rem;
-    outline-style: none;
-    appearance: none;
     text-transform: uppercase;
-    color: $text-color;
-    background-color: #fff;
-    border: 1px solid $text-color;
+    cursor: pointer;
+    outline-style: none;
+
+    appearance: none;
+
+    &:hover {
+        background: rgba($theme-color, .05);
+    }
+
     > img {
         width: 16px;
         height: 18px;
     }
 }
+
 </style>

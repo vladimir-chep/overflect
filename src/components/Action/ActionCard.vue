@@ -23,59 +23,44 @@ export default {
     },
     computed: {
         ...mapGetters('edit', ['visible', 'editMode']),
-        // ...mapGetters('progress', ['currentRole']),
         title() {
             return this.editMode ? 'Edit result' : 'Add result';
         },
     },
-    // beforeCreate() {
-    //     this.$store.commit('edit/updateRole', this.currentRole);
-    // },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/setup/mixin';
+
 .actionCard {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    border-radius: 8px 8px 0 0;
     padding: 36px;
     padding-bottom: 100px;
+    border-radius: 8px 8px 0 0;
     background: #fff;
 
     &__wrapper {
         display: flex;
-        flex-direction: column;
         height: 100%;
         max-height: calc(100vh - 136px);
+        flex-direction: column;
+
         &__ttl {
-            font-size: 2.4rem;
-            font-weight: bold;
             margin-bottom: 32px;
+            font-weight: bold;
+            font-size: 2.4rem;
         }
+
         &__body {
-            overflow-y: auto;
-            overflow-x: hidden;
             height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
     }
 }
 
-.slideUp {
-    &-enter-active,
-    &-leave-active {
-        transition-timing-function: ease-in-out;
-        transition-duration: 0.25s;
-        transition-property: opacity, transform;
-        will-change: opacity, transform;
-    }
-
-    &-enter,
-    &-leave-to {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-}
 </style>

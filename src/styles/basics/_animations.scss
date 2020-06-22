@@ -1,0 +1,99 @@
+.slideUp {
+    &-enter-active,
+    &-leave-active {
+        @include transition-default('opacity, transform');
+        will-change: opacity, transform;
+    }
+
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+.slide {
+    &-leave-active,
+    &-enter-active {
+        transition: all .35s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    &-enter {
+        opacity: 0;
+        transform: translate(0, 10px);
+    }
+
+    &-leave-to {
+        opacity: 0;
+        transform: translate(0, -10px);
+    }
+}
+
+.fade {
+    &-enter-active,
+    &-leave-active {
+        will-change: opacity;
+        transition: opacity 1.5s;
+    }
+
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+    }
+}
+
+.signInFade {
+    &-enter-active,
+    &-leave-active {
+        will-change: opacity;
+        transition: opacity .5s;
+    }
+
+    &-enter,
+    &-leave-to {
+        opacity: 0;
+    }
+}
+
+.slideAnim {
+    &-right-enter-active,
+    &-right-leave-active,
+    &-left-enter-active,
+    &-left-leave-active {
+        position: absolute;
+        will-change: transform;
+        transition: all .35s;
+    }
+
+    &-right-enter,
+    &-left-leave-active {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    &-left-enter,
+    &-right-leave-active {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+@keyframes halfCircleSpinnerAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

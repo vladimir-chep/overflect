@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade" appear>
+    <transition name="signInFade" appear>
         <div class="signIn">
             <transition-group :name="slideAnim" mode="out-in">
                 <FrontSlide
@@ -49,17 +49,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .signIn {
     position: relative;
     width: $wrapper-width;
     max-width: 100%;
     height: 100%;
+    overflow: hidden;
     margin: auto;
     color: #fff;
     background: $theme-color;
-    overflow: hidden;
 
     &__slide {
         display: flex;
@@ -72,37 +72,4 @@ export default {
     }
 }
 
-.slideAnim {
-    &-right-enter-active,
-    &-right-leave-active,
-    &-left-enter-active,
-    &-left-leave-active {
-        position: absolute;
-        will-change: transform;
-        transition: all 0.35s;
-    }
-
-    &-right-enter,
-    &-left-leave-active {
-        opacity: 0;
-        transform: translate3d(-100%, 0, 0);
-    }
-
-    &-left-enter,
-    &-right-leave-active {
-        opacity: 0;
-        transform: translate3d(100%, 0, 0);
-    }
-}
-.fade {
-    &-enter-active,
-    &-leave-active {
-        transition: opacity 0.5s;
-        will-change: opacity;
-    }
-    &-enter,
-    &-leave-to {
-        opacity: 0;
-    }
-}
 </style>

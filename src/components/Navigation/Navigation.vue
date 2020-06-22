@@ -21,22 +21,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+
 .navigationPanel {
     position: relative;
-    max-height: 60px;
     height: 100%;
-    text-align: center;
-    background: #fff;
+    max-height: 60px;
     box-shadow: $shadow-navigation;
+    background: #fff;
+    text-align: center;
 
     &__wrapper {
         position: relative;
+        z-index: 200;
         width: 756px;
         max-width: 100%;
         height: 100%;
         margin: auto;
-        z-index: 200;
     }
 }
+
 </style>

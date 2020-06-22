@@ -45,6 +45,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
 
 .frontVisual {
     display: flex;
@@ -74,10 +75,11 @@ export default {
 }
 
 .control {
-    text-align: center;
     margin-bottom: 3rem;
+    text-align: center;
 
     &__connect {
+        @include transition-default('background-color');
         display: block;
         width: 100%;
         max-width: 380px;
@@ -90,7 +92,6 @@ export default {
         font-weight: bold;
         font-size: 1.8rem;
         text-transform: uppercase;
-        transition: .25s background-color ease-in-out;
         cursor: pointer;
 
         &:hover {
@@ -99,12 +100,12 @@ export default {
     }
 
     &__skip {
+        @include transition-default('color');
         display: inline-block;
         padding: 1rem;
         color: #fff;
         font-size: 1.4rem;
         text-decoration: underline;
-        transition: .25s color ease-in-out;
         cursor: pointer;
 
         &:hover {
@@ -112,4 +113,5 @@ export default {
         }
     }
 }
+
 </style>

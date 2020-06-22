@@ -22,15 +22,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .navigationList {
     display: flex;
-    flex-direction: row;
-    list-style: none;
     height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     padding: 0 14px;
-    justify-content: space-between;
+    list-style: none;
 }
+
 </style>

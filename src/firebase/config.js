@@ -31,4 +31,14 @@ const checkAuth = new Promise((resolve) => {
     });
 });
 
-export { firebase, db, auth, competitiveRef, tankRef, damageRef, supportRef, checkAuth, getRef };
+export {
+    firebase,
+    db,
+    auth,
+    competitiveRef,
+    tankRef,
+    damageRef,
+    supportRef,
+    checkAuth,
+    getRef
+};

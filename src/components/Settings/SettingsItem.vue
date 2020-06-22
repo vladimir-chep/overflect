@@ -39,7 +39,7 @@ export default {
     &__content {
         a {
             color: $theme-color;
-            transition: .25s color ease-in-out;
+            transition: $transition-default;
 
             &:hover {
                 color: darken($theme-color, 10%);

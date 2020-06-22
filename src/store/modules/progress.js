@@ -1,26 +1,5 @@
 import { getRef } from '@/firebase/config';
 
-const calcDiff = (val, index, arr) => {
-    let result = 0;
-    if (index !== 0) {
-        let cur = val.score;
-        let prev = arr[index - 1].score;
-        result = cur - prev;
-    }
-    return result;
-};
-const getTier = (el, tierScheme) => {
-    const founded = tierScheme.find((tier) => {
-        if (el.score >= tier.min && el.score <= tier.max) {
-            return tier;
-        }
-    });
-    return {
-        name: founded.name,
-        url: founded.image || 'none',
-    };
-};
-
 const state = {
     loading: true,
     role: 'tank',
@@ -106,6 +85,26 @@ const actions = {
         });
     },
     fetchRoleResults({ commit }, roleName) {
+        const calcDiff = (val, index, arr) => {
+            let result = 0;
+            if (index !== 0) {
+                let cur = val.score;
+                let prev = arr[index - 1].score;
+                result = cur - prev;
+            }
+            return result;
+        };
+        const getTier = (el, tierScheme) => {
+            const founded = tierScheme.find((tier) => {
+                if (el.score >= tier.min && el.score <= tier.max) {
+                    return tier;
+                }
+            });
+            return {
+                name: founded.name,
+                url: founded.image || 'none',
+            };
+        };
         return new Promise((resolve) => {
             getRef(roleName).on('value', (snapshot) => {
                 const results = [];

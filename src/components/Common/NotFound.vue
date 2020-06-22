@@ -1,6 +1,10 @@
 <template>
     <div class="notFound">
-        <img src="@/assets/images/confusedFace.svg" alt="" class="notFound__icon">
+        <img
+            src="@/assets/images/icon/confusedFace.svg"
+            alt="Nothing to display"
+            class="notFound__icon"
+        />
         <p class="notFound__txt">Nothing to display</p>
     </div>
 </template>

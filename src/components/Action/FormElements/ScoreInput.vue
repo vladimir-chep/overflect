@@ -4,6 +4,7 @@
         pattern="\d*"
         class="scoreInput"
         placeholder="Insert score"
+        :value="playScore"
         :maxlength="4"
         @input="updateValue"
         @keypress="checkNumber()"
@@ -42,9 +43,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
+$bg-color: #f1f1f1;
 
 .scoreInput {
+    @include transition-default;
     display: block;
     width: 100%;
     height: 46px;
@@ -53,14 +57,18 @@ export default {
     padding: 0 20px;
     border-width: 0;
     border-radius: 8px;
-    box-shadow: inset 0 0 0 1px #f1f1f1;
-    background-color: #f1f1f1;
+    box-shadow: inset 0 0 0 1px $bg-color;
+    background: $bg-color;
     font-size: 1.6rem;
     text-align: center;
     text-transform: uppercase;
-    transition: 0.08s all ease-in-out;
     outline-style: none;
 
     appearance: none;
+
+    &:hover {
+        background: darken($bg-color, 5%);
+    }
 }
+
 </style>

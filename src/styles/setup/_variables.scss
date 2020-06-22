@@ -6,7 +6,7 @@ $color-danger: #e51b1b;
 $color-gray: #afb2bc;
 $color-silver: #d7d8dd;
 $color-light: #f0f0f2;
-$color-lighter: #f3F6ff;
+$color-lighter: #f3f6ff;
 
 // Theme
 $theme-color: $color-main;
@@ -14,10 +14,10 @@ $text-color: $color-dark;
 $text-light: $color-gray;
 $bg-color: $color-lighter;
 $hr-color: $color-light;
-$error-color:$color-danger;
-$success-color:$color-green;
-$neutral-color:$color-dark;
-$inactive-color:$color-silver;
+$error-color: $color-danger;
+$success-color: $color-green;
+$neutral-color: $color-dark;
+$inactive-color: $color-silver;
 
 // Spacing
 $indent: 14px;
@@ -25,8 +25,6 @@ $spacing-x: $indent;
 $spacing-y: $indent + 10;
 $padding: $spacing-y $spacing-x;
 $l-px: $indent;
-$l-py: 20px;
-$padding: $l-py $l-px;
 $padding-card: 30px 20px;
 
 // Borders
@@ -38,11 +36,11 @@ $shadow-1: 0 4px 6px rgba(50, 50, 93, .11),
 $shadow-2: 0 13px 27px -5px rgba(50, 50, 93, .25),
 0 8px 16px -8px rgba(0, 0, 0, .3),
 0 -6px 16px -6px rgba(0, 0, 0, .025);
-$shadow-3: 0 0px 30px 30px rgba(50, 50, 93, .03),
-0 0px 18px 50px rgba(0, 0, 0, .01);
-$shadow-3-1: 0 0px 30px 0px rgba(50, 50, 93, .03),
-0 0px 18px 0px rgba(0, 0, 0, .01);
-$shadow-4: 0 0px 30px 30px rgba(50, 50, 93, .03),
+$shadow-3: 0 0 30px 30px rgba(50, 50, 93, .03),
+0 0 18px 50px rgba(0, 0, 0, .01);
+$shadow-3-1: 0 0 30px 0 rgba(50, 50, 93, .03),
+0 0 18px 0 rgba(0, 0, 0, .01);
+$shadow-4: 0 0 30px 30px rgba(50, 50, 93, .03),
 0 -18px 50px 50px rgba(0, 0, 0, .025);
 $shadow-card: $shadow-1;
 $shadow-pageHeader: $shadow-1;
@@ -51,3 +49,6 @@ $shadow-navigation: $shadow-4;
 
 // Layout
 $wrapper-width: 756px;
+
+// Animation, Transitions
+$transition-default: .25s all ease-in-out;

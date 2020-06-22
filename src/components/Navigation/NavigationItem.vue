@@ -37,28 +37,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .navigationItem {
-    position: relative;
-    flex: 1 1 0;
     display: flex;
-    height: 100%;
+    position: relative;
     max-width: 50px;
+    height: 100%;
+    flex: 1 1 0;
 
     &.is-activeExact:before {
-        content: "";
         display: block;
-        background: $theme-color;
-        width: 100%;
-        height: 2px;
         position: absolute;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 2px;
+        background: $theme-color;
+        content: '';
     }
-
-    /* &--editModule {
-            max-width: 80px;
-        } */
 }
+
 </style>

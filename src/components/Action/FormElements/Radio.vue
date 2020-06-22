@@ -64,7 +64,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
 
 .radioItem {
     flex: 1 1 0;
@@ -77,6 +78,7 @@ export default {
     }
 
     > label {
+        @include transition-default('background-color');
         display: flex;
         width: 100%;
         justify-content: center;
@@ -87,9 +89,14 @@ export default {
         font-weight: bold;
         font-size: 1.6rem;
         text-transform: uppercase;
+        cursor: pointer;
         outline-style: none;
 
         appearance: none;
+
+        &:hover {
+            background: darken($inactive-color, 5%);
+        }
 
         > svg {
             width: 20px;
@@ -105,6 +112,10 @@ export default {
         color: #fff;
         background-color: $theme-color;
 
+        &:hover {
+            background: darken($theme-color, 5%);
+        }
+
         svg {
             g {
                 fill: #fff;
@@ -112,4 +123,5 @@ export default {
         }
     }
 }
+
 </style>

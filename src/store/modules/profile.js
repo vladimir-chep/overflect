@@ -5,6 +5,7 @@ import axios from 'axios';
  * @description https://ow-api.com/docs/
  * @access https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile
  */
+const apiURL = 'https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile';
 
 const state = {
     data: null,
@@ -18,7 +19,7 @@ const getters = {
 const actions = {
     getData({ commit }) {
         return axios
-            .get('https://ow-api.com/v1/stats/pc/asia/Noyt-11939/profile')
+            .get(apiURL)
             .then((result) => {
                 commit('updateData', result.data);
             })

@@ -11,7 +11,7 @@
                     <img
                         class="roleCard__visual__icon"
                         :src="
-                            require(`@/assets/images/competitive/${role.role}.svg`)
+                            require(`@/assets/images/icon/competitive/${role.role}.svg`)
                         "
                         :alt="role.role"
                     />
@@ -40,7 +40,7 @@ export default {
 
 .competitive {
     &__ttl {
-        margin: 0 auto $spacing-x;
+        margin: 0 auto $spacing-y;
         font-weight: bold;
         font-size: 1.8rem;
         text-align: center;

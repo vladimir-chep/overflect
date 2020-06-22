@@ -71,7 +71,7 @@ export default {
         },
         addResult() {
             if (this.score <= 0 || this.score > 5000) {
-                alert('Score: Weird value!');
+                alert('Required less 5000!');
                 return;
             }
 

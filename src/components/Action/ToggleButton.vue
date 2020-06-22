@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/setup/variables';
+@import '~@/styles/setup/mixin';
 
 .centerItem {
     display: flex;
@@ -42,6 +43,7 @@ export default {
 }
 
 .toggleBtn {
+    @include transition-default('background-color');
     display: flex;
     position: absolute;
     top: 0;
@@ -55,7 +57,6 @@ export default {
     box-shadow: $shadow-card;
     background: $theme-color;
     transform: translate(-50%, -50%);
-    transition: background-color .25s ease-in-out;
     cursor: pointer;
 
     &:hover,

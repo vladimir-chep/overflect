@@ -20,8 +20,14 @@
     margin: auto;
 }
 
-@mixin height-overflow{
+@mixin height-overflow {
     height: 100%;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@mixin transition-default($property: all, $duration: .25s) {
+    transition-property: $property;
+    transition-duration: .25s;
+    transition-timing-function: ease-in-out;
 }

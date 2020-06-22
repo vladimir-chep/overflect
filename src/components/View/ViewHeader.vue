@@ -27,13 +27,12 @@ export default {
     &__wrapper {
         @include wrapper;
         display: flex;
-        height: 59px;
         justify-content: space-between;
         align-items: center;
 
         &__ttl {
             margin: 0;
-            padding: $spacing-x;
+            padding: 20px $spacing-x;
             font-weight: bold;
             font-size: 1.8rem;
             width: 100%;

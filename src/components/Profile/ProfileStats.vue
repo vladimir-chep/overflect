@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
 
 .stats {
     display: flex;
@@ -49,4 +49,5 @@ export default {
         }
     }
 }
+
 </style>

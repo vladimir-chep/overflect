@@ -98,22 +98,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/setup/variables";
+@import '~@/styles/setup/variables';
+
+@import '~@/styles/setup/mixin';
 
 .slideBack {
+    @include transition-default;
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 32px;
     height: 32px;
+    justify-content: center;
+    align-items: center;
     padding: 6px;
     border-radius: 50%;
-    transition: 0.15s background-color ease-in-out;
+    transition-duration: .15s;
     cursor: pointer;
 
     &:hover {
-        background-color: rgba(#fff, 0.15);
+        background-color: rgba(#fff, .15);
     }
+
     img {
         width: 11px;
         height: 18px;
@@ -154,12 +158,13 @@ export default {
     background: #fff;
 
     &__inputTtl {
-        margin-bottom: 0.3rem;
+        margin-bottom: .3rem;
         color: $theme-color;
         font-weight: bold;
     }
 
     &__input {
+        @include transition-default;
         display: block;
         width: 100%;
         height: 46px;
@@ -173,13 +178,11 @@ export default {
         background-color: #f1f1f1;
         font-size: 1.6rem;
         text-align: center;
-        transition-property: all;
-        transition-duration: 80ms;
-        transition-timing-function: ease-in-out;
+        transition-duration: .08s;
         outline-style: none;
 
         -webkit-appearance: none;
-        appearance: none;
+                appearance: none;
 
         &.error {
             box-shadow: inset 0 0 0 1px $error-color;
@@ -201,10 +204,12 @@ export default {
         color: $error-color;
         font-weight: bold;
         text-align: center;
-        transition: all 0.6s;
+        transition: $transition-default;
+        transition-timing-function: ease-in-out;
     }
 
     &__btn {
+        @include transition-default;
         display: block;
         width: 100%;
         padding: $spacing-x;
@@ -214,6 +219,11 @@ export default {
         background: $theme-color;
         font-weight: bold;
         font-size: 1.8rem;
+        cursor: pointer;
+
+        &:hover {
+            background: darken($theme-color, .15);
+        }
 
         &:disabled {
             border-color: transparent;
@@ -225,7 +235,8 @@ export default {
 .error-enter-active,
 .error-leave-active {
     will-change: transform;
-    transition: all 0.6s;
+    transition: $transition-default;
+    transition-timing-function: ease-in-out;
 }
 
 .error-enter {
@@ -237,4 +248,5 @@ export default {
     opacity: 0;
     transform: translate3d(0, -100%, 0);
 }
+
 </style>
