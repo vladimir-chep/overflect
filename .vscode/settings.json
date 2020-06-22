@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "Overwatch",
+        "chartjs",
+        "overflect"
+    ],
+    "path-intellisense.mappings": {
+        "@": "${workspaceRoot}/src"
+      }
+}
