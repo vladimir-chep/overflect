@@ -1,37 +1,37 @@
 @font-face {
-    font-family: 'Comfortaa';
-    font-weight: 400;
-    src: local('Comfortaa'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
+  font-family: 'Comfortaa';
+  font-weight: 400;
+  src: local('Comfortaa'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Comfortaa';
-    font-weight: 700;
-    src: local('Comfortaa Bold'), local('Comfortaa-Bold'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
+  font-family: 'Comfortaa';
+  font-weight: 700;
+  src: local('Comfortaa Bold'), local('Comfortaa-Bold'), url(~@/assets/fonts/Comfortaa[wght].ttf) format('truetype');
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 body {
-    color: $color-dark;
-    font-family: 'Comfortaa', cursive;
-    font-size: 14px;
-    font-size: 1.4rem;
-    font-variant-numeric: proportional-nums;
-    -webkit-font-feature-settings: 'pnum';
-            font-feature-settings: 'pnum';
+  color: $color-dark;
+  font-family: 'Comfortaa', cursive;
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-variant-numeric: proportional-nums;
+  -webkit-font-feature-settings: 'pnum';
+  font-feature-settings: 'pnum';
 
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 h1 {
-    font-size: 24px;
-    font-size: 2.4rem;
+  font-size: 24px;
+  font-size: 2.4rem;
 }
 
 // a {
