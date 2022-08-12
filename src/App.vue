@@ -1,64 +1,38 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view /> -->
-  <!-- <div :class="['container', `container--${layout}`]"> -->
-  <component :is="layout"></component>
-  <!-- </div> -->
+  <AppLayout>
+    <router-view />
+  </AppLayout>
 </template>
 
-<script>
-import Default from '@/layouts/Default.vue';
-import SignIn from '@/layouts/SignIn.vue';
+<!-- <script lang="ts" setup>
+// import { computed } from 'vue';
+// import { useRoute } from 'vue-router';
+// import LayoutDefault from '@/layouts/LayoutDefault.vue';
+// import LayoutAuth from '@/layouts/LayoutAuth.vue';
 
-export default {
-  name: 'App',
-  components: {
-    Default,
-    SignIn,
-  },
-  computed: {
-    layout() {
-      return `${this.$route.meta.layout || 'Default'}`;
-    },
-  },
-};
-</script>
+// const route = useRoute();
+// const layout = computed(() => {
+//   // return `${route.meta.layout || 'Default'}`;
+//   const layoutName = route.meta.layout || 'LayoutDefault';
+//   console.log(route.meta.layout, layoutName);
+//   // return () => import(`@/layouts/${layoutName}.vue`);
+//   return `${route.meta.layout || 'LayoutDefault'}`;
+// });
 
-<style lang="scss" scoped>
-@import '~@/styles/setup/variables';
+// export default {
+// name: 'App',
+// components: {
+//   Default,
+//   SignIn,
+// },
+// computed: {
+//   layout() {
+//     return `${this.$route.meta.layout || 'Default'}`;
+//   },
+// },
+// };
+</script> -->
 
-.container {
-  // height: 100%;
-  // overflow: hidden;
-
-  &--SignIn {
-    // background: $theme-color;
-  }
-}
-</style>
-
-<!-- <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+<!-- <style lang="scss" scoped>
+@import '~@/styles/config/varia
 </style> -->

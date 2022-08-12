@@ -1,0 +1,20 @@
+@import './variables';
+
+:root {
+  // --app-background-color: #{$background-light};
+  // --app-text-color: #{$text-light};
+  // --app-highlight-color: #{$highlight-light};
+  --app-background-color: #{$color-lighter};
+  --app-text-color: #{$color-dark};
+}
+
+// [theme="dark"] {
+// --app-background-color: #{$background-dark};
+// --app-text-color: #{$text-dark};
+// --app-highlight-color: #{$highlight-dark};
+// }
+
+[layout="auth"] {
+  --app-background-color: #{$color-main};
+  --app-text-color: #fff;
+}

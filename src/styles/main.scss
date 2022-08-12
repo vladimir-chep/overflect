@@ -1,7 +1,8 @@
 @charset 'utf-8';
 
-@import './setup/variables';
-@import './setup/mixin';
+@import './config/variables';
+@import './config/mixin';
+@import './config/theme-colors';
 
 @import './basics/normalize';
 @import './basics/typography';

@@ -1,27 +1,27 @@
 <template>
-  <div>
-    <a class="slideBack" @click.prevent="backSlide">
+  <div class="verification">
+    <a href="" class="verification__back" @click.prevent="prevSlide">
       <img src="@/assets/images/icon/ArrowBack.svg" alt="" />
     </a>
-    <div class="verification">
-      <h2 class="verification__ttl">Sign In</h2>
-      <p class="verification__txt">
+    <div class="description">
+      <h2 class="description__title">Sign In</h2>
+      <p class="description__text">
         Enter your email and password to get access to edit mode
       </p>
     </div>
-    <form class="verificationForm">
-      <p class="verificationForm__inputTtl">Email</p>
+    <form class="form">
+      <p class="form__title">Email</p>
       <input
-        class="verificationForm__input"
+        class="form__inputField"
         :class="{ error: alert }"
         placeholder="Insert email here..."
         type="email"
         id="email"
         v-model="email"
       />
-      <p class="verificationForm__inputTtl">Password</p>
+      <p class="form__title">Password</p>
       <input
-        class="verificationForm__input"
+        class="form__inputField"
         :class="{ error: alert }"
         placeholder="Insert password here..."
         type="password"
@@ -35,8 +35,8 @@
       </transition>
       <button
         type="submit"
-        class="verificationForm__btn"
-        @click.prevent="signIn"
+        class="form__submit"
+        @click.prevent="onSubmit"
         :disabled="disabled"
       >
         <SpinnerLoading v-if="loading" />
@@ -46,95 +46,105 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 // import { mapState, mapGetters } from 'vuex';
+import { ref, reactive, computed, watch, toRefs, defineEmits } from 'vue';
 import SpinnerLoading from '@/components/Symbols/SpinnerLoading.vue';
 
-export default {
-  name: 'SignInVerification',
-  components: {
-    SpinnerLoading,
-  },
-  data() {
-    return {
-      email: '',
-      password: '',
-      alert: false,
-    };
-  },
-  computed: {
-    // ...mapState('auth', ['loading', 'error']),
-    // ...mapGetters('auth', ['isAuthenticated']),
-    error() {
-      return this.$store.state['auth'].error;
-    },
-    disabled() {
-      const isEmpty = this.email === '' || this.password === '';
+const emit = defineEmits<{
+  (e: 'prev'): void;
+}>();
 
-      if ((isEmpty && !this.loading) || this.loading) return true;
-      return false;
-    },
-  },
-  watch: {
-    error(value) {
-      if (value) this.alert = true;
-    },
-    alert(value) {
-      if (!value) this.$store.commit('auth/setError', null);
-    },
-  },
-  methods: {
-    backSlide() {
-      this.$emit('slide', true);
-    },
-    signIn() {
-      this.$store.dispatch('auth/manualSignIn', {
-        email: this.email,
-        password: this.password,
-      });
-    },
-  },
+const state = reactive<{
+  email: string;
+  password: string;
+  loading: boolean;
+  alert: boolean;
+  error: string;
+  isAuthenticated: boolean;
+}>({
+  email: '',
+  password: '',
+  alert: false,
+  // ...mapState('auth', ['loading', 'error']),
+  // ...mapGetters('auth', ['isAuthenticated']),
+  loading: false,
+  error: '',
+  isAuthenticated: false,
+  // =========================================================
+});
+const disabled = computed(() => {
+  const isEmpty = state.email === '' || state.password === '';
+  // if ((isEmpty && !this.loading) || this.loading) return true;
+  return false;
+});
+
+watch(
+  () => state.error,
+  (newVal) => {
+    if (newVal) {
+      // if (value) this.alert = true;
+    }
+  }
+);
+watch(
+  () => state.alert,
+  (newVal) => {
+    // if (!value) this.$store.commit('auth/setError', null);
+  }
+);
+
+const prevSlide = () => {
+  emit('prev');
 };
+const onSubmit = () => {
+  // this.$store.dispatch('auth/manualSignIn', {
+  //   email: this.email,
+  //   password: this.password,
+  // });
+};
+const { email, password, alert, error, loading } = toRefs(state);
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/setup/variables';
+@import '~@/styles/config/variables';
+@import '~@/styles/config/mixin';
 
-@import '~@/styles/setup/mixin';
+.verification {
+  &__back {
+    @include transition-default;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition-duration: 0.15s;
+    cursor: pointer;
 
-.slideBack {
-  @include transition-default;
-  display: flex;
-  width: 32px;
-  height: 32px;
-  justify-content: center;
-  align-items: center;
-  padding: 6px;
-  border-radius: 50%;
-  transition-duration: 0.15s;
-  cursor: pointer;
+    &:hover {
+      background-color: rgba(#fff, 0.15);
+    }
 
-  &:hover {
-    background-color: rgba(#fff, 0.15);
-  }
-
-  img {
-    width: 11px;
-    height: 18px;
+    img {
+      width: 11px;
+      height: 18px;
+    }
   }
 }
 
-.verification {
+.description {
   margin: 3rem auto;
   text-align: center;
 
-  &__ttl {
+  &__title {
     margin-bottom: 2rem;
     font-weight: bold;
     font-size: 3rem;
   }
 
-  &__txt {
+  &__text {
     line-height: 1.75;
     font-size: 1.6rem;
 
@@ -148,7 +158,7 @@ export default {
   }
 }
 
-.verificationForm {
+.form {
   width: 100%;
   max-width: 476px;
   margin: 0 auto auto;
@@ -157,13 +167,13 @@ export default {
   box-shadow: $shadow-card;
   background: #fff;
 
-  &__inputTtl {
+  &__title {
     margin-bottom: 0.3rem;
     color: $theme-color;
     font-weight: bold;
   }
 
-  &__input {
+  &__inputField {
     @include transition-default;
     display: block;
     width: 100%;
@@ -208,7 +218,7 @@ export default {
     transition-timing-function: ease-in-out;
   }
 
-  &__btn {
+  &__submit {
     @include transition-default;
     display: block;
     width: 100%;

@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/setup/variables';
+@import '~@/styles/config/variables';
 $size: 20px;
 
 .spinnerLoading {

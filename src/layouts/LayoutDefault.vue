@@ -1,10 +1,11 @@
 <template>
-  <transition name="fade" appear>
+  <!-- <transition name="fade" appear>
     <div class="view">
       <router-view :class="['view__content', { 'is-fixed': visible }]" />
-      <!-- <Navigation /> -->
+      <Navigation />
     </div>
-  </transition>
+  </transition> -->
+  <router-view />
 </template>
 
 <script>
@@ -23,8 +24,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/setup/variables';
-@import '~@/styles/setup/mixin';
+@import '~@/styles/config/variables';
+@import '~@/styles/config/mixin';
 
 .view {
   display: flex;

@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import SignIn from '@/layouts/SignIn.vue';
+import AuthenticationView from '@/views/AuthenticationView.vue';
+import HomeView from '@/views/HomeView.vue';
+// import SignIn from '@/layouts/SignIn.vue';
+// import LayoutAuth from '@/layouts/LayoutAuth.vue';
 
 const routes: Array<RouteRecordRaw> = [
+  // TODO: look at this redirect one more time
   {
     path: '/',
     redirect: {
@@ -10,12 +13,13 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/sign-in',
-    name: 'SignIn',
+    path: '/auth',
+    name: 'AuthenticationView',
     meta: {
-      layout: 'SignIn',
+      // layout: 'LayoutAuth',
+      layout: 'auth',
     },
-    component: SignIn,
+    component: AuthenticationView,
   },
   {
     path: '/profile',
@@ -53,7 +57,7 @@ router.beforeEach((to, from, next) => {
 
   // if (requiresAuth && !currentUser && !skipStatus) {
   if (requiresAuth) {
-    next('/sign-in');
+    next('/auth');
   } else {
     next();
   }
