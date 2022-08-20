@@ -26,7 +26,7 @@ $size: 20px;
     width: $size;
     height: $size;
     margin: 0 calc(#{$size} / 2);
-    border: calc(#{$size} / 5) solid $theme-color;
+    border: calc(#{$size} / 5) solid var(--app-text-color);
     border-radius: 50%;
     transform: scale(0);
     animation: spinnerLoading 1s ease infinite 0s;

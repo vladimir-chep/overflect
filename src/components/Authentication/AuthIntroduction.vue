@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits } from 'vue';
+import { defineEmits, inject } from 'vue';
 
 const emit = defineEmits<{
   (e: 'next'): void;

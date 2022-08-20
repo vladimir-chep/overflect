@@ -13,7 +13,7 @@
       <p class="form__title">Email</p>
       <input
         class="form__inputField"
-        :class="{ error: alert }"
+        :class="{ error: isAlerted }"
         placeholder="Insert email here..."
         type="email"
         id="email"
@@ -22,14 +22,14 @@
       <p class="form__title">Password</p>
       <input
         class="form__inputField"
-        :class="{ error: alert }"
+        :class="{ error: isAlerted }"
         placeholder="Insert password here..."
         type="password"
         id="password"
         v-model="password"
       />
       <transition name="error" mode="out-in">
-        <p v-if="alert" class="verificationForm__error">
+        <p v-if="isAlerted" class="verificationForm__error">
           {{ error }}
         </p>
       </transition>
@@ -48,7 +48,21 @@
 
 <script lang="ts" setup>
 // import { mapState, mapGetters } from 'vuex';
-import { ref, reactive, computed, watch, toRefs, defineEmits } from 'vue';
+import {
+  ref,
+  reactive,
+  computed,
+  watch,
+  toRefs,
+  defineEmits,
+  inject,
+} from 'vue';
+import {
+  UserAuthenticationStateSymbol,
+  UserAuthenticationUpdateSymbol,
+} from '@/providers/UserAuthenticationProvider';
+import { auth } from '@/firebase/config';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import SpinnerLoading from '@/components/Symbols/SpinnerLoading.vue';
 
 const emit = defineEmits<{
@@ -59,15 +73,14 @@ const state = reactive<{
   email: string;
   password: string;
   loading: boolean;
-  alert: boolean;
+  isAlerted: boolean;
   error: string;
   isAuthenticated: boolean;
 }>({
-  email: '',
-  password: '',
-  alert: false,
+  email: 'web00chepvl@gmail.com',
+  password: '321506',
+  isAlerted: false,
   // ...mapState('auth', ['loading', 'error']),
-  // ...mapGetters('auth', ['isAuthenticated']),
   loading: false,
   error: '',
   isAuthenticated: false,
@@ -75,8 +88,14 @@ const state = reactive<{
 });
 const disabled = computed(() => {
   const isEmpty = state.email === '' || state.password === '';
-  // if ((isEmpty && !this.loading) || this.loading) return true;
-  return false;
+  return isEmpty || state.loading;
+});
+
+const userAuthState = inject(UserAuthenticationStateSymbol);
+
+const onUserUpdate = inject(UserAuthenticationUpdateSymbol);
+console.log({
+  userAuthState,
 });
 
 watch(
@@ -84,11 +103,12 @@ watch(
   (newVal) => {
     if (newVal) {
       // if (value) this.alert = true;
+      state.isAlerted = true;
     }
   }
 );
 watch(
-  () => state.alert,
+  () => state.isAlerted,
   (newVal) => {
     // if (!value) this.$store.commit('auth/setError', null);
   }
@@ -97,13 +117,39 @@ watch(
 const prevSlide = () => {
   emit('prev');
 };
+// const onManualSignIn = async (payload: { email: string; password: string }) => {
+//   try {
+//     const response = signInWithEmailAndPassword(
+//       auth,
+//       payload.email,
+//       payload.password
+//     );
+//     console.log('response', response);
+//   } catch (error) {
+//     console.log('error', error);
+//   }
+// };
 const onSubmit = () => {
+  // onManualSignIn({ email: state.email, password: state.password });
+  state.loading = true;
+  signInWithEmailAndPassword(auth, state.email, state.password)
+    .then((response) => {
+      console.log('response', response);
+      const user = response.user;
+      onUserUpdate?.(user);
+    })
+    .catch((error) => {
+      console.log('error', error);
+    })
+    .finally(() => {
+      state.loading = false;
+    });
   // this.$store.dispatch('auth/manualSignIn', {
   //   email: this.email,
   //   password: this.password,
   // });
 };
-const { email, password, alert, error, loading } = toRefs(state);
+const { email, password, isAlerted, error, loading } = toRefs(state);
 </script>
 
 <style lang="scss" scoped>
@@ -184,7 +230,7 @@ const { email, password, alert, error, loading } = toRefs(state);
     border-width: 0;
     border-radius: $border-radius;
     box-shadow: inset 0 0 0 1px #f1f1f1;
-    color: #c4c4c4;
+    color: #5f5f5f;
     background-color: #f1f1f1;
     font-size: 1.6rem;
     text-align: center;
@@ -242,20 +288,22 @@ const { email, password, alert, error, loading } = toRefs(state);
   }
 }
 
-.error-enter-active,
-.error-leave-active {
-  will-change: transform;
-  transition: $transition-default;
-  transition-timing-function: ease-in-out;
-}
+.error {
+  &-enter-active,
+  &-leave-active {
+    will-change: transform;
+    transition: $transition-default;
+    transition-timing-function: ease-in-out;
+  }
 
-.error-enter {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
+  &-enter-from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
 
-.error-leave-active {
-  opacity: 0;
-  transform: translate3d(0, -100%, 0);
+  &-leave-active {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
 }
 </style>

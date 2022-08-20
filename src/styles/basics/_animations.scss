@@ -6,7 +6,7 @@
     will-change: opacity, transform;
   }
 
-  &-enter,
+  &-enter-from,
   &-leave-to {
     opacity: 0;
     transform: translateY(100%);
@@ -20,7 +20,7 @@
     transition: all .35s cubic-bezier(.25, .46, .45, .94);
   }
 
-  &-enter {
+  &-enter-from {
     opacity: 0;
     transform: translate(0, 10px);
   }
@@ -39,7 +39,7 @@
     transition: opacity 1.5s;
   }
 
-  &-enter,
+  &-enter-from,
   &-leave-to {
     opacity: 0;
   }
@@ -53,7 +53,7 @@
     transition: opacity .5s;
   }
 
-  &-enter,
+  &-enter-from,
   &-leave-to {
     opacity: 0;
   }
@@ -70,13 +70,13 @@
     transition: all .35s;
   }
 
-  &-right-enter,
+  &-right-enter-from,
   &-left-leave-active {
     opacity: 0;
     transform: translate3d(-100%, 0, 0);
   }
 
-  &-left-enter,
+  &-left-enter-from,
   &-right-leave-active {
     opacity: 0;
     transform: translate3d(100%, 0, 0);

@@ -1,10 +1,13 @@
 <template>
-  <AppLayout>
-    <router-view />
-  </AppLayout>
+  <UserAuthenticationProvider>
+    <AppLayout>
+      <router-view />
+    </AppLayout>
+  </UserAuthenticationProvider>
 </template>
 
-<!-- <script lang="ts" setup>
+<script lang="ts" setup>
+import UserAuthenticationProvider from '@/providers/UserAuthenticationProvider';
 // import { computed } from 'vue';
 // import { useRoute } from 'vue-router';
 // import LayoutDefault from '@/layouts/LayoutDefault.vue';
@@ -31,7 +34,7 @@
 //   },
 // },
 // };
-</script> -->
+</script>
 
 <!-- <style lang="scss" scoped>
 @import '~@/styles/config/varia
