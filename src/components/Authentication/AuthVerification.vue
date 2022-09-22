@@ -1,8 +1,9 @@
 <template>
   <div class="verification">
-    <a href="" class="verification__back" @click.prevent="prevSlide">
-      <img src="@/assets/images/icon/ArrowBack.svg" alt="" />
-    </a>
+    <button type="submit" class="verification__back" @click.prevent="prevSlide">
+      <img src="@/assets/images/icon/ArrowBack.svg" alt="Back" />
+    </button>
+
     <div class="description">
       <h2 class="description__title">Sign In</h2>
       <p class="description__text">
@@ -29,10 +30,11 @@
         v-model="password"
       />
       <transition name="error" mode="out-in">
-        <p v-if="isAlerted" class="verificationForm__error">
-          {{ error }}
+        <p v-if="isAlerted" class="form__error">
+          {{ authState.error }}
         </p>
       </transition>
+
       <button
         type="submit"
         class="form__submit"
@@ -47,62 +49,45 @@
 </template>
 
 <script lang="ts" setup>
-// import { mapState, mapGetters } from 'vuex';
-import {
-  ref,
-  reactive,
-  computed,
-  watch,
-  toRefs,
-  defineEmits,
-  inject,
-} from 'vue';
-import {
-  UserAuthenticationStateSymbol,
-  UserAuthenticationUpdateSymbol,
-} from '@/providers/UserAuthenticationProvider';
+import { reactive, computed, watch, toRefs, defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { auth } from '@/firebase/config';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useAuthStore } from '@/stores';
+import { paths } from '@/router/routes';
 import SpinnerLoading from '@/components/Symbols/SpinnerLoading.vue';
+
+const router = useRouter();
+const authStore = useAuthStore();
+const { state: authState } = storeToRefs(authStore);
+const { onUserUpdate, onErrorUpdate } = authStore;
 
 const emit = defineEmits<{
   (e: 'prev'): void;
 }>();
 
-const state = reactive<{
+type State = {
   email: string;
   password: string;
   loading: boolean;
   isAlerted: boolean;
-  error: string;
-  isAuthenticated: boolean;
-}>({
-  email: 'web00chepvl@gmail.com',
-  password: '321506',
+};
+const state = reactive<State>({
+  email: '',
+  password: '',
   isAlerted: false,
-  // ...mapState('auth', ['loading', 'error']),
   loading: false,
-  error: '',
-  isAuthenticated: false,
-  // =========================================================
 });
 const disabled = computed(() => {
   const isEmpty = state.email === '' || state.password === '';
   return isEmpty || state.loading;
 });
 
-const userAuthState = inject(UserAuthenticationStateSymbol);
-
-const onUserUpdate = inject(UserAuthenticationUpdateSymbol);
-console.log({
-  userAuthState,
-});
-
 watch(
-  () => state.error,
+  () => authState.value.error,
   (newVal) => {
     if (newVal) {
-      // if (value) this.alert = true;
       state.isAlerted = true;
     }
   }
@@ -110,46 +95,30 @@ watch(
 watch(
   () => state.isAlerted,
   (newVal) => {
-    // if (!value) this.$store.commit('auth/setError', null);
+    if (!newVal) onErrorUpdate(undefined);
   }
 );
 
 const prevSlide = () => {
   emit('prev');
 };
-// const onManualSignIn = async (payload: { email: string; password: string }) => {
-//   try {
-//     const response = signInWithEmailAndPassword(
-//       auth,
-//       payload.email,
-//       payload.password
-//     );
-//     console.log('response', response);
-//   } catch (error) {
-//     console.log('error', error);
-//   }
-// };
-const onSubmit = () => {
-  // onManualSignIn({ email: state.email, password: state.password });
+
+const onSubmit = async () => {
   state.loading = true;
-  signInWithEmailAndPassword(auth, state.email, state.password)
-    .then((response) => {
-      console.log('response', response);
-      const user = response.user;
-      onUserUpdate?.(user);
+  await signInWithEmailAndPassword(auth, state.email, state.password)
+    .then(({ user }) => {
+      onUserUpdate(user);
+      onErrorUpdate(undefined);
+      router.push(paths.profile);
     })
     .catch((error) => {
-      console.log('error', error);
+      onErrorUpdate(error);
     })
     .finally(() => {
       state.loading = false;
     });
-  // this.$store.dispatch('auth/manualSignIn', {
-  //   email: this.email,
-  //   password: this.password,
-  // });
 };
-const { email, password, isAlerted, error, loading } = toRefs(state);
+const { email, password, isAlerted, loading } = toRefs(state);
 </script>
 
 <style lang="scss" scoped>
@@ -165,9 +134,9 @@ const { email, password, isAlerted, error, loading } = toRefs(state);
     justify-content: center;
     align-items: center;
     padding: 6px;
-    border-radius: 50%;
     transition-duration: 0.15s;
-    cursor: pointer;
+    background: none;
+    border: none;
 
     &:hover {
       background-color: rgba(#fff, 0.15);

@@ -1,64 +1,39 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import AuthenticationView from '@/views/AuthenticationView.vue';
-import HomeView from '@/views/HomeView.vue';
-// import SignIn from '@/layouts/SignIn.vue';
-// import LayoutAuth from '@/layouts/LayoutAuth.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores';
+import { auth } from '@/firebase/config';
 
-const routes: Array<RouteRecordRaw> = [
-  // TODO: look at this redirect one more time
-  {
-    path: '/',
-    redirect: {
-      name: 'Profile',
-    },
-  },
-  {
-    path: '/auth',
-    name: 'AuthenticationView',
-    meta: {
-      // layout: 'LayoutAuth',
-      layout: 'auth',
-    },
-    component: AuthenticationView,
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: HomeView,
-    meta: {
-      requiresAuth: true,
-    },
-  },
+import { routes, paths } from './routes';
 
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: HomeView,
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-  // },
-];
-
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  // const currentUser = auth.currentUser;
+  const { currentUser } = auth;
   // const skipStatus = store.getters['auth/skip'];
+  const isWithoutAuth = authStore.state.skipped;
+  console.log(
+    'BeforeEach Cond',
+    {
+      one: requiresAuth,
+      two: !currentUser,
+      three: !isWithoutAuth,
+    },
+    {
+      requiresAuth,
+      currentUser,
+      isWithoutAuth,
+    }
+  );
 
-  // if (requiresAuth && !currentUser && !skipStatus) {
-  if (requiresAuth) {
-    next('/auth');
+  if (requiresAuth && !currentUser && !isWithoutAuth) {
+    console.log('BeforeEach: Auth needed!');
+
+    next(paths.auth);
   } else {
+    console.log('BeforeEach: OK');
     next();
   }
 });

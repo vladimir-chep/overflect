@@ -20,7 +20,7 @@
       >
         Connect
       </button>
-      <a href="#" @click.prevent="onSkip" class="introduction__control__skip"
+      <a href="#" class="introduction__control__skip" @click.prevent="onSkip"
         >Watch without sign in</a
       >
     </div>
@@ -28,7 +28,14 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, inject } from 'vue';
+import { defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores';
+import { paths } from '@/router/routes';
+
+const router = useRouter();
+const authStore = useAuthStore();
+const { onSkipping } = authStore;
 
 const emit = defineEmits<{
   (e: 'next'): void;
@@ -38,9 +45,9 @@ const onNextSlide = () => {
   emit('next');
 };
 const onSkip = () => {
-  // event.preventDefault();
-  console.log('skip');
-  // this.$store.dispatch('auth/skipSignIn');
+  onSkipping().then(() => {
+    router.push(paths.profile);
+  });
 };
 </script>
 

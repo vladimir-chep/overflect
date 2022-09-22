@@ -1,13 +1,10 @@
 <template>
-  <UserAuthenticationProvider>
-    <AppLayout>
-      <router-view />
-    </AppLayout>
-  </UserAuthenticationProvider>
+  <AppLayout>
+    <router-view />
+  </AppLayout>
 </template>
 
 <script lang="ts" setup>
-import UserAuthenticationProvider from '@/providers/UserAuthenticationProvider';
 // import { computed } from 'vue';
 // import { useRoute } from 'vue-router';
 // import LayoutDefault from '@/layouts/LayoutDefault.vue';
